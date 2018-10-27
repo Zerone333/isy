@@ -102,10 +102,12 @@
     _detailModel = detailModel;
     self.deslabel.text = detailModel.detail;
     
+    CGRect titleRect = [detailModel.detail boundingRectWithSize:CGSizeMake(kScreenWidth - 24, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.deslabel.font} context:nil];
     
-    CGSize size = [detailModel.detail sizeWithAttributes:@{NSFontAttributeName: self.deslabel.font}];
-    self.headView.frame = CGRectMake(0, 0, kScreenWidth, size.height + 20);
+    self.headView.frame = CGRectMake(0, 0, kScreenWidth, titleRect.size.height + 20);
+    [self.tableView beginUpdates];
     self.tableView.tableHeaderView = self.headView;
+    [self.tableView endUpdates];
     
     NSDictionary *item1 = @{@"titleString" : @"播音其他作品",
                             @"dataSource" : detailModel.director_books.count == 0 ? @[] :  detailModel.director_books

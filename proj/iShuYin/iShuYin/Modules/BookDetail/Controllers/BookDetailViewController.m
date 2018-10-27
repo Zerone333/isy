@@ -25,7 +25,14 @@
 //@property (nonatomic, strong) BookDetailOthersView *authorView;//作者其他作品
 //@property (nonatomic, strong) BookDetailOthersView *directorView;//播音其他作品
 @property (nonatomic, strong) BookDetailModel *detailModel;
+
+
 @property (nonatomic, strong) UIView *currentPlayContentView;
+@property (nonatomic, strong) UIButton *playStatuButton;
+@property (nonatomic, strong) UILabel *currentChaperlabel;
+@property (nonatomic, strong) UIButton *sortingButton;
+
+
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *scrollContentView;
 @property (nonatomic, strong) BookDetailSubDownLoadViewController *vc1;
@@ -172,69 +179,6 @@
         }];
         _descOneView.desc = desc;
 }
-
-////推荐
-//- (void)initAuthorView {
-//    if (_detailModel.actor_books == nil || _detailModel.actor_books.count == 0) {
-//        return;
-//    }
-//    CGFloat height = 10+29+54;
-//    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
-//    CGFloat item_h = item_w*105/80 + 30.5;
-//    NSInteger row = _detailModel.actor_books.count/4 + (_detailModel.actor_books.count%4 != 0);
-//    height += (item_h*row + (row-1)*20);
-//
-//    _authorView = [BookDetailOthersView loadFromNib];
-//    [self.scrollContentView addSubview:_authorView];
-//    [_authorView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(self.vc1.view.mas_right);
-//        make.width.mas_equalTo(kScreenWidth);
-//        make.top.equalTo(self.scrollContentView);
-//        make.height.equalTo(@(height));
-//    }];
-//    __weak __typeof(self)weakSelf = self;
-//    _authorView.bookBlock = ^(NSString *book_id) {
-//        __strong __typeof(weakSelf)strongSelf = weakSelf;
-//        [strongSelf pushToBookDetailWithIdentity:book_id];
-//    };
-//    _authorView.moreBlock = ^{
-//        __strong __typeof(weakSelf)strongSelf = weakSelf;
-//        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.actor];
-//    };
-//    _authorView.title = @"作者其他作品";
-//    _authorView.dataArray = _detailModel.actor_books;
-//}
-//
-//- (void)initDirectorView {
-//    if (_detailModel.director_books == nil || _detailModel.director_books.count == 0) {
-//        return;
-//    }
-//    CGFloat height = 10+29+54;
-//    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
-//    CGFloat item_h = item_w*105/80 + 30.5;
-//    NSInteger row = _detailModel.director_books.count/4 + (_detailModel.director_books.count%4 != 0);
-//    height += (item_h*row + (row-1)*20);
-//
-//    _directorView = [BookDetailOthersView loadFromNib];
-//    [self.scrollContentView addSubview:_directorView];
-//    [_directorView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(_authorView.mas_bottom);
-//        make.left.right.equalTo(_authorView);
-//        make.height.equalTo(@(height));
-//    }];
-//    __weak __typeof(self)weakSelf = self;
-//    _directorView.bookBlock = ^(NSString *book_id) {
-//        __strong __typeof(weakSelf)strongSelf = weakSelf;
-//        [strongSelf pushToBookDetailWithIdentity:book_id];
-//    };
-//    _directorView.moreBlock = ^{
-//        __strong __typeof(weakSelf)strongSelf = weakSelf;
-//        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.director];
-//    };
-//    _directorView.title = @"播音其他作品";
-//    _directorView.dataArray = _detailModel.director_books;
-//}
-
 
 #pragma mark - Action
 //详情
@@ -386,8 +330,75 @@
 - (UIView *)currentPlayContentView {
     if (!_currentPlayContentView) {
         _currentPlayContentView = [[UIView alloc] init];
-        _currentPlayContentView.backgroundColor = [UIColor redColor];
+        _currentPlayContentView.backgroundColor = [UIColor whiteColor];
+     
+        UILabel *label = [[ UILabel alloc] init];
+        label.text = @"排序";
+        label.font = [UIFont systemFontOfSize:14];
+        label.textColor = kColorValue(0x282828);
+        
+        [_currentPlayContentView addSubview:self.playStatuButton];
+        [_currentPlayContentView addSubview:self.currentChaperlabel];
+        [_currentPlayContentView addSubview:label];
+        [_currentPlayContentView addSubview:self.sortingButton];
+        
+        [self.playStatuButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(22, 22));
+            make.centerY.equalTo(_currentPlayContentView);
+            make.left.equalTo(_currentPlayContentView).mas_offset(20);
+        }];
+        [self.currentChaperlabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_currentPlayContentView);
+            make.left.equalTo(self.playStatuButton.mas_right).mas_offset(16);
+        }];
+        
+        [self.sortingButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_currentPlayContentView);
+            make.right.equalTo(_currentPlayContentView).mas_offset(-15);
+        }];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+           
+            make.centerY.equalTo(_currentPlayContentView);
+            make.right.equalTo(self.sortingButton.mas_left).mas_offset(-15);
+        }];
+        
+        UIView *lineView  = [[UIView alloc] init];
+        lineView.backgroundColor = kColorValue(0x999999);
+        [_currentPlayContentView addSubview:lineView];
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0.5);
+            make.right.bottom.equalTo(_currentPlayContentView);
+            make.left.equalTo(self.currentChaperlabel);
+        }];
     }
     return _currentPlayContentView;
 }
+
+- (UIButton *)playStatuButton {
+    if (!_playStatuButton) {
+        _playStatuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_playStatuButton setImage:[UIImage imageNamed:@"正在播放icon"] forState:UIControlStateNormal];
+    }
+    return _playStatuButton;
+}
+
+- (UILabel *)currentChaperlabel {
+    if (!_currentChaperlabel) {
+        _currentChaperlabel = [[ UILabel alloc] init];
+        _currentChaperlabel.text = @"正在播放呢：";
+        _currentChaperlabel.font = [UIFont systemFontOfSize:14];
+        _currentChaperlabel.textColor = kColorValue(0x282828);
+    }
+    return _currentChaperlabel;
+}
+
+- (UIButton *)sortingButton {
+    if (!_sortingButton) {
+        _sortingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_sortingButton setImage:[UIImage imageNamed:@"正序"] forState:UIControlStateNormal];
+        [_sortingButton setImage:[UIImage imageNamed:@"倒序"] forState:UIControlStateSelected];
+    }
+    return _sortingButton;
+}
+
 @end
