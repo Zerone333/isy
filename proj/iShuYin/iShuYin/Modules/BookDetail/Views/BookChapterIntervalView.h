@@ -11,4 +11,5 @@
 @interface BookChapterIntervalView : UIView
 @property (nonatomic, assign) NSInteger totalCount;
 @property (nonatomic, strong) void (^itemBlock)(NSInteger index);
+- (void)updatesCrollDirection:(UICollectionViewScrollDirection)type;
 @end

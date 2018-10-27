@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *desc;
 
+@property (nonatomic, strong) void (^chapter1Block)();
 @property (nonatomic, strong) void (^chapterBlock)();
 
 @property (nonatomic, strong) void (^downloadBlock)();

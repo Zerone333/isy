@@ -7,11 +7,8 @@
 //
 
 #import "ZXBaseViewController.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import "BookDetailModel.h"
 
 @interface BookSubDetailViewController : ZXBaseViewController
-
+@property (nonatomic, strong) BookDetailModel *detailModel;
 @end
-
-NS_ASSUME_NONNULL_END

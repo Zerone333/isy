@@ -54,25 +54,31 @@
     
     if (receipt.state == MCDownloadStateDownloading || receipt.state == MCDownloadStateWillResume) {
         [self.actionBtn setTitle:@"停止" forState:UIControlStateNormal];
+        [self.actionBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
     }else if (receipt.state == MCDownloadStateCompleted) {
 
         if (self.progressView.progress == 1.0) {
             [self.actionBtn setTitle:@"删除" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"已下载"] forState:UIControlStateNormal];
         }else {
             [self.actionBtn setTitle:@"下载" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"下载"] forState:UIControlStateNormal];
         }
         
     }else {
         if (self.progressView.progress == 1.0) {
+            [self.actionBtn setImage:[UIImage imageNamed:@"已下载"] forState:UIControlStateNormal];
             [self.actionBtn setTitle:@"删除" forState:UIControlStateNormal];
         }else {
             [self.actionBtn setTitle:@"下载" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"下载"] forState:UIControlStateNormal];
         }
     }
     
     receipt.downloaderProgressBlock = ^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
         if ([targetURL.absoluteString isEqualToString:self.url]) {
             [self.actionBtn setTitle:@"停止" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"下载"] forState:UIControlStateNormal];
             self.progressView.progress = (receivedSize/1024.0/1024) / (expectedSize/1024.0/1024);
         }
     };
@@ -80,9 +86,11 @@
     receipt.downloaderCompletedBlock = ^(MCDownloadReceipt *receipt, NSError * _Nullable error, BOOL finished) {
         if (error) {
             [self.actionBtn setTitle:@"下载" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"下载"] forState:UIControlStateNormal];
         }else {
             [self saveAfterDownload];
             [self.actionBtn setTitle:@"删除" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"已下载"] forState:UIControlStateNormal];
         }
     };
 }
@@ -94,9 +102,9 @@
         
         [[MCDownloader sharedDownloader] cancel:receipt completed:^{
             [self.actionBtn setTitle:@"下载" forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"下载"] forState:UIControlStateNormal];
         }];
     }else if (receipt.state == MCDownloadStateCompleted) {
-        
         if ([self.actionBtn.currentTitle isEqualToString:@"删除"]) {
             receipt.state = MCDownloadStateNone;
             [self delete];
@@ -106,6 +114,7 @@
         }
     }else {
         [self.actionBtn setTitle:@"停止" forState:UIControlStateNormal];
+        [self.actionBtn setImage:[UIImage imageNamed:@"下载中"] forState:UIControlStateNormal];
         receipt.state = MCDownloadStateNone;
         [self download];
     }
@@ -136,6 +145,7 @@
     [[ZXTools shareTools] removeFileAtPath:path];
     self.progressView.progress = 0.0;
     [self.actionBtn setTitle:@"下载" forState:UIControlStateNormal];
+    [self.actionBtn setImage:[UIImage imageNamed:@"下载"] forState:UIControlStateNormal];
 }
 
 - (void)saveAfterDownload {

@@ -8,8 +8,12 @@
 
 #import "ZXBaseViewController.h"
 
+
 @class BookDetailModel;
 
+/**
+ 批量下载
+ */
 @interface BookChapterViewController : ZXBaseViewController
 
 @property (nonatomic, strong) BookDetailModel *detailModel;

@@ -144,7 +144,6 @@
 		18A4A7D31F40B7E000A02BE8 /* BookDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4A7D21F40B7E000A02BE8 /* BookDetailViewController.m */; };
 		18A4A7D61F40B80200A02BE8 /* BookDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4A7D51F40B80200A02BE8 /* BookDetailModel.m */; };
 		18A4A7D91F40C5D800A02BE8 /* BookDetailInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4A7D81F40C5D800A02BE8 /* BookDetailInfoView.m */; };
-		18A4A7DB1F40C5E100A02BE8 /* BookDetailInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A4A7DA1F40C5E100A02BE8 /* BookDetailInfoView.xib */; };
 		18A4A7DE1F40C94200A02BE8 /* BookDetailOthersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4A7DD1F40C94200A02BE8 /* BookDetailOthersView.m */; };
 		18A4A7E01F40C94900A02BE8 /* BookDetailOthersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A4A7DF1F40C94900A02BE8 /* BookDetailOthersView.xib */; };
 		18CB19B61F51DBEE006F03B4 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB19B51F51DBEE006F03B4 /* PlayViewController.m */; };
@@ -155,6 +154,10 @@
 		18CB1A351F5F8FB3006F03B4 /* MineFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB1A341F5F8FB3006F03B4 /* MineFooter.m */; };
 		18CB1A371F5F8FC8006F03B4 /* MineFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CB1A361F5F8FC8006F03B4 /* MineFooter.xib */; };
 		18CB1A3A1F600194006F03B4 /* BookDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB1A391F600194006F03B4 /* BookDownloadViewController.m */; };
+		6DF039D82184370800EFDB38 /* ISYBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */; };
+		6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */; };
+		6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */; };
+		6DF039E321844DCF00EFDB38 /* ISYMoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */; };
 		99061EBE1D4FA48B0B9A12BA /* libPods-iShuYin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6777BA96BC9336E3F606CF0C /* libPods-iShuYin.a */; };
 		9B5CDC5C2174DD6800EA5D60 /* CarMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5CDC5B2174DD6800EA5D60 /* CarMoreViewController.m */; };
 		9B5CDC632174DFF800EA5D60 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5CDC622174DFF800EA5D60 /* HistoryViewController.m */; };
@@ -418,7 +421,6 @@
 		18A4A7D51F40B80200A02BE8 /* BookDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetailModel.m; sourceTree = "<group>"; };
 		18A4A7D71F40C5D800A02BE8 /* BookDetailInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailInfoView.h; sourceTree = "<group>"; };
 		18A4A7D81F40C5D800A02BE8 /* BookDetailInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetailInfoView.m; sourceTree = "<group>"; };
-		18A4A7DA1F40C5E100A02BE8 /* BookDetailInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookDetailInfoView.xib; sourceTree = "<group>"; };
 		18A4A7DC1F40C94200A02BE8 /* BookDetailOthersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailOthersView.h; sourceTree = "<group>"; };
 		18A4A7DD1F40C94200A02BE8 /* BookDetailOthersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetailOthersView.m; sourceTree = "<group>"; };
 		18A4A7DF1F40C94900A02BE8 /* BookDetailOthersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookDetailOthersView.xib; sourceTree = "<group>"; };
@@ -438,6 +440,14 @@
 		5DD0F7E5297EE226F110F7B7 /* Pods-iShuYin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.release.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.release.xcconfig"; sourceTree = "<group>"; };
 		6777BA96BC9336E3F606CF0C /* libPods-iShuYin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iShuYin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D699B56B1F74F164D3CB22B /* Pods-iShuYin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.debug.xcconfig"; sourceTree = "<group>"; };
+		6DF039D62184370800EFDB38 /* ISYBookTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookTableViewCell.h; sourceTree = "<group>"; };
+		6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookTableViewCell.m; sourceTree = "<group>"; };
+		6DF039D92184427900EFDB38 /* ISYBookHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookHeaderFooterView.h; sourceTree = "<group>"; };
+		6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookHeaderFooterView.m; sourceTree = "<group>"; };
+		6DF039DE21844B7300EFDB38 /* ISYMoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYMoreViewController.h; sourceTree = "<group>"; };
+		6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYMoreViewController.m; sourceTree = "<group>"; };
+		6DF039E121844DCF00EFDB38 /* ISYMoreListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYMoreListViewController.h; sourceTree = "<group>"; };
+		6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYMoreListViewController.m; sourceTree = "<group>"; };
 		9B5CDC5A2174DD6800EA5D60 /* CarMoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarMoreViewController.h; sourceTree = "<group>"; };
 		9B5CDC5B2174DD6800EA5D60 /* CarMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarMoreViewController.m; sourceTree = "<group>"; };
 		9B5CDC612174DFF800EA5D60 /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -568,6 +578,7 @@
 				184DAE271F2E25A700EAEA58 /* ThirdParty */,
 				184DAE281F2E25B800EAEA58 /* Categories */,
 				184DAE291F2E25CC00EAEA58 /* Utilities */,
+				6DF039D5218436D000EFDB38 /* Base */,
 				184DAE2A1F2E25D900EAEA58 /* Modules */,
 				184DAE2B1F2E260F00EAEA58 /* Resource */,
 				184DAE0C1F2E24F600EAEA58 /* Supporting Files */,
@@ -684,6 +695,7 @@
 				18A4A7CD1F40B7B700A02BE8 /* BookDetail */,
 				9B72DF9D2174D9AE00DC99B5 /* Car */,
 				9B5CDC5D2174DFE600EA5D60 /* History */,
+				6DF039DD21844B5A00EFDB38 /* More */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1134,7 +1146,6 @@
 			children = (
 				18A4A7D71F40C5D800A02BE8 /* BookDetailInfoView.h */,
 				18A4A7D81F40C5D800A02BE8 /* BookDetailInfoView.m */,
-				18A4A7DA1F40C5E100A02BE8 /* BookDetailInfoView.xib */,
 				18A4A7DC1F40C94200A02BE8 /* BookDetailOthersView.h */,
 				18A4A7DD1F40C94200A02BE8 /* BookDetailOthersView.m */,
 				18A4A7DF1F40C94900A02BE8 /* BookDetailOthersView.xib */,
@@ -1166,6 +1177,28 @@
 				9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6DF039D5218436D000EFDB38 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				6DF039D62184370800EFDB38 /* ISYBookTableViewCell.h */,
+				6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */,
+				6DF039D92184427900EFDB38 /* ISYBookHeaderFooterView.h */,
+				6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		6DF039DD21844B5A00EFDB38 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				6DF039DE21844B7300EFDB38 /* ISYMoreViewController.h */,
+				6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */,
+				6DF039E121844DCF00EFDB38 /* ISYMoreListViewController.h */,
+				6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */,
+			);
+			path = More;
 			sourceTree = "<group>";
 		};
 		71EF4DD6886CA6F78522EA0F /* Pods */ = {
@@ -1352,7 +1385,6 @@
 				1848415C1F81BFD700AF809B /* SubscribeHeader.xib in Resources */,
 				18103F4F1F717EA300E56116 /* FeedbackAdminCell.xib in Resources */,
 				18103FA41F7288D100E56116 /* FeedbackTypeView.xib in Resources */,
-				18A4A7DB1F40C5E100A02BE8 /* BookDetailInfoView.xib in Resources */,
 				185638D71F4B6CFF00DD0184 /* BookPlayButtonView.xib in Resources */,
 				18CB1A321F5F8C55006F03B4 /* MineHeader.xib in Resources */,
 				C3B2A9F52125DEBD006B9589 /* UpdateRemindView.xib in Resources */,
@@ -1461,6 +1493,7 @@
 				18386CE61F374D5400CBF32B /* HomeBookModel.m in Sources */,
 				18CB1A301F5F8C4F006F03B4 /* MineHeader.m in Sources */,
 				18386CF61F374FE300CBF32B /* SerialListViewController.m in Sources */,
+				6DF039D82184370800EFDB38 /* ISYBookTableViewCell.m in Sources */,
 				9B72DF992174CC6F00DC99B5 /* HomeRecommendViewController.m in Sources */,
 				9B72DF9C2174CE8500DC99B5 /* HomeHotViewController.m in Sources */,
 				18A4A7B41F3B725300A02BE8 /* CategoryChildCell.m in Sources */,
@@ -1485,6 +1518,7 @@
 				18CB1A3A1F600194006F03B4 /* BookDownloadViewController.m in Sources */,
 				188471F61FEBB8650018CC3B /* SleepCell.m in Sources */,
 				184DAE601F2E2F0700EAEA58 /* NSString+ZXAdd.m in Sources */,
+				6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */,
 				18A4A7D31F40B7E000A02BE8 /* BookDetailViewController.m in Sources */,
 				185638CE1F4B610500DD0184 /* BookChapterCell.m in Sources */,
 				18CB1A351F5F8FB3006F03B4 /* MineFooter.m in Sources */,
@@ -1516,6 +1550,7 @@
 				184DAE5D1F2E2EDC00EAEA58 /* UIButton+ZXAdd.m in Sources */,
 				183CC4041FA86E2600B356B4 /* ZXPlayButton.m in Sources */,
 				18A4A7D91F40C5D800A02BE8 /* BookDetailInfoView.m in Sources */,
+				6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */,
 				184DAE891F2E39F000EAEA58 /* GuideCell.m in Sources */,
 				184DAE481F2E29F500EAEA58 /* ZPTradeInputView.m in Sources */,
 				1833968F1F4212D700491F22 /* BookDetailDescOneView.m in Sources */,
@@ -1526,6 +1561,7 @@
 				1819F0A71F9679F80040CB58 /* SettingViewController.m in Sources */,
 				C3B2A9F92125DEFD006B9589 /* ZXInputView.m in Sources */,
 				18A4A7B21F3B725300A02BE8 /* CategoryCell.m in Sources */,
+				6DF039E321844DCF00EFDB38 /* ISYMoreListViewController.m in Sources */,
 				18A4A7A41F38D49200A02BE8 /* HomeListCell.m in Sources */,
 				184DAEC51F2E3F0F00EAEA58 /* MineViewController.m in Sources */,
 				185638CA1F4B5FD000DD0184 /* BookChapterViewController.m in Sources */,

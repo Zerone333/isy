@@ -22,13 +22,13 @@
 @interface BookDetailViewController ()
 @property (nonatomic, strong) BookDetailInfoView *infoView;//书本信息
 @property (nonatomic, strong) BookDetailDescOneView *descOneView;//内容简介
-@property (nonatomic, strong) BookDetailOthersView *authorView;//作者其他作品
-@property (nonatomic, strong) BookDetailOthersView *directorView;//播音其他作品
+//@property (nonatomic, strong) BookDetailOthersView *authorView;//作者其他作品
+//@property (nonatomic, strong) BookDetailOthersView *directorView;//播音其他作品
 @property (nonatomic, strong) BookDetailModel *detailModel;
-
+@property (nonatomic, strong) UIView *currentPlayContentView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *scrollContentView;
-@property (nonatomic, strong) BookChapterViewController *vc1;
+@property (nonatomic, strong) BookDetailSubDownLoadViewController *vc1;
 @property (nonatomic, strong) BookSubDetailViewController *vc2;
 @end
 
@@ -55,6 +55,7 @@
             BookDetailModel *detailModel = [BookDetailModel yy_modelWithJSON:responseObject[@"data"]];
             strongSelf.detailModel = detailModel;
             strongSelf.vc1.detailModel = detailModel;
+            strongSelf.vc2.detailModel = detailModel;
             [strongSelf reloadUI];
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
@@ -71,10 +72,24 @@
 - (void)reloadUI {
     [self initInfoView];
     [self initDescView];
+    
+    [self.view addSubview:self.currentPlayContentView];
     [self.view addSubview:self.scrollView];
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.currentPlayContentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descOneView.mas_bottom);
-        make.left.bottom.right.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(67);
+    }];
+    
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.currentPlayContentView.mas_bottom);
+        make.left.right.equalTo(self.view);
+        if (@available(iOS 11.0, *)) {
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+        } else {
+            make.bottom.equalTo(self.view);
+        }
     }];
     
     [self.scrollView addSubview:self.scrollContentView];
@@ -111,7 +126,7 @@
 }
 
 - (void)initInfoView {
-    _infoView = [BookDetailInfoView loadFromNib];
+    _infoView = [[BookDetailInfoView alloc] init];
     __weak __typeof(self)weakSelf = self;
     _infoView.collectionBlock = ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -127,7 +142,7 @@
         make.right.mas_equalTo(self.view.mas_right);
         make.centerX.mas_equalTo(self.view.mas_centerX);
         make.top.mas_equalTo(self.view.mas_top);
-        make.height.equalTo(@192);
+        make.height.equalTo(@140);
     }];
     _infoView.model = _detailModel;
 }
@@ -136,9 +151,13 @@
     NSString *desc = [NSString isEmpty:_detailModel.desc]?@"暂无简介":_detailModel.desc;
         _descOneView = [BookDetailDescOneView loadFromNib];
         __weak __typeof(self)weakSelf = self;
+    _descOneView.chapter1Block = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.scrollView scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, CGRectGetWidth(strongSelf.scrollView.frame)) animated:YES];
+    };
         _descOneView.chapterBlock = ^{
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf pushToBookChapterList];
+            [strongSelf.scrollView scrollRectToVisible:CGRectMake(kScreenWidth, 0, kScreenWidth, CGRectGetWidth(strongSelf.scrollView.frame)) animated:YES];
         };
         _descOneView.downloadBlock = ^{
             __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -154,67 +173,67 @@
         _descOneView.desc = desc;
 }
 
-//推荐
-- (void)initAuthorView {
-    if (_detailModel.actor_books == nil || _detailModel.actor_books.count == 0) {
-        return;
-    }
-    CGFloat height = 10+29+54;
-    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
-    CGFloat item_h = item_w*105/80 + 30.5;
-    NSInteger row = _detailModel.actor_books.count/4 + (_detailModel.actor_books.count%4 != 0);
-    height += (item_h*row + (row-1)*20);
-
-    _authorView = [BookDetailOthersView loadFromNib];
-    [self.scrollContentView addSubview:_authorView];
-    [_authorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.vc1.view.mas_right);
-        make.width.mas_equalTo(kScreenWidth);
-        make.top.equalTo(self.scrollContentView);
-        make.height.equalTo(@(height));
-    }];
-    __weak __typeof(self)weakSelf = self;
-    _authorView.bookBlock = ^(NSString *book_id) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf pushToBookDetailWithIdentity:book_id];
-    };
-    _authorView.moreBlock = ^{
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.actor];
-    };
-    _authorView.title = @"作者其他作品";
-    _authorView.dataArray = _detailModel.actor_books;
-}
-
-- (void)initDirectorView {
-    if (_detailModel.director_books == nil || _detailModel.director_books.count == 0) {
-        return;
-    }
-    CGFloat height = 10+29+54;
-    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
-    CGFloat item_h = item_w*105/80 + 30.5;
-    NSInteger row = _detailModel.director_books.count/4 + (_detailModel.director_books.count%4 != 0);
-    height += (item_h*row + (row-1)*20);
-
-    _directorView = [BookDetailOthersView loadFromNib];
-    [self.scrollContentView addSubview:_directorView];
-    [_directorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_authorView.mas_bottom);
-        make.left.right.equalTo(_authorView);
-        make.height.equalTo(@(height));
-    }];
-    __weak __typeof(self)weakSelf = self;
-    _directorView.bookBlock = ^(NSString *book_id) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf pushToBookDetailWithIdentity:book_id];
-    };
-    _directorView.moreBlock = ^{
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.director];
-    };
-    _directorView.title = @"播音其他作品";
-    _directorView.dataArray = _detailModel.director_books;
-}
+////推荐
+//- (void)initAuthorView {
+//    if (_detailModel.actor_books == nil || _detailModel.actor_books.count == 0) {
+//        return;
+//    }
+//    CGFloat height = 10+29+54;
+//    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
+//    CGFloat item_h = item_w*105/80 + 30.5;
+//    NSInteger row = _detailModel.actor_books.count/4 + (_detailModel.actor_books.count%4 != 0);
+//    height += (item_h*row + (row-1)*20);
+//
+//    _authorView = [BookDetailOthersView loadFromNib];
+//    [self.scrollContentView addSubview:_authorView];
+//    [_authorView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.vc1.view.mas_right);
+//        make.width.mas_equalTo(kScreenWidth);
+//        make.top.equalTo(self.scrollContentView);
+//        make.height.equalTo(@(height));
+//    }];
+//    __weak __typeof(self)weakSelf = self;
+//    _authorView.bookBlock = ^(NSString *book_id) {
+//        __strong __typeof(weakSelf)strongSelf = weakSelf;
+//        [strongSelf pushToBookDetailWithIdentity:book_id];
+//    };
+//    _authorView.moreBlock = ^{
+//        __strong __typeof(weakSelf)strongSelf = weakSelf;
+//        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.actor];
+//    };
+//    _authorView.title = @"作者其他作品";
+//    _authorView.dataArray = _detailModel.actor_books;
+//}
+//
+//- (void)initDirectorView {
+//    if (_detailModel.director_books == nil || _detailModel.director_books.count == 0) {
+//        return;
+//    }
+//    CGFloat height = 10+29+54;
+//    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
+//    CGFloat item_h = item_w*105/80 + 30.5;
+//    NSInteger row = _detailModel.director_books.count/4 + (_detailModel.director_books.count%4 != 0);
+//    height += (item_h*row + (row-1)*20);
+//
+//    _directorView = [BookDetailOthersView loadFromNib];
+//    [self.scrollContentView addSubview:_directorView];
+//    [_directorView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(_authorView.mas_bottom);
+//        make.left.right.equalTo(_authorView);
+//        make.height.equalTo(@(height));
+//    }];
+//    __weak __typeof(self)weakSelf = self;
+//    _directorView.bookBlock = ^(NSString *book_id) {
+//        __strong __typeof(weakSelf)strongSelf = weakSelf;
+//        [strongSelf pushToBookDetailWithIdentity:book_id];
+//    };
+//    _directorView.moreBlock = ^{
+//        __strong __typeof(weakSelf)strongSelf = weakSelf;
+//        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.director];
+//    };
+//    _directorView.title = @"播音其他作品";
+//    _directorView.dataArray = _detailModel.director_books;
+//}
 
 
 #pragma mark - Action
@@ -339,6 +358,7 @@
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] init];
+        _scrollView.pagingEnabled = YES;
     }
     return _scrollView;
 }
@@ -361,5 +381,13 @@
         _scrollContentView = [[UIView alloc] init];
     }
     return _scrollContentView;
+}
+
+- (UIView *)currentPlayContentView {
+    if (!_currentPlayContentView) {
+        _currentPlayContentView = [[UIView alloc] init];
+        _currentPlayContentView.backgroundColor = [UIColor redColor];
+    }
+    return _currentPlayContentView;
 }
 @end

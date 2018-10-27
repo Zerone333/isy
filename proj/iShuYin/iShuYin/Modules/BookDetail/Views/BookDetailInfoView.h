@@ -14,8 +14,8 @@
 
 @property (nonatomic, strong) BookDetailModel *model;
 
-@property (nonatomic, strong) void (^collectionBlock)();
+@property (nonatomic, strong) void (^collectionBlock)(void);
 
-@property (nonatomic, strong) void (^shareBlock)();
+@property (nonatomic, strong) void (^shareBlock)(void);
 
 @end

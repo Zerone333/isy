@@ -12,12 +12,14 @@
 #import "PlayViewController.h"
 #import "BookDownloadBottomView.h"
 #import "MCDownloader.h"
+#import "BookChapterIntervalView.h"
 
 @interface BookDetailSubDownLoadViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) BookDownloadBottomView *bottomView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *selectArray;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) BookChapterIntervalView *chapterView;
 @end
 
 @implementation BookDetailSubDownLoadViewController
@@ -32,29 +34,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     [MCDownloader sharedDownloader].downloadTimeout = 60;
     [MCDownloader sharedDownloader].maxConcurrentDownloads = 1;
     [self configUI];
     [self configData];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 - (void)configUI {
     NSString *text = [NSString stringWithFormat:@"%@",_detailModel.title];
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:text];
-    [self.view addSubview:self.bottomView];
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.view.mas_bottom);
-        make.height.equalTo(@(104));
-    }];
+
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view.mas_top);
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.bottomView.mas_top);
+        make.bottom.mas_equalTo(self.view).mas_offset(-115/2);
+    }];
+    
+    [self.view addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.bottom.mas_equalTo(self.view);
+        make.height.mas_equalTo(115/2);
+    }];
+    
+    [self.bottomView addSubview:self.chapterView];
+    [self.chapterView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.equalTo(self.bottomView);
+        make.right.equalTo(self.bottomView).mas_offset(-56);
     }];
 }
 
@@ -64,10 +78,10 @@
     if (_detailModel.chapters.count) {
         [self getChapterWithIndex:0];
     }
+    self.chapterView.totalCount = _detailModel.chapters.count;
 }
 
 - (void)getChapterWithIndex:(NSInteger)index {
-    _bottomView.isChooseAll = NO;
     for (BookChapterModel *chapterModel in _selectArray) {
         chapterModel.isSelected = NO;
     }
@@ -87,6 +101,7 @@
         [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
+
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -113,11 +128,11 @@
     return 78.0f;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return kScreenWidth*94.0/750.f;
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return kScreenWidth*240.0/750.f;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIImageView *imgView = [[UIImageView alloc]init];
     imgView.image = [UIImage imageNamed:@"download_ad"];
     return imgView;
@@ -146,7 +161,6 @@
     }else {
         [_selectArray addObject:chapterModel];
     }
-    _bottomView.isChooseAll = (_selectArray.count == _dataArray.count);
 }
 
 //全选
@@ -213,30 +227,57 @@
     return _tableView;
 }
 
-- (BookDownloadBottomView *)bottomView {
+- (UIView *)bottomView {
     if (!_bottomView) {
-        _bottomView = [BookDownloadBottomView loadFromNib];
-        _bottomView.detailModel = _detailModel;
-        __weak __typeof(self)weakSelf = self;
-        _bottomView.itemBlock = ^(NSInteger index) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf chapterItemSelect:index];
-        };
-        _bottomView.allBlock = ^(BOOL isAll){
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf allBtnClick:isAll];
-        };
-        _bottomView.downloadBlock = ^{
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf downloadBtnClick];
-        };
+        _bottomView = [[UIView alloc] init];
+        _bottomView.backgroundColor = [UIColor whiteColor];
+        UIButton *listButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [listButton setImage:[UIImage imageNamed:@"detail_down"] forState:UIControlStateNormal];
+        [listButton setImage:[UIImage imageNamed:@"detail_up"] forState:UIControlStateSelected];
+        [listButton addTarget:self action:@selector(listButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:listButton];
+        [listButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(44, 44));
+            make.top.equalTo(_bottomView).mas_offset((115/ 2- 44)/ 2);
+            make.right.equalTo(_bottomView).mas_offset(-12);
+        }];
+        
     }
     return _bottomView;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)listButtonClick:(UIButton *)button {
+    button.selected = !button.selected;
+    if (button.selected) {
+        [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view.mas_left);
+            make.right.mas_equalTo(self.view.mas_right);
+            make.bottom.mas_equalTo(self.view);
+            make.height.top.equalTo(self.view);
+            [self.chapterView updatesCrollDirection:UICollectionViewScrollDirectionVertical];
+        }];
+    } else {
+        [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view.mas_left);
+            make.right.mas_equalTo(self.view.mas_right);
+            make.bottom.mas_equalTo(self.view);
+            make.height.mas_equalTo(115/2);
+        }];
+        [self.chapterView updatesCrollDirection:UICollectionViewScrollDirectionHorizontal];
+        
+    }
 }
 
+- (BookChapterIntervalView *)chapterView {
+    if (!_chapterView) {
+        _chapterView = [[BookChapterIntervalView alloc] init];
+        
+        __weak __typeof(self)weakSelf = self;
+        _chapterView.itemBlock = ^(NSInteger index) {
+            [weakSelf getChapterWithIndex:index];
+        };
+        
+    }
+    return _chapterView;
+}
 @end

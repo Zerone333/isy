@@ -11,6 +11,7 @@
 
 @interface BookChapterIntervalView ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UICollectionViewFlowLayout *layout;
 @end
 @implementation BookChapterIntervalView
 
@@ -36,6 +37,7 @@
         layout.minimumInteritemSpacing = 0;
         layout.sectionInset = UIEdgeInsetsZero;
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        self.layout = layout;
         self.collectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -43,6 +45,12 @@
         [_collectionView registerNib:[UINib nibWithNibName:@"BookChapterCountCell" bundle:nil] forCellWithReuseIdentifier:@"BookChapterCountCell"];
     }
     return _collectionView;
+}
+
+
+- (void)updatesCrollDirection:(UICollectionViewScrollDirection)type  {
+    self.layout.scrollDirection = type;
+    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -63,7 +71,9 @@
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(80, 36);
+    CGFloat p = CGRectGetWidth(collectionView.frame) /kScreenWidth;
+    CGFloat w =  floor((CGRectGetWidth(collectionView.frame)) /5.0);
+    return CGSizeMake(w, 36);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {

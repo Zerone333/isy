@@ -10,6 +10,9 @@
 
 @class BookDetailModel;
 
+/**
+ 详情节目
+ */
 @interface BookDetailSubDownLoadViewController : ZXBaseViewController
 @property (nonatomic, strong) BookDetailModel *detailModel;
 
