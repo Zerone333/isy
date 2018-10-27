@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FeedbackTypeView">
+            <rect key="frame" x="0.0" y="0.0" width="371" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OW9-Yu-rpL">
+                    <rect key="frame" x="0.0" y="0.0" width="371" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zDO-nL-6g1">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="b0j-f8-z93"/>
+                            </constraints>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="IiW-oi-30m"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqF-9l-VBZ">
+                            <rect key="frame" x="295" y="5" width="60" height="34"/>
+                            <color key="backgroundColor" red="0.55294117647058827" green="0.76862745098039209" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="TQ2-On-bec"/>
+                            </constraints>
+                            <state key="normal" title="确定">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="4.0"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="sureBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="G64-CU-GqX"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.77254901960784317" green="0.88627450980392153" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="zDO-nL-6g1" secondAttribute="bottom" id="1CG-vO-uNx"/>
+                        <constraint firstAttribute="trailing" secondItem="fqF-9l-VBZ" secondAttribute="trailing" constant="16" id="5sL-7V-cWz"/>
+                        <constraint firstItem="zDO-nL-6g1" firstAttribute="leading" secondItem="OW9-Yu-rpL" secondAttribute="leading" id="KbT-dx-i4p"/>
+                        <constraint firstAttribute="bottom" secondItem="fqF-9l-VBZ" secondAttribute="bottom" constant="5" id="LCt-A9-k2J"/>
+                        <constraint firstItem="zDO-nL-6g1" firstAttribute="top" secondItem="OW9-Yu-rpL" secondAttribute="top" id="Wo5-e7-Mdn"/>
+                        <constraint firstAttribute="height" constant="44" id="pbl-RY-RDq"/>
+                        <constraint firstItem="fqF-9l-VBZ" firstAttribute="top" secondItem="OW9-Yu-rpL" secondAttribute="top" constant="5" id="rox-Uz-S7H"/>
+                    </constraints>
+                </view>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMs-in-KSQ">
+                    <rect key="frame" x="0.0" y="44" width="371" height="156"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="rEe-cK-Gky"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="zpC-WW-lVw"/>
+                    </connections>
+                </pickerView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="AMs-in-KSQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6Kh-Gz-McT"/>
+                <constraint firstItem="OW9-Yu-rpL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="747-WF-l2a"/>
+                <constraint firstAttribute="trailing" secondItem="AMs-in-KSQ" secondAttribute="trailing" id="P6Q-or-icK"/>
+                <constraint firstAttribute="trailing" secondItem="OW9-Yu-rpL" secondAttribute="trailing" id="UHk-eg-H6G"/>
+                <constraint firstItem="AMs-in-KSQ" firstAttribute="top" secondItem="OW9-Yu-rpL" secondAttribute="bottom" id="eVe-Ie-X3I"/>
+                <constraint firstItem="OW9-Yu-rpL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="etd-Pl-ZmK"/>
+                <constraint firstAttribute="bottom" secondItem="AMs-in-KSQ" secondAttribute="bottom" id="gM1-EL-3hh"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="pickerView" destination="AMs-in-KSQ" id="Rwu-f3-DgA"/>
+            </connections>
+            <point key="canvasLocation" x="31.5" y="-207"/>
+        </view>
+    </objects>
+</document>

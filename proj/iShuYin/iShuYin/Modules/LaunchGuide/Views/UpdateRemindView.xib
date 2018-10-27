@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UpdateRemindView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7g-LY-mCn">
+                    <rect key="frame" x="50" y="127.5" width="220" height="165"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版本更新" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKc-u2-Mzi">
+                            <rect key="frame" x="79.5" y="16" width="61.5" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="bug修复" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADT-Cq-m1u" customClass="ZXInputView">
+                            <rect key="frame" x="17" y="60" width="186" height="44"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="9e2-wS-r2A"/>
+                            </constraints>
+                            <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZ6-ij-ByI">
+                            <rect key="frame" x="117.5" y="118" width="80.5" height="29"/>
+                            <color key="backgroundColor" red="0.55294117649999996" green="0.76862745099999996" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="立即更新">
+                                <color key="titleColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="4.0"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="confirmBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="8ex-ba-NAQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YF0-OD-vqS">
+                            <rect key="frame" x="22" y="118" width="80.5" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="以后再说">
+                                <color key="titleColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="4.0"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="1.0"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="cancelBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Whj-y9-IKK"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="BZ6-ij-ByI" firstAttribute="width" secondItem="YF0-OD-vqS" secondAttribute="width" id="2PR-tD-luT"/>
+                        <constraint firstItem="GKc-u2-Mzi" firstAttribute="centerX" secondItem="F7g-LY-mCn" secondAttribute="centerX" id="3uc-ky-rcY"/>
+                        <constraint firstAttribute="trailing" secondItem="ADT-Cq-m1u" secondAttribute="trailing" constant="17" id="4Ox-BG-g89"/>
+                        <constraint firstItem="YF0-OD-vqS" firstAttribute="leading" secondItem="F7g-LY-mCn" secondAttribute="leading" constant="22" id="78g-J3-jUh"/>
+                        <constraint firstAttribute="trailing" secondItem="BZ6-ij-ByI" secondAttribute="trailing" constant="22" id="9l6-ia-U40"/>
+                        <constraint firstItem="GKc-u2-Mzi" firstAttribute="top" secondItem="F7g-LY-mCn" secondAttribute="top" constant="16" id="FSk-hg-xKK"/>
+                        <constraint firstItem="ADT-Cq-m1u" firstAttribute="leading" secondItem="F7g-LY-mCn" secondAttribute="leading" constant="17" id="adq-Rm-8aM"/>
+                        <constraint firstAttribute="bottom" secondItem="BZ6-ij-ByI" secondAttribute="bottom" constant="18" id="kRe-we-fJV"/>
+                        <constraint firstItem="ADT-Cq-m1u" firstAttribute="top" secondItem="GKc-u2-Mzi" secondAttribute="bottom" constant="26" id="omi-nQ-mgB"/>
+                        <constraint firstItem="BZ6-ij-ByI" firstAttribute="leading" secondItem="YF0-OD-vqS" secondAttribute="trailing" constant="15" id="s3V-25-G0c"/>
+                        <constraint firstItem="BZ6-ij-ByI" firstAttribute="top" secondItem="ADT-Cq-m1u" secondAttribute="bottom" constant="14" id="sGn-pn-bWJ"/>
+                        <constraint firstItem="YF0-OD-vqS" firstAttribute="top" secondItem="ADT-Cq-m1u" secondAttribute="bottom" constant="14" id="zxg-gk-IE5"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="6.0"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="F7g-LY-mCn" secondAttribute="trailing" constant="50" id="SS4-yg-Vgb"/>
+                <constraint firstItem="F7g-LY-mCn" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-30" id="j8V-Gr-083"/>
+                <constraint firstItem="F7g-LY-mCn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="rUd-lR-9Y0"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancelBtn" destination="YF0-OD-vqS" id="IUN-Qx-jlY"/>
+                <outlet property="confirmBtn" destination="BZ6-ij-ByI" id="wCa-VL-mMW"/>
+                <outlet property="consH" destination="9e2-wS-r2A" id="dyh-TV-M3g"/>
+                <outlet property="contentView" destination="ADT-Cq-m1u" id="Hoj-TW-GE8"/>
+            </connections>
+        </view>
+    </objects>
+</document>

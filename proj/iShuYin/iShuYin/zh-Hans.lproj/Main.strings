@@ -1,0 +1,117 @@
+
+/* Class = "UIViewController"; title = "找回密码"; ObjectID = "2yj-ci-mZQ"; */
+"2yj-ci-mZQ.title" = "找回密码";
+
+/* Class = "UITextField"; placeholder = "请输入用户名"; ObjectID = "5WZ-k2-sh5"; */
+"5WZ-k2-sh5.placeholder" = "请输入用户名";
+
+/* Class = "UIButton"; normalTitle = "注册"; ObjectID = "7IY-n1-WyU"; */
+"7IY-n1-WyU.normalTitle" = "注册";
+
+/* Class = "UIViewController"; title = "添加留言"; ObjectID = "7Q8-oc-qfT"; */
+"7Q8-oc-qfT.title" = "添加留言";
+
+/* Class = "UILabel"; text = "收藏"; ObjectID = "Bwi-s1-kJ5"; */
+"Bwi-s1-kJ5.text" = "收藏";
+
+/* Class = "UILabel"; text = "评论"; ObjectID = "Fsz-Ce-DdP"; */
+"Fsz-Ce-DdP.text" = "评论";
+
+/* Class = "UILabel"; text = "类型"; ObjectID = "HeI-Bs-isu"; */
+"HeI-Bs-isu.text" = "类型";
+
+/* Class = "UILabel"; text = "睡眠"; ObjectID = "IST-m6-09U"; */
+"IST-m6-09U.text" = "睡眠";
+
+/* Class = "UITextField"; placeholder = "请设置登录密码"; ObjectID = "Ig4-9B-1v1"; */
+"Ig4-9B-1v1.placeholder" = "请设置登录密码";
+
+/* Class = "UIButton"; normalTitle = "《注册服务条款》"; ObjectID = "KKZ-Ry-pIt"; */
+"KKZ-Ry-pIt.normalTitle" = "《注册服务条款》";
+
+/* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "LPo-8h-i0e"; */
+"LPo-8h-i0e.placeholder" = "请输入密码";
+
+/* Class = "UIButton"; normalTitle = "记住密码"; ObjectID = "M36-J9-9I0"; */
+"M36-J9-9I0.normalTitle" = "记住密码";
+
+/* Class = "UIButton"; selectedTitle = "记住密码"; ObjectID = "M36-J9-9I0"; */
+"M36-J9-9I0.selectedTitle" = "记住密码";
+
+/* Class = "UITextField"; placeholder = "请输入邮箱"; ObjectID = "MWg-nr-vCv"; */
+"MWg-nr-vCv.placeholder" = "请输入邮箱";
+
+/* Class = "UILabel"; text = "chapter"; ObjectID = "O0f-fZ-nhA"; */
+"O0f-fZ-nhA.text" = "chapter";
+
+/* Class = "UITextField"; placeholder = "请输入邮箱"; ObjectID = "OPe-a1-QRv"; */
+"OPe-a1-QRv.placeholder" = "请输入邮箱";
+
+/* Class = "UITextField"; placeholder = "请确认登录密码"; ObjectID = "QWr-RW-cfN"; */
+"QWr-RW-cfN.placeholder" = "请确认登录密码";
+
+/* Class = "UITextField"; placeholder = "标题"; ObjectID = "RRz-3v-UtX"; */
+"RRz-3v-UtX.placeholder" = "标题";
+
+/* Class = "UITextField"; placeholder = "请输入账号"; ObjectID = "XK9-ri-3Ql"; */
+"XK9-ri-3Ql.placeholder" = "请输入账号";
+
+/* Class = "UIViewController"; title = "修改密码"; ObjectID = "YOd-3Y-qI9"; */
+"YOd-3Y-qI9.title" = "修改密码";
+
+/* Class = "UITextField"; placeholder = "请设置登录密码"; ObjectID = "YpH-6U-DcQ"; */
+"YpH-6U-DcQ.placeholder" = "请设置登录密码";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "Z1l-l1-91e"; */
+"Z1l-l1-91e.text" = "00:00";
+
+/* Class = "UIViewController"; title = "登录"; ObjectID = "bqV-Eb-SLc"; */
+"bqV-Eb-SLc.title" = "登录";
+
+/* Class = "UILabel"; text = "章节"; ObjectID = "cr2-LX-afh"; */
+"cr2-LX-afh.text" = "章节";
+
+/* Class = "UITextField"; placeholder = "请确认登录密码"; ObjectID = "dRi-NG-zza"; */
+"dRi-NG-zza.placeholder" = "请确认登录密码";
+
+/* Class = "UITextField"; placeholder = "请输入用户名"; ObjectID = "fBh-dh-Kkp"; */
+"fBh-dh-Kkp.placeholder" = "请输入用户名";
+
+/* Class = "UITextField"; placeholder = "请输入原密码"; ObjectID = "gL6-qS-fhf"; */
+"gL6-qS-fhf.placeholder" = "请输入原密码";
+
+/* Class = "UILabel"; text = "分享"; ObjectID = "gSX-uu-71S"; */
+"gSX-uu-71S.text" = "分享";
+
+/* Class = "UIButton"; normalTitle = "同意并接受"; ObjectID = "gYd-bK-WdL"; */
+"gYd-bK-WdL.normalTitle" = "同意并接受";
+
+/* Class = "UIViewController"; title = "播放"; ObjectID = "iQF-YQ-qeT"; */
+"iQF-YQ-qeT.title" = "播放";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "l0B-sZ-Bmw"; */
+"l0B-sZ-Bmw.normalTitle" = "登录";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "m1K-4I-JT8"; */
+"m1K-4I-JT8.text" = "00:00";
+
+/* Class = "UIButton"; normalTitle = "自动登录"; ObjectID = "r4I-PC-Nih"; */
+"r4I-PC-Nih.normalTitle" = "自动登录";
+
+/* Class = "UIButton"; selectedTitle = "自动登录"; ObjectID = "r4I-PC-Nih"; */
+"r4I-PC-Nih.selectedTitle" = "自动登录";
+
+/* Class = "UIButton"; normalTitle = "忘记密码？"; ObjectID = "t0q-Ye-XPk"; */
+"t0q-Ye-XPk.normalTitle" = "忘记密码？";
+
+/* Class = "UIButton"; normalTitle = "找回密码"; ObjectID = "uJd-Ur-KEK"; */
+"uJd-Ur-KEK.normalTitle" = "找回密码";
+
+/* Class = "UIButton"; normalTitle = "修改密码"; ObjectID = "v1n-Tu-Ih0"; */
+"v1n-Tu-Ih0.normalTitle" = "修改密码";
+
+/* Class = "UIButton"; normalTitle = "注册"; ObjectID = "vqi-fC-de6"; */
+"vqi-fC-de6.normalTitle" = "注册";
+
+/* Class = "UIViewController"; title = "注册"; ObjectID = "xfj-JB-t9N"; */
+"xfj-JB-t9N.title" = "注册";

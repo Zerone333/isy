@@ -1,0 +1,17 @@
+platform:ios,'8.0'
+target 'iShuYin' do
+pod 'AFNetworking', '~> 3.1.0'
+pod 'HMSegmentedControl', '~> 1.5.4'
+pod 'IQKeyboardManager', '~> 5.0.6'
+pod 'CYLTabBarController', '~> 1.14.2'
+pod 'Masonry', '~> 1.1.0'
+pod 'MBProgressHUD', '~> 1.0.0'
+pod 'MJRefresh', '~> 3.1.15'
+pod 'SDWebImage', '~> 4.2.2'
+pod 'YYModel', '~> 1.0.4'
+pod 'FreeStreamer', '~> 3.8.0'
+pod 'UMengUShare/UI','~> 6.4.6'
+pod 'UMengUShare/Social/QQ','~> 6.4.6'
+pod 'UMengUShare/Social/SMS','~> 6.4.6'
+pod 'UMengUShare/Social/WeChat','~> 6.4.6'
+end

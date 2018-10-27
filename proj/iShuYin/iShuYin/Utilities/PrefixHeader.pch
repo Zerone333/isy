@@ -1,0 +1,55 @@
+//
+//  PrefixHeader.pch
+//  iShuYin
+//
+//  Created by Apple on 2017/7/30.
+//  Copyright © 2017年 ishuyin. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+
+//Global
+#import "AppDelegate.h"
+
+//Utility
+#import "Const.h"
+#import "ZXTools.h"
+#import "ZXPopView.h"
+#import "ZXProgressHUD.h"
+#import "ZXCountDownButton.h"
+#import "ZXScrollView.h"
+#import "ZXNetworkManager.h"
+
+//Categories
+#import "UIView+ZXAdd.h"
+#import "UILabel+ZXAdd.h"
+#import "UIButton+ZXAdd.h"
+#import "UIImage+ZXAdd.h"
+#import "NSArray+ZXAdd.h"
+#import "NSString+ZXAdd.h"
+
+//ThirdParty
+#import "ZPTradeView.h"
+#import "SVProgressHUD.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApiInterface.h>
+#import "ChangyanSDK.h"
+
+//Pods
+#import <YYModel.h>
+#import <Masonry.h>
+#import <MJRefresh.h>
+
+#import <IQKeyboardManager.h>
+#import <HMSegmentedControl.h>
+#import <UIImageView+WebCache.h>
+
+#import <UMSocialCore/UMSocialCore.h>
+#import <UMSocialQQHandler.h>
+#import <UMSocialSmsHandler.h>
+#import <UMSocialWechatHandler.h>
+
+
+#endif /* PrefixHeader_pch */

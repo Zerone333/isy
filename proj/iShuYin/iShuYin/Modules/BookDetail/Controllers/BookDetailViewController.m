@@ -1,0 +1,365 @@
+//
+//  BookDetailViewController.m
+//  iShuYin
+//
+//  Created by Apple on 2017/8/14.
+//  Copyright © 2017年 ishuyin. All rights reserved.
+//
+
+#import "BookDetailViewController.h"
+#import "BookDetailModel.h"
+#import "BookDetailInfoView.h"
+#import "BookDetailDescOneView.h"
+#import "BookDetailDescTwoView.h"
+#import "BookDetailOthersView.h"
+#import "MoreListViewController.h"
+#import "BookChapterViewController.h"
+#import "BookDownloadViewController.h"
+#import "LoginViewController.h"
+#import "BookSubDetailViewController.h"
+#import "BookDetailSubDownLoadViewController.h"
+
+@interface BookDetailViewController ()
+@property (nonatomic, strong) BookDetailInfoView *infoView;//书本信息
+@property (nonatomic, strong) BookDetailDescOneView *descOneView;//内容简介
+@property (nonatomic, strong) BookDetailOthersView *authorView;//作者其他作品
+@property (nonatomic, strong) BookDetailOthersView *directorView;//播音其他作品
+@property (nonatomic, strong) BookDetailModel *detailModel;
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIView *scrollContentView;
+@property (nonatomic, strong) BookChapterViewController *vc1;
+@property (nonatomic, strong) BookSubDetailViewController *vc2;
+@end
+
+@implementation BookDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"详情"];
+    [self requestData];
+}
+
+- (void)requestData {
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery:QueryBookDetail];
+    NSDictionary *params = @{@"book_id":_bookid};
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    [manager GETWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            BookDetailModel *detailModel = [BookDetailModel yy_modelWithJSON:responseObject[@"data"]];
+            strongSelf.detailModel = detailModel;
+            strongSelf.vc1.detailModel = detailModel;
+            [strongSelf reloadUI];
+        }else {
+            [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+            [strongSelf.navigationController popViewControllerAnimated:YES];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+- (void)reloadUI {
+    [self initInfoView];
+    [self initDescView];
+    [self.view addSubview:self.scrollView];
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.descOneView.mas_bottom);
+        make.left.bottom.right.equalTo(self.view);
+    }];
+    
+    [self.scrollView addSubview:self.scrollContentView];
+    
+    [self.scrollContentView addSubview:self.vc1.view];
+    [self.scrollContentView addSubview:self.vc2.view];
+//    [contentView addSubview:self.vc3.view];
+//    [contentView addSubview:self.vc4.view];
+    
+    [self addChildViewController:self.vc1];
+    [self addChildViewController:self.vc2];
+    
+    [self.vc1.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.equalTo(self.scrollContentView);
+        make.width.mas_equalTo(kScreenWidth);
+    }];
+    
+    [self.vc2.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.equalTo(self.scrollContentView);
+        make.left.equalTo(self.vc1.view.mas_right);
+        make.width.mas_equalTo(kScreenWidth);
+    }];
+    
+//    [self initAuthorView];
+//    [self initDirectorView];
+//
+    [self.scrollContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.scrollView);
+        make.height.mas_equalTo(self.scrollView);
+        make.top.equalTo(self.scrollView);
+        make.right.equalTo(self.vc2.view);
+    }];
+
+}
+
+- (void)initInfoView {
+    _infoView = [BookDetailInfoView loadFromNib];
+    __weak __typeof(self)weakSelf = self;
+    _infoView.collectionBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf collectionBtnClick];
+    };
+    _infoView.shareBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf shareBtnClick];
+    };
+    [self.view addSubview:_infoView];
+    [_infoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.top.mas_equalTo(self.view.mas_top);
+        make.height.equalTo(@192);
+    }];
+    _infoView.model = _detailModel;
+}
+
+- (void)initDescView {
+    NSString *desc = [NSString isEmpty:_detailModel.desc]?@"暂无简介":_detailModel.desc;
+        _descOneView = [BookDetailDescOneView loadFromNib];
+        __weak __typeof(self)weakSelf = self;
+        _descOneView.chapterBlock = ^{
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf pushToBookChapterList];
+        };
+        _descOneView.downloadBlock = ^{
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf pushToBookChapterList];
+        };
+        [self.view addSubview:_descOneView];
+        [_descOneView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view.mas_left);
+            make.right.mas_equalTo(self.view.mas_right);
+            make.top.mas_equalTo(_infoView.mas_bottom).offset(8);
+            make.height.equalTo(@(40));
+        }];
+        _descOneView.desc = desc;
+}
+
+//推荐
+- (void)initAuthorView {
+    if (_detailModel.actor_books == nil || _detailModel.actor_books.count == 0) {
+        return;
+    }
+    CGFloat height = 10+29+54;
+    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
+    CGFloat item_h = item_w*105/80 + 30.5;
+    NSInteger row = _detailModel.actor_books.count/4 + (_detailModel.actor_books.count%4 != 0);
+    height += (item_h*row + (row-1)*20);
+
+    _authorView = [BookDetailOthersView loadFromNib];
+    [self.scrollContentView addSubview:_authorView];
+    [_authorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.vc1.view.mas_right);
+        make.width.mas_equalTo(kScreenWidth);
+        make.top.equalTo(self.scrollContentView);
+        make.height.equalTo(@(height));
+    }];
+    __weak __typeof(self)weakSelf = self;
+    _authorView.bookBlock = ^(NSString *book_id) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf pushToBookDetailWithIdentity:book_id];
+    };
+    _authorView.moreBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.actor];
+    };
+    _authorView.title = @"作者其他作品";
+    _authorView.dataArray = _detailModel.actor_books;
+}
+
+- (void)initDirectorView {
+    if (_detailModel.director_books == nil || _detailModel.director_books.count == 0) {
+        return;
+    }
+    CGFloat height = 10+29+54;
+    CGFloat item_w = (kScreenWidth-32-18) / 4.0;
+    CGFloat item_h = item_w*105/80 + 30.5;
+    NSInteger row = _detailModel.director_books.count/4 + (_detailModel.director_books.count%4 != 0);
+    height += (item_h*row + (row-1)*20);
+
+    _directorView = [BookDetailOthersView loadFromNib];
+    [self.scrollContentView addSubview:_directorView];
+    [_directorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_authorView.mas_bottom);
+        make.left.right.equalTo(_authorView);
+        make.height.equalTo(@(height));
+    }];
+    __weak __typeof(self)weakSelf = self;
+    _directorView.bookBlock = ^(NSString *book_id) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf pushToBookDetailWithIdentity:book_id];
+    };
+    _directorView.moreBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf moreBooksWithKeyword:strongSelf.detailModel.director];
+    };
+    _directorView.title = @"播音其他作品";
+    _directorView.dataArray = _detailModel.director_books;
+}
+
+
+#pragma mark - Action
+//详情
+- (void)pushToBookDetailWithIdentity:(NSString *)bookid {
+    if ([NSString isEmpty:bookid]) {
+        [SVProgressHUD showImage:nil status:@"书本数据有误"];
+        return;
+    }
+    BookDetailViewController *vc = [[BookDetailViewController alloc]init];
+    vc.bookid = bookid;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+//其他作品
+- (void)moreBooksWithKeyword:(NSString *)keyword {
+    MoreListViewController *vc = [[MoreListViewController alloc]init];
+    vc.keyword = keyword;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+//章节
+- (void)pushToBookChapterList {
+    BookChapterViewController *vc = [[BookChapterViewController alloc]init];
+    vc.detailModel = _detailModel;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+//下载
+- (void)pushToBookDownloadList {
+    BookDownloadViewController *vc = [[BookDownloadViewController alloc]init];
+    vc.detailModel = _detailModel;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+//收藏
+- (void)collectionBtnClick {
+    if (!APPDELEGATE.loginModel) {
+        LoginViewController *vc = SBVC(@"LoginVC");
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
+        return;
+    }
+    NSString *operate = _detailModel.is_collected.boolValue ? @"2" : @"1";
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery:QueryCollectionOperate];
+    NSDictionary *params = @{@"book_id":_detailModel.show_id,
+                             @"operate":operate,//1 收藏 2取消收藏
+                             };
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            if ([operate isEqualToString:@"1"]) {
+                strongSelf.detailModel.is_collected = @"1";
+            }else {
+                strongSelf.detailModel.is_collected = @"0";
+            }
+            strongSelf.infoView.model = strongSelf.detailModel;
+        }
+        [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+    }];
+}
+
+//分享
+- (void)shareBtnClick {
+    __weak __typeof(self)weakSelf = self;
+    ZXPopView *view = [[ZXPopView alloc]initWithShareBlock:^(NSInteger idx) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf shareToPlatform:idx];
+    }];
+    [view showInView:self.navigationController.view animated:ZXPopViewAnimatedSlip];
+}
+
+- (void)shareToPlatform:(NSInteger)idx {
+    NSString *title = self.detailModel.title;
+    NSString *content = self.detailModel.desc;
+    NSString *url = [NSString stringWithFormat:@"http://m.aikeu.com/show-%@.html",self.detailModel.show_id];
+    NSData *imgData = nil;
+    if ([self.detailModel.thumb containsString:kPrefixImageDefault]) {
+        imgData = [NSData dataWithContentsOfURL:[self.detailModel.thumb url]];
+    }else {
+        imgData = [NSData dataWithContentsOfURL:[[kPrefixImageDefault stringByAppendingString:self.detailModel.thumb] url]];
+    }
+    UMSocialPlatformType platformType = UMSocialPlatformType_UnKnown;//平台
+    UMSocialMessageObject *shareMessage = [UMSocialMessageObject messageObject];//创建分享消息对象
+    switch (idx) {
+        case 0:platformType = UMSocialPlatformType_WechatSession;break;//微信好友
+        case 1:platformType = UMSocialPlatformType_WechatTimeLine;break;//朋友圈
+        case 2:platformType = UMSocialPlatformType_Qzone;break;//空间
+        case 3:platformType = UMSocialPlatformType_QQ;break;//QQ
+        default:break;
+    }
+    if (platformType == UMSocialPlatformType_UnKnown) {
+        return;
+    }
+    //创建网页内容对象
+    UMShareWebpageObject *shareWebObject = [UMShareWebpageObject shareObjectWithTitle:title descr:content thumImage:imgData];
+    shareWebObject.webpageUrl = url;
+    shareMessage.shareObject = shareWebObject;
+    [[UMSocialManager defaultManager]shareToPlatform:platformType messageObject:shareMessage currentViewController:self completion:^(id result, NSError *error) {
+        if (error.localizedDescription) {
+            DLog(@"%@", error.localizedDescription);
+        }else {
+            DLog(@"%@", result);
+        }
+    }];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - get/set method
+
+- (UIScrollView *)scrollView {
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] init];
+    }
+    return _scrollView;
+}
+
+- (BookDetailSubDownLoadViewController *)vc1 {
+    if (!_vc1) {
+        _vc1 = [[BookDetailSubDownLoadViewController alloc] init];
+    }
+    return _vc1;
+}
+
+- (BookSubDetailViewController *)vc2 {
+    if (!_vc2) {
+        _vc2 = [[BookSubDetailViewController alloc] init];
+    }
+    return _vc2;
+}
+- (UIView *)scrollContentView {
+    if (!_scrollContentView) {
+        _scrollContentView = [[UIView alloc] init];
+    }
+    return _scrollContentView;
+}
+@end

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BookDetailOthersView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlO-6T-UOu">
+                    <rect key="frame" x="16" y="12" width="24.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OHz-a1-fJr">
+                    <rect key="frame" x="0.0" y="246" width="375" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="9DR-g7-76G"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="-30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="更多" image="home_more">
+                        <color key="titleColor" red="0.55294117649999996" green="0.76862745099999996" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="moreBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="H8T-en-Nl9"/>
+                    </connections>
+                </button>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Mgz-VF-OGd">
+                    <rect key="frame" x="0.0" y="29" width="375" height="217"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="6" id="HP9-jE-myq">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="16" minY="10" maxX="16" maxY="22"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="RN9-ey-dNi"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="OFe-p5-Urq"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="OHz-a1-fJr" firstAttribute="top" secondItem="Mgz-VF-OGd" secondAttribute="bottom" id="1T0-xd-J8X"/>
+                <constraint firstItem="OHz-a1-fJr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2nn-IP-XJ3"/>
+                <constraint firstAttribute="trailing" secondItem="Mgz-VF-OGd" secondAttribute="trailing" id="9A5-Od-EWP"/>
+                <constraint firstAttribute="trailing" secondItem="OHz-a1-fJr" secondAttribute="trailing" id="Alv-KT-D1W"/>
+                <constraint firstItem="Mgz-VF-OGd" firstAttribute="top" secondItem="hlO-6T-UOu" secondAttribute="bottom" id="CTy-ug-efM"/>
+                <constraint firstAttribute="bottom" secondItem="OHz-a1-fJr" secondAttribute="bottom" id="Fnl-jL-B04"/>
+                <constraint firstItem="hlO-6T-UOu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="ZYJ-1P-QwZ"/>
+                <constraint firstItem="Mgz-VF-OGd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="d35-wC-jh4"/>
+                <constraint firstItem="hlO-6T-UOu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="fAq-nQ-lAa"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="Mgz-VF-OGd" id="nkh-yD-KcI"/>
+                <outlet property="titleLabel" destination="hlO-6T-UOu" id="B5z-cv-SRS"/>
+            </connections>
+            <point key="canvasLocation" x="37.5" y="54"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="home_more" width="14" height="14"/>
+    </resources>
+</document>
