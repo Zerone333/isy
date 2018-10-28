@@ -1,19 +1,17 @@
 //
-//  CommentTableViewCell.m
+//  ISYBookListTableViewCell.m
 //  iShuYin
 //
 //  Created by 李艺真 on 2018/10/14.
 //  Copyright © 2018年 ishuyin. All rights reserved.
 //
 
-#import "CommentTableViewCell.h"
+#import "ISYBookListTableViewCell.h"
 
-@interface CommentTableViewCell ()
-@property (strong, nonatomic) UIImageView *thumImageView;
-@property (strong, nonatomic) UILabel *nameLabel;
+@interface ISYBookListTableViewCell ()
 @end
 
-@implementation CommentTableViewCell
+@implementation ISYBookListTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -38,7 +36,7 @@
 }
 
 + (NSString *)cellID {
-    return @"CommentTableViewCellID";
+    return @"ISYBookListTableViewCellID";
 }
 #pragma mark - private
 
@@ -73,6 +71,7 @@
 - (UIImageView *)thumImageView {
     if (!_thumImageView) {
         _thumImageView = [[UIImageView alloc] init];
+        _thumImageView.image = [UIImage imageNamed:@"ph_image"];
     }
     return _thumImageView;
 }
@@ -80,6 +79,7 @@
 - (UILabel *)nameLabel {
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
+        _nameLabel.text = @"name";
     }
     return _nameLabel;
 }

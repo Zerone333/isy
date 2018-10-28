@@ -154,6 +154,17 @@
 		18CB1A351F5F8FB3006F03B4 /* MineFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB1A341F5F8FB3006F03B4 /* MineFooter.m */; };
 		18CB1A371F5F8FC8006F03B4 /* MineFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CB1A361F5F8FC8006F03B4 /* MineFooter.xib */; };
 		18CB1A3A1F600194006F03B4 /* BookDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB1A391F600194006F03B4 /* BookDownloadViewController.m */; };
+		6D3C8E5B21858C3E00DB3C15 /* ISYDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E5A21858C3E00DB3C15 /* ISYDownLoadViewController.m */; };
+		6D3C8E622185938900DB3C15 /* ISYBookListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E612185938800DB3C15 /* ISYBookListTableViewCell.m */; };
+		6D3C8E652185943A00DB3C15 /* ISYDownLoadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E642185943A00DB3C15 /* ISYDownLoadTableViewCell.m */; };
+		6D3C8E682185977C00DB3C15 /* ISYDownLoadListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E672185977C00DB3C15 /* ISYDownLoadListViewController.m */; };
+		6D3C8E762185A6CB00DB3C15 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E6B2185A6CB00DB3C15 /* FMDatabase.m */; };
+		6D3C8E772185A6CB00DB3C15 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E6D2185A6CB00DB3C15 /* FMDatabaseAdditions.m */; };
+		6D3C8E782185A6CB00DB3C15 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E6F2185A6CB00DB3C15 /* FMDatabasePool.m */; };
+		6D3C8E792185A6CB00DB3C15 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E712185A6CB00DB3C15 /* FMDatabaseQueue.m */; };
+		6D3C8E7A2185A6CB00DB3C15 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E742185A6CB00DB3C15 /* FMResultSet.m */; };
+		6D3C8E7B2185A6CB00DB3C15 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D3C8E752185A6CB00DB3C15 /* Info.plist */; };
+		6D3C8E7F2185A73100DB3C15 /* ISYDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E7E2185A73100DB3C15 /* ISYDBManager.m */; };
 		6DF039D82184370800EFDB38 /* ISYBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */; };
 		6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */; };
 		6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */; };
@@ -166,7 +177,6 @@
 		9B72DFA32174D9C600DC99B5 /* CarHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B72DFA22174D9C600DC99B5 /* CarHomeViewController.m */; };
 		9B738D61217344CA008D549E /* HomeFoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B738D60217344CA008D549E /* HomeFoundViewController.m */; };
 		9B738D86217366F8008D549E /* HomeFoundItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B738D85217366F8008D549E /* HomeFoundItemModel.m */; };
-		9B738D89217397BF008D549E /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B738D88217397BF008D549E /* CommentTableViewCell.m */; };
 		9B9AAFB1217C1EF30080A662 /* BookSubDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB0217C1EF30080A662 /* BookSubDetailViewController.m */; };
 		9B9AAFB4217C1FE80080A662 /* BookDetailSubDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB3217C1FE80080A662 /* BookDetailSubDownLoadViewController.m */; };
 		9B9AAFB7217C24F80080A662 /* BookChapterIntervalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */; };
@@ -439,6 +449,28 @@
 		18CB1A391F600194006F03B4 /* BookDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDownloadViewController.m; sourceTree = "<group>"; };
 		5DD0F7E5297EE226F110F7B7 /* Pods-iShuYin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.release.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.release.xcconfig"; sourceTree = "<group>"; };
 		6777BA96BC9336E3F606CF0C /* libPods-iShuYin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iShuYin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D3C8E5921858C3E00DB3C15 /* ISYDownLoadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownLoadViewController.h; sourceTree = "<group>"; };
+		6D3C8E5A21858C3E00DB3C15 /* ISYDownLoadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownLoadViewController.m; sourceTree = "<group>"; };
+		6D3C8E602185938800DB3C15 /* ISYBookListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYBookListTableViewCell.h; sourceTree = "<group>"; };
+		6D3C8E612185938800DB3C15 /* ISYBookListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISYBookListTableViewCell.m; sourceTree = "<group>"; };
+		6D3C8E632185943A00DB3C15 /* ISYDownLoadTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownLoadTableViewCell.h; sourceTree = "<group>"; };
+		6D3C8E642185943A00DB3C15 /* ISYDownLoadTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownLoadTableViewCell.m; sourceTree = "<group>"; };
+		6D3C8E662185977C00DB3C15 /* ISYDownLoadListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownLoadListViewController.h; sourceTree = "<group>"; };
+		6D3C8E672185977C00DB3C15 /* ISYDownLoadListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownLoadListViewController.m; sourceTree = "<group>"; };
+		6D3C8E6A2185A6CB00DB3C15 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		6D3C8E6B2185A6CB00DB3C15 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		6D3C8E6C2185A6CB00DB3C15 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		6D3C8E6D2185A6CB00DB3C15 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		6D3C8E6E2185A6CB00DB3C15 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		6D3C8E6F2185A6CB00DB3C15 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		6D3C8E702185A6CB00DB3C15 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		6D3C8E712185A6CB00DB3C15 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		6D3C8E722185A6CB00DB3C15 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		6D3C8E732185A6CB00DB3C15 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		6D3C8E742185A6CB00DB3C15 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		6D3C8E752185A6CB00DB3C15 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D3C8E7D2185A73100DB3C15 /* ISYDBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDBManager.h; sourceTree = "<group>"; };
+		6D3C8E7E2185A73100DB3C15 /* ISYDBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDBManager.m; sourceTree = "<group>"; };
 		6D699B56B1F74F164D3CB22B /* Pods-iShuYin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.debug.xcconfig"; sourceTree = "<group>"; };
 		6DF039D62184370800EFDB38 /* ISYBookTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookTableViewCell.h; sourceTree = "<group>"; };
 		6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookTableViewCell.m; sourceTree = "<group>"; };
@@ -462,8 +494,6 @@
 		9B738D60217344CA008D549E /* HomeFoundViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeFoundViewController.m; sourceTree = "<group>"; };
 		9B738D84217366F8008D549E /* HomeFoundItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeFoundItemModel.h; sourceTree = "<group>"; };
 		9B738D85217366F8008D549E /* HomeFoundItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeFoundItemModel.m; sourceTree = "<group>"; };
-		9B738D87217397BF008D549E /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
-		9B738D88217397BF008D549E /* CommentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		9B9AAFAF217C1EF30080A662 /* BookSubDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookSubDetailViewController.h; sourceTree = "<group>"; };
 		9B9AAFB0217C1EF30080A662 /* BookSubDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookSubDetailViewController.m; sourceTree = "<group>"; };
 		9B9AAFB2217C1FE80080A662 /* BookDetailSubDownLoadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookDetailSubDownLoadViewController.h; sourceTree = "<group>"; };
@@ -574,6 +604,7 @@
 		184DAE0B1F2E24F600EAEA58 /* iShuYin */ = {
 			isa = PBXGroup;
 			children = (
+				6D3C8E7C2185A71100DB3C15 /* DB */,
 				184DAE231F2E255300EAEA58 /* Application */,
 				184DAE271F2E25A700EAEA58 /* ThirdParty */,
 				184DAE281F2E25B800EAEA58 /* Categories */,
@@ -615,6 +646,7 @@
 		184DAE271F2E25A700EAEA58 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				6D3C8E692185A6CB00DB3C15 /* fmdb */,
 				188471D91FEA49A90018CC3B /* BaiduMTJ */,
 				189C45F11FE7D45B004B7666 /* MCDownloader */,
 				1880EFD21F9D07A5006BADCB /* ChangyanSDK */,
@@ -685,6 +717,7 @@
 		184DAE2A1F2E25D900EAEA58 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6D3C8E5821858C2700DB3C15 /* Download */,
 				1880EFDF1F9D13A5006BADCB /* Comment */,
 				184DAE791F2E393D00EAEA58 /* LaunchGuide */,
 				184DAE931F2E3BA000EAEA58 /* LoginRegister */,
@@ -1077,8 +1110,6 @@
 				1880EFEE1F9D3E48006BADCB /* CommentListHeader.h */,
 				1880EFEF1F9D3E48006BADCB /* CommentListHeader.m */,
 				1880EFF11F9D3E4E006BADCB /* CommentListHeader.xib */,
-				9B738D87217397BF008D549E /* CommentTableViewCell.h */,
-				9B738D88217397BF008D549E /* CommentTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1179,9 +1210,60 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		6D3C8E5821858C2700DB3C15 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				6D3C8E5C2185929300DB3C15 /* View */,
+				6D3C8E5921858C3E00DB3C15 /* ISYDownLoadViewController.h */,
+				6D3C8E5A21858C3E00DB3C15 /* ISYDownLoadViewController.m */,
+				6D3C8E662185977C00DB3C15 /* ISYDownLoadListViewController.h */,
+				6D3C8E672185977C00DB3C15 /* ISYDownLoadListViewController.m */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
+		6D3C8E5C2185929300DB3C15 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D3C8E632185943A00DB3C15 /* ISYDownLoadTableViewCell.h */,
+				6D3C8E642185943A00DB3C15 /* ISYDownLoadTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D3C8E692185A6CB00DB3C15 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				6D3C8E6A2185A6CB00DB3C15 /* FMDatabase.h */,
+				6D3C8E6B2185A6CB00DB3C15 /* FMDatabase.m */,
+				6D3C8E6C2185A6CB00DB3C15 /* FMDatabaseAdditions.h */,
+				6D3C8E6D2185A6CB00DB3C15 /* FMDatabaseAdditions.m */,
+				6D3C8E6E2185A6CB00DB3C15 /* FMDatabasePool.h */,
+				6D3C8E6F2185A6CB00DB3C15 /* FMDatabasePool.m */,
+				6D3C8E702185A6CB00DB3C15 /* FMDatabaseQueue.h */,
+				6D3C8E712185A6CB00DB3C15 /* FMDatabaseQueue.m */,
+				6D3C8E722185A6CB00DB3C15 /* FMDB.h */,
+				6D3C8E732185A6CB00DB3C15 /* FMResultSet.h */,
+				6D3C8E742185A6CB00DB3C15 /* FMResultSet.m */,
+				6D3C8E752185A6CB00DB3C15 /* Info.plist */,
+			);
+			path = fmdb;
+			sourceTree = "<group>";
+		};
+		6D3C8E7C2185A71100DB3C15 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				6D3C8E7D2185A73100DB3C15 /* ISYDBManager.h */,
+				6D3C8E7E2185A73100DB3C15 /* ISYDBManager.m */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
 		6DF039D5218436D000EFDB38 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				6D3C8E602185938800DB3C15 /* ISYBookListTableViewCell.h */,
+				6D3C8E612185938800DB3C15 /* ISYBookListTableViewCell.m */,
 				6DF039D62184370800EFDB38 /* ISYBookTableViewCell.h */,
 				6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */,
 				6DF039D92184427900EFDB38 /* ISYBookHeaderFooterView.h */,
@@ -1362,6 +1444,7 @@
 				184841751F8230A200AF809B /* SubRecentCell.xib in Resources */,
 				183CC4161FAC48F500B356B4 /* SubDownloadCell.xib in Resources */,
 				185638DC1F4B725200DD0184 /* BookPlayControlView.xib in Resources */,
+				6D3C8E7B2185A6CB00DB3C15 /* Info.plist in Resources */,
 				1846234720283F9C00AE9A87 /* ZXEmptyView.xib in Resources */,
 				18CB1A371F5F8FC8006F03B4 /* MineFooter.xib in Resources */,
 				1848417A1F836B0800AF809B /* BookDownloadCell.xib in Resources */,
@@ -1455,7 +1538,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				18386D061F375BA400CBF32B /* HomeModel.m in Sources */,
+				6D3C8E622185938900DB3C15 /* ISYBookListTableViewCell.m in Sources */,
 				18A4A7C01F3B81B900A02BE8 /* MoreListViewController.m in Sources */,
+				6D3C8E762185A6CB00DB3C15 /* FMDatabase.m in Sources */,
 				9B5CDC5C2174DD6800EA5D60 /* CarMoreViewController.m in Sources */,
 				18386D0A1F37654600CBF32B /* HomeCenterCell.m in Sources */,
 				9B9AAFB7217C24F80080A662 /* BookChapterIntervalView.m in Sources */,
@@ -1465,6 +1550,7 @@
 				184DAEA81F2E3E3400EAEA58 /* LoginViewController.m in Sources */,
 				184DAE4E1F2E2D7E00EAEA58 /* ZXTools.m in Sources */,
 				184841971F8BFAB200AF809B /* RecentPlayCell.m in Sources */,
+				6D3C8E5B21858C3E00DB3C15 /* ISYDownLoadViewController.m in Sources */,
 				18A4A7A01F38CCAE00A02BE8 /* FinishListViewController.m in Sources */,
 				184841791F836B0800AF809B /* BookDownloadCell.m in Sources */,
 				189C45F81FE7D45B004B7666 /* MCDownloader.m in Sources */,
@@ -1472,6 +1558,7 @@
 				184DAE6C1F2E322200EAEA58 /* ZXBaseViewController.m in Sources */,
 				184DAE261F2E258200EAEA58 /* AppDelegate.m in Sources */,
 				184DAE851F2E396B00EAEA58 /* LaunchViewController.m in Sources */,
+				6D3C8E682185977C00DB3C15 /* ISYDownLoadListViewController.m in Sources */,
 				9B738D61217344CA008D549E /* HomeFoundViewController.m in Sources */,
 				184DAE6F1F2E324200EAEA58 /* ZXScrollView.m in Sources */,
 				184DAE571F2E2DC000EAEA58 /* ZXProgressHUD.m in Sources */,
@@ -1514,6 +1601,7 @@
 				185639211F4C5CAF00DD0184 /* ZXStarRatingView.m in Sources */,
 				184DAEB81F2E3EA300EAEA58 /* CategoryViewController.m in Sources */,
 				185638D51F4B6CF800DD0184 /* BookPlayButtonView.m in Sources */,
+				6D3C8E7F2185A73100DB3C15 /* ISYDBManager.m in Sources */,
 				18103F351F71717F00E56116 /* FeedbackModel.m in Sources */,
 				18CB1A3A1F600194006F03B4 /* BookDownloadViewController.m in Sources */,
 				188471F61FEBB8650018CC3B /* SleepCell.m in Sources */,
@@ -1534,19 +1622,21 @@
 				184DAE781F2E384500EAEA58 /* NSArray+ZXAdd.m in Sources */,
 				18103F451F717C6200E56116 /* FeedbackDetailViewController.m in Sources */,
 				184DAEC21F2E3EFF00EAEA58 /* SubscribeViewController.m in Sources */,
+				6D3C8E7A2185A6CB00DB3C15 /* FMResultSet.m in Sources */,
 				C3B2A9F42125DEBD006B9589 /* UpdateRemindView.m in Sources */,
 				188471F91FEBB8650018CC3B /* SleepView.m in Sources */,
+				6D3C8E772185A6CB00DB3C15 /* FMDatabaseAdditions.m in Sources */,
 				183396951F4226BD00491F22 /* BookDetailDescTwoView.m in Sources */,
 				18386CEA1F374D5E00CBF32B /* HomeViewController.m in Sources */,
 				18103F391F71721C00E56116 /* FeedbackCell.m in Sources */,
 				184DAE821F2E395D00EAEA58 /* GuideViewController.m in Sources */,
 				184841741F8230A200AF809B /* SubRecentCell.m in Sources */,
+				6D3C8E652185943A00DB3C15 /* ISYDownLoadTableViewCell.m in Sources */,
 				1880EFF01F9D3E48006BADCB /* CommentListHeader.m in Sources */,
 				18386CF31F374FD900CBF32B /* FinishManageViewController.m in Sources */,
 				184DAE991F2E3C4B00EAEA58 /* ZXMainViewController.m in Sources */,
 				9B9AAFB4217C1FE80080A662 /* BookDetailSubDownLoadViewController.m in Sources */,
 				184DAE511F2E2D9600EAEA58 /* ZXNetworkManager.m in Sources */,
-				9B738D89217397BF008D549E /* CommentTableViewCell.m in Sources */,
 				184DAE5D1F2E2EDC00EAEA58 /* UIButton+ZXAdd.m in Sources */,
 				183CC4041FA86E2600B356B4 /* ZXPlayButton.m in Sources */,
 				18A4A7D91F40C5D800A02BE8 /* BookDetailInfoView.m in Sources */,
@@ -1558,6 +1648,7 @@
 				188471EF1FEBB82D0018CC3B /* SleepModel.m in Sources */,
 				184DAEAB1F2E3E4300EAEA58 /* RegisterViewController.m in Sources */,
 				184DAE381F2E29CD00EAEA58 /* SVProgressAnimatedView.m in Sources */,
+				6D3C8E782185A6CB00DB3C15 /* FMDatabasePool.m in Sources */,
 				1819F0A71F9679F80040CB58 /* SettingViewController.m in Sources */,
 				C3B2A9F92125DEFD006B9589 /* ZXInputView.m in Sources */,
 				18A4A7B21F3B725300A02BE8 /* CategoryCell.m in Sources */,
@@ -1576,6 +1667,7 @@
 				1880EFE51F9D13B3006BADCB /* CommentListViewController.m in Sources */,
 				18103FAD1F73EA0D00E56116 /* BookChapterCountCell.m in Sources */,
 				9B9AAFB1217C1EF30080A662 /* BookSubDetailViewController.m in Sources */,
+				6D3C8E792185A6CB00DB3C15 /* FMDatabaseQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

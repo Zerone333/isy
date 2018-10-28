@@ -12,6 +12,7 @@
 #import "BaiduMobStat.h"
 #import "MCDownloader.h"
 #import <AVFoundation/AVFoundation.h>
+#import "ISYDBManager.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) NSTimer *sleepTimer;
@@ -97,6 +98,9 @@
     BaiduMobStat *mobStat = [BaiduMobStat defaultStat];
     mobStat.enableGps = NO;
     [mobStat startWithAppId:kBaiduMTJAppKey];
+    
+    // 数据库
+    [ISYDBManager shareInstance];
     
     return YES;
 }

@@ -9,7 +9,7 @@
 #import "ISYBookTableViewCell.h"
 #import "HomeCenterCell.h"
 #import "HomeBookModel.h"
-#import "CommentTableViewCell.h"
+#import "ISYBookListTableViewCell.h"
 
 @interface ISYBookTableViewCell ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) UICollectionView *collectionView;

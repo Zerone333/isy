@@ -10,7 +10,7 @@
 #import "HomeLeftCell.h"//靠左对齐
 #import "HomeCenterCell.h"//居中对齐
 #import "HomeBookModel.h"
-#import "CommentTableViewCell.h"
+#import "ISYBookListTableViewCell.h"
 
 @interface HomeTableCell ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -37,7 +37,7 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_collectionView);
         make.left.right.equalTo(self.contentView);
-        make.height.mas_equalTo([CommentTableViewCell cellHeight] * 3);
+        make.height.mas_equalTo([ISYBookListTableViewCell cellHeight] * 3);
     }];
     
 }
@@ -91,7 +91,7 @@
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(headView.mas_bottom);
             make.left.right.equalTo(self.contentView);
-            make.height.mas_equalTo([CommentTableViewCell cellHeight] * 3);
+            make.height.mas_equalTo([ISYBookListTableViewCell cellHeight] * 3);
         }];
 //
         //bottmom
@@ -126,7 +126,7 @@
             CGFloat itemH = itemW*kCoverProportion + 30.5;
         return itemH + 10+28+54;
     } else if (cellType == HomeTableCellViewType_Table) {
-        return [CommentTableViewCell cellHeight] * 3 + 10+28+54;
+        return [ISYBookListTableViewCell cellHeight] * 3 + 10+28+54;
     }
     return 0;
 }
@@ -259,9 +259,9 @@
     return self.dataArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CommentTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CommentTableViewCell cellID]];
+    ISYBookListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[ISYBookListTableViewCell cellID]];
     if (cell == nil) {
-        cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:[CommentTableViewCell cellID]];
+        cell = [[ISYBookListTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:[ISYBookListTableViewCell cellID]];
     }
     
     cell.model = self.dataArray[indexPath.item];
@@ -269,7 +269,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [CommentTableViewCell cellHeight];
+    return [ISYBookListTableViewCell cellHeight];
 }
 
 #pragma mark - Action

@@ -22,6 +22,7 @@
 #import "HomeHotViewController.h"
 #import "CarHomeViewController.h"
 #import "HistoryViewController.h"
+#import "ISYDownLoadViewController.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -355,7 +356,8 @@
 
 - (void)leftButtonClick {
     //历史记录
-    HistoryViewController *vc = [[HistoryViewController alloc] init];
+//    HistoryViewController *vc = [[HistoryViewController alloc] init];
+    ISYDownLoadViewController *vc = [[ISYDownLoadViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

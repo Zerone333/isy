@@ -18,6 +18,7 @@
 #import "LoginViewController.h"
 #import "BookSubDetailViewController.h"
 #import "BookDetailSubDownLoadViewController.h"
+#import "ISYDBManager.h"
 
 @interface BookDetailViewController ()
 @property (nonatomic, strong) BookDetailInfoView *infoView;//书本信息
@@ -64,6 +65,9 @@
             strongSelf.vc1.detailModel = detailModel;
             strongSelf.vc2.detailModel = detailModel;
             [strongSelf reloadUI];
+            
+            //本地缓存
+            [[ISYDBManager shareInstance] insertBook:detailModel];
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
             [strongSelf.navigationController popViewControllerAnimated:YES];

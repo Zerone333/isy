@@ -35,7 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     [MCDownloader sharedDownloader].downloadTimeout = 60;
     [MCDownloader sharedDownloader].maxConcurrentDownloads = 1;
     [self configUI];
@@ -129,13 +128,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return kScreenWidth*94.0/750.f;
+    return 0.001;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIImageView *imgView = [[UIImageView alloc]init];
-    imgView.image = [UIImage imageNamed:@"download_ad"];
-    return imgView;
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -176,47 +173,16 @@
     [_tableView reloadData];
 }
 
-//下载
-- (void)downloadBtnClick {
-    if (_selectArray.count == 0) {
-        [SVProgressHUD showImage:nil status:@"请选择要下载的章节"];
-        return;
-    }
-    for (BookChapterModel *m in _selectArray) {
-        NSString *urlString = [m.l_url decodePlayURL];
-        
-        MCDownloadReceipt *receipt = [[MCDownloader sharedDownloader] downloadReceiptForURLString:urlString];
-        if (receipt.progress.fractionCompleted == 1.0) {
-            continue;
-        }else {
-            receipt.state = MCDownloadStateNone;
-            receipt.customFilePathBlock = ^NSString * _Nullable(MCDownloadReceipt * _Nullable receipt) {
-                NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *bookPath = [NSString stringWithFormat:@"%@/downloads/%@_%@/",document,_detailModel.show_id,_detailModel.title];
-                return [bookPath stringByAppendingString:[NSString stringWithFormat:@"%@_%@",m.l_id,urlString.lastPathComponent]];
-            };
-            
-        }
-        [[MCDownloader sharedDownloader] downloadDataWithURL:[urlString url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-            
-        } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
-            
-        }];
-        NSInteger row = [_dataArray indexOfObject:m];
-        NSIndexPath *ip = [NSIndexPath indexPathForRow:row inSection:0];
-        [_tableView beginUpdates];
-        [_tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
-        [_tableView endUpdates];
-    }
-}
 
 #pragma mark - Getter
 
 - (BookChapterIntervalView *)topView {
     if (!_topView) {
         _topView = [[BookChapterIntervalView alloc] init];
-        
-       
+        __weak __typeof(self)weakSelf = self;
+        _topView.itemBlock = ^(NSInteger index) {
+            [weakSelf getChapterWithIndex:index];
+        };
     }
     return _topView;
 }
@@ -225,19 +191,57 @@
     if (!_selectAllButton) {
         _selectAllButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_selectAllButton setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
-        [_selectAllButton setTitle:@"全选本页" forState:UIControlStateNormal];
+        [_selectAllButton setTitle:@" 全选本页" forState:UIControlStateNormal];
         [_selectAllButton setImage:[UIImage imageNamed:@"download_choose_nor"] forState:UIControlStateNormal];
-        [_selectAllButton setImage:[UIImage imageNamed:@"download_choose_sel"] forState:UIControlStateNormal];
+        [_selectAllButton setImage:[UIImage imageNamed:@"download_choose_sel"] forState:UIControlStateSelected];
         [_selectAllButton addTarget:self action:@selector(selectAllButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _selectAllButton;
 }
 
 - (void)downLoadButtonClick:(UIButton *)button {
+        if (_selectArray.count == 0) {
+            [SVProgressHUD showImage:nil status:@"请选择要下载的章节"];
+            return;
+        }
+        for (BookChapterModel *m in _selectArray) {
+            NSString *urlString = [m.l_url decodePlayURL];
+            
+            MCDownloadReceipt *receipt = [[MCDownloader sharedDownloader] downloadReceiptForURLString:urlString];
+            if (receipt.progress.fractionCompleted == 1.0) {
+                continue;
+            }else {
+                receipt.state = MCDownloadStateNone;
+                receipt.customFilePathBlock = ^NSString * _Nullable(MCDownloadReceipt * _Nullable receipt) {
+                    NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *bookPath = [NSString stringWithFormat:@"%@/downloads/%@_%@/",document,_detailModel.show_id,_detailModel.title];
+                    return [bookPath stringByAppendingString:[NSString stringWithFormat:@"%@_%@",m.l_id,urlString.lastPathComponent]];
+                };
+                
+            }
+            [[MCDownloader sharedDownloader] downloadDataWithURL:[urlString url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+                
+            } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+                
+            }];
+            NSInteger row = [_dataArray indexOfObject:m];
+            NSIndexPath *ip = [NSIndexPath indexPathForRow:row inSection:0];
+            [_tableView beginUpdates];
+            [_tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+            [_tableView endUpdates];
+        }
 }
 
 - (void)selectAllButtonClick:(UIButton *)button {
     button.selected = !button.selected;
+    [_selectArray removeAllObjects];
+    for (BookChapterModel *m in _dataArray) {
+        m.isSelected = self.selectAllButton.selected;
+    }
+    if (self.selectAllButton.selected) {
+        [_selectArray addObjectsFromArray:_dataArray];
+    }
+  
 }
 
 - (UIView *)bottomView {

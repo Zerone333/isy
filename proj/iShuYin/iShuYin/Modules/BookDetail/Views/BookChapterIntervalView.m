@@ -12,6 +12,7 @@
 @interface BookChapterIntervalView ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UICollectionViewFlowLayout *layout;
+@property (assign, nonatomic) NSInteger currentSelectIndex;
 @end
 @implementation BookChapterIntervalView
 
@@ -22,6 +23,7 @@
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
+        self.currentSelectIndex = 0;
     }
     return self;
 }
@@ -65,6 +67,7 @@
     if (count > self.totalCount) {
         count = indexPath.item * 50 + self.totalCount%50;
     }
+    cell.selected = self.currentSelectIndex == indexPath.item;
     cell.text = [NSString stringWithFormat:@"%li-%li",indexPath.item*50+1,count];
     return cell;
 }
@@ -89,6 +92,10 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSInteger tempIndex = self.currentSelectIndex;
+    self.currentSelectIndex = indexPath.item;
     !_itemBlock?:_itemBlock(indexPath.item);
+    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:tempIndex inSection:0]]];
 }
 @end

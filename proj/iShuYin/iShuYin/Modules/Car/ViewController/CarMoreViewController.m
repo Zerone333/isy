@@ -9,7 +9,7 @@
 #import "CarMoreViewController.h"
 #import "HomeModel.h"
 #import "HomeFoundItemModel.h"
-#import "CommentTableViewCell.h"
+#import "ISYBookListTableViewCell.h"
 
 @interface CarMoreViewController ()
 @property (nonatomic, strong) UITableView *tableView;
@@ -84,14 +84,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HomeFoundItemModel *model = self.dataSource[indexPath.section];
-    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[CommentTableViewCell cellID]];
+    ISYBookListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListTableViewCell cellID]];
     cell.model = model.dataSource[indexPath.row];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [CommentTableViewCell cellHeight];
+    return [ISYBookListTableViewCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -121,7 +121,7 @@
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
-        [_tableView registerClass:[CommentTableViewCell class] forCellReuseIdentifier:[CommentTableViewCell cellID]];
+        [_tableView registerClass:[ISYBookListTableViewCell class] forCellReuseIdentifier:[ISYBookListTableViewCell cellID]];
         if (@available(iOS 11, *)) {
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }

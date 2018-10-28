@@ -1,5 +1,5 @@
 //
-//  CommentTableViewCell.h
+//  ISYBookListTableViewCell.h
 //  iShuYin
 //
 //  Created by 李艺真 on 2018/10/14.
@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "HomeBookModel.h"
 
-@interface CommentTableViewCell : UITableViewCell
+@interface ISYBookListTableViewCell : UITableViewCell
+@property (strong, nonatomic) UIImageView *thumImageView;
+@property (strong, nonatomic) UILabel *nameLabel;
 @property (nonatomic, strong) HomeBookModel *model;
 + (CGFloat)cellHeight;
 + (NSString *)cellID;
