@@ -623,6 +623,18 @@
         [weakSelf addcommentListWithBookId:self.detailModel.show_id content:des];
     }];
 }
+
+- (void)speedButtonClick:(UIButton *)button {
+    button.selected = !button.selected;
+    if (button.selected) {
+        [self.audioStream setPlayRate:2.0];
+        self.audioPlayer.rate = 2.0;
+    } else {
+        [self.audioStream setPlayRate:1.0];
+        self.audioPlayer.rate = 1.0;
+    }
+}
+
 #pragma mark - Methods
 //本地是否存在该章节
 - (BOOL)isLocalChapter:(BookChapterModel *)chapterModel {
@@ -684,8 +696,14 @@
 
 //播放网络音频
 - (void)playChapterNetwork:(BookChapterModel *)chapterModel {
+    FSStreamConfiguration *config = [[FSStreamConfiguration alloc] init];
+    config.httpConnectionBufferSize *= 2;
+    config.enableTimeAndPitchConversion = YES;
+    
     NSURL *url = [[chapterModel.l_url decodePlayURL] url];
-    _audioStream = [[FSAudioStream alloc]initWithUrl:url];
+//    _audioStream = [[FSAudioStream alloc]initWithUrl:url];
+     _audioStream = [[FSAudioStream alloc]initWithConfiguration:config];
+    [_audioStream playFromURL:url];
     __weak __typeof(self)weakSelf = self;
     _audioStream.onFailure = ^(FSAudioStreamError error,NSString *description){
         DLog(@"网络播放过程中发生错误，错误信息：%@",description);
@@ -712,6 +730,7 @@
     _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
     _audioPlayer.numberOfLoops = 0;//设置为0不循环
     _audioPlayer.delegate = self;
+    _audioPlayer.enableRate = YES;
     [_audioPlayer prepareToPlay];//加载音频文件到缓存
     if(error){
         NSLog(@"初始化播放器过程发生错误,错误信息:%@",error.localizedDescription);
@@ -1055,7 +1074,9 @@
     if (!_speedButton) {
         UIImage *image = [UIImage imageNamed:@"speed1"];
         _speedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_speedButton addTarget:self action:@selector(speedButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [_speedButton setImage:image forState:UIControlStateNormal];
+        [_speedButton setImage:[UIImage imageNamed:@"speed2"] forState:UIControlStateSelected];
         [_speedButton setTitle:@"倍数播放" forState:UIControlStateNormal];
         [_speedButton setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
         _speedButton.titleLabel.font = [UIFont systemFontOfSize:11];
