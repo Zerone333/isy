@@ -163,7 +163,6 @@
 		6D3C8E782185A6CB00DB3C15 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E6F2185A6CB00DB3C15 /* FMDatabasePool.m */; };
 		6D3C8E792185A6CB00DB3C15 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E712185A6CB00DB3C15 /* FMDatabaseQueue.m */; };
 		6D3C8E7A2185A6CB00DB3C15 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E742185A6CB00DB3C15 /* FMResultSet.m */; };
-		6D3C8E7B2185A6CB00DB3C15 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D3C8E752185A6CB00DB3C15 /* Info.plist */; };
 		6D3C8E7F2185A73100DB3C15 /* ISYDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E7E2185A73100DB3C15 /* ISYDBManager.m */; };
 		6DF039D82184370800EFDB38 /* ISYBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */; };
 		6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */; };
@@ -468,7 +467,6 @@
 		6D3C8E722185A6CB00DB3C15 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		6D3C8E732185A6CB00DB3C15 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		6D3C8E742185A6CB00DB3C15 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		6D3C8E752185A6CB00DB3C15 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D3C8E7D2185A73100DB3C15 /* ISYDBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDBManager.h; sourceTree = "<group>"; };
 		6D3C8E7E2185A73100DB3C15 /* ISYDBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDBManager.m; sourceTree = "<group>"; };
 		6D699B56B1F74F164D3CB22B /* Pods-iShuYin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1245,7 +1243,6 @@
 				6D3C8E722185A6CB00DB3C15 /* FMDB.h */,
 				6D3C8E732185A6CB00DB3C15 /* FMResultSet.h */,
 				6D3C8E742185A6CB00DB3C15 /* FMResultSet.m */,
-				6D3C8E752185A6CB00DB3C15 /* Info.plist */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -1444,7 +1441,6 @@
 				184841751F8230A200AF809B /* SubRecentCell.xib in Resources */,
 				183CC4161FAC48F500B356B4 /* SubDownloadCell.xib in Resources */,
 				185638DC1F4B725200DD0184 /* BookPlayControlView.xib in Resources */,
-				6D3C8E7B2185A6CB00DB3C15 /* Info.plist in Resources */,
 				1846234720283F9C00AE9A87 /* ZXEmptyView.xib in Resources */,
 				18CB1A371F5F8FC8006F03B4 /* MineFooter.xib in Resources */,
 				1848417A1F836B0800AF809B /* BookDownloadCell.xib in Resources */,
@@ -1821,7 +1817,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ishuyin.iShuYin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5cedc5ad-6f43-435a-a03b-92dfdf63349b";
-				PROVISIONING_PROFILE_SPECIFIER = iShuYin_development;
+				PROVISIONING_PROFILE_SPECIFIER = lee_isy_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1848,7 +1844,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ishuyin.iShuYin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0bc1e87e-5270-4466-ae48-ac7f110d2374";
-				PROVISIONING_PROFILE_SPECIFIER = iShuYin_distribution;
+				PROVISIONING_PROFILE_SPECIFIER = lee_isy_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
