@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class HomeBookModel;
+
+typedef void(^ISYBookTableViewCellItemClickBlock)(HomeBookModel *book);
 
 // 包含collectionView的cell
 @interface ISYBookTableViewCell : UITableViewCell
-
+@property (nonatomic, copy) ISYBookTableViewCellItemClickBlock itemClickBlock;
 /**
  cell行高
 

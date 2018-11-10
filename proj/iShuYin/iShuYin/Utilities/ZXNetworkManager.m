@@ -199,9 +199,14 @@
         case Query2IndexRecom:query = @"index_recom";break;
             //首页-热播
         case Query2IndexHot:query = @"index_hot";break;
+            //获取评论
+        case Query2getCommentList:query = @"getCommentList";break;
+            //发表评论
+        case Query2AddComment:query = @"addComment";break;
         default:break;
     }
     return [APPDELEGATE.base_url_2 stringByAppendingString:query];
 }
 
 @end
+

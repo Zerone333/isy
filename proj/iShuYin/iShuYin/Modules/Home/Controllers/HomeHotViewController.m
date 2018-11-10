@@ -9,7 +9,7 @@
 #import "HomeHotViewController.h"
 #import "HomeModel.h"
 #import "HomeFoundItemModel.h"
-#import "ISYBookListTableViewCell.h"
+#import "ISYBookListHotTableViewCell.h"
 
 #define kHomeHotViewControllerItemCount 4
 
@@ -74,6 +74,11 @@
     [item refreshDataWithCount:kHomeHotViewControllerItemCount];
     return item;
 }
+- (void)pushBookVC:(NSString *)bookID {
+    if (self.bookBlock) {
+        self.bookBlock(bookID);
+    }
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -88,7 +93,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HomeFoundItemModel *model = self.dataSource[indexPath.section];
-    ISYBookListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListTableViewCell cellID]];
+    ISYBookListHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListHotTableViewCell cellID]];
     cell.model = model.randarDataSource[indexPath.row];
     return cell;
 }
@@ -102,6 +107,14 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    HomeFoundItemModel *model = self.dataSource[indexPath.section];
+    HomeBookModel *item = model.randarDataSource[indexPath.row];
+    [self pushBookVC:item.show_id];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [ISYBookListTableViewCell cellHeight];
 }
@@ -142,7 +155,7 @@
     [view.contentView removeAllSubviews];
     
     UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [refreshButton setTitle:@"换一换" forState:UIControlStateNormal];
+    [refreshButton setImage:[UIImage imageNamed:@"换一换btn"] forState:UIControlStateNormal];
     [refreshButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [view.contentView addSubview:refreshButton];
@@ -166,7 +179,7 @@
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
-        [_tableView registerClass:[ISYBookListTableViewCell class] forCellReuseIdentifier:[ISYBookListTableViewCell cellID]];
+        [_tableView registerClass:[ISYBookListHotTableViewCell class] forCellReuseIdentifier:[ISYBookListHotTableViewCell cellID]];
         if (@available(iOS 11, *)) {
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }

@@ -62,6 +62,9 @@
     ISYBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookTableViewCell cellID]];
     NSDictionary *item = self.dataSouce[indexPath.section];
     [cell updateDataSource:item[@"dataSource"]];
+    cell.itemClickBlock = ^(HomeBookModel *book) {
+        //TODO:进入详情
+    };
     return cell;
 }
 

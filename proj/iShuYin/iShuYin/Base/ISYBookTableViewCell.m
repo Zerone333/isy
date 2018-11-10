@@ -102,6 +102,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     HomeBookModel *bookModel = _dataArray[indexPath.item];
-//    !_bookBlock?:_bookBlock(bookModel.show_id);
+    if (self.itemClickBlock != nil) {
+        self.itemClickBlock(bookModel);
+    };
 }
 @end

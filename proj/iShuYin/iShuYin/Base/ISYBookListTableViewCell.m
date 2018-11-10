@@ -18,8 +18,7 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
+    [super setSelected:NO animated:animated];
     // Configure the view for the selected state
 }
 
@@ -32,7 +31,7 @@
 
 #pragma mark - public
 + (CGFloat)cellHeight {
-    return 110 * kCoverProportion + 12 * 2;
+    return 110 + 12 * 2;
 }
 
 + (NSString *)cellID {
@@ -45,7 +44,7 @@
     [self.contentView addSubview:self.nameLabel];
     
     [self.thumImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(110, 110 * kCoverProportion));
+        make.size.mas_equalTo(CGSizeMake(110 / kCoverProportion, 110));
         make.top.left.equalTo(self.contentView).mas_offset(12);
     }];
     
