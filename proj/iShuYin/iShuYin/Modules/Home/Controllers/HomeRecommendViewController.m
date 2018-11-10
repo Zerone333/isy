@@ -10,6 +10,11 @@
 #import "HomeModel.h"
 #import "HomeTableCell.h"
 #import "HomeFoundItemModel.h"
+#import "ISYBookTableViewCell.h"
+#import "ISYBookListHotTableViewCell.h"
+#import "ISYBookHeaderFooterView.h"
+#import "ISYMoreViewController.h"
+#import "ISYBookRefreshFooterView.h"
 
 @interface HomeRecommendViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -97,92 +102,104 @@
     return tempArray;
 }
 
+- (void)pushBookVC:(NSString *)bookID {
+    if (self.bookBlock) {
+        self.bookBlock(bookID);
+    }
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataSource.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (section == 0) {
+        return 1;
+    } else if (section == 1 ) {
+        return 1;
+    } else {
+        HomeFoundItemModel *model = self.dataSource[section];
+        return model.randarDataSource.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseId = @"HomeTableCell";
-    HomeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
-    __weak __typeof(self)weakSelf = self;
-    cell.bookBlock = ^(NSString *book_id) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        //        [strongSelf pushToBookDetailWithIdentity:book_id];
-    };
-    cell.moreBlock = ^(HomeTableCellType type) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        //        MoreManageViewController *vc = [[MoreManageViewController alloc]init];
-        //        vc.index = type;
-        //        vc.hidesBottomBarWhenPushed = YES;
-        //        [strongSelf.navigationController pushViewController:vc animated:YES];
-    };
-    
     HomeFoundItemModel *model = self.dataSource[indexPath.section];
-    [cell updateDataSource: model.randarDataSource cellType:model.cellType];
-    [cell refreshCategoryTitle:model.keyType];
-    cell.refreshBlock = ^{
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf refreshRandaItem:model];
-        [strongSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
-    };
-    return cell;
+    if (indexPath.section <= 1) {
+        ISYBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookTableViewCell cellID]];
+        [cell updateDataSource:model.randarDataSource];
+//        __weak __typeof(self)weakSelf = self;
+        cell.itemClickBlock = ^(HomeBookModel *book) {
+            //TODO:进入详情
+//             __strong __typeof(weakSelf)strongSelf = weakSelf;
+//            [strongSelf pushToBookDetailWithIdentity:book_id];
+        };
+        return cell;
+    } else {
+        ISYBookListHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListHotTableViewCell cellID]];
+        cell.model = model.randarDataSource[indexPath.row];
+        return cell;
+    }
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HomeFoundItemModel *model = self.dataSource[indexPath.section];
-    return [HomeTableCell cellHeight:model.cellType];
-    //    CGFloat h = 10+28+54;
-    //    CGFloat itemW = (kScreenWidth-32-18) / 3.0;
-    //    CGFloat itemH = itemW*105/80 + 30.5;
-    //    if (indexPath.section == 0) {
-    //        //推荐
-    //        if (!_model || _model.recommend.count == 0) return 28+54;
-    //        CGFloat item_w = (kScreenWidth-32-18) / 4.0;
-    //        CGFloat item_h = item_w*105/80 + 30.5;
-    //        NSInteger row = _model.recommend.count/4 + (_model.recommend.count%4 != 0);
-    //        h += (item_h*row + (row-1)*20);
-    //    }else if (indexPath.section == 1) {
-    //        //热播
-    //        if (!_model || _model.hot.count == 0) return 28+54;
-    //        CGFloat item_w = (kScreenWidth-32-18) / 4.0;
-    //        CGFloat item_h = item_w*105/80 + 30.5;
-    //        NSInteger row = _model.hot.count/4 + (_model.hot.count%4 !=0);
-    //        h += (item_h*row + (row-1)*20);
-    //    }else {
-    //        //最新
-    //        if (!_model || _model.newest.count == 0) return 28+54;
-    //        CGFloat item_w = (kScreenWidth-32-6) / 2.0;
-    //        CGFloat item_h = item_w*105/165 + 37.5;
-    //        NSInteger row = _model.newest.count/2 + (_model.newest.count%2 !=0);
-    //        h += (item_h*row + (row-1)*10);
-    //    }
-    //    return itemH +10+28+54 ;
-    //    return h;
+    if (indexPath.section <= 1) {
+        return [ISYBookTableViewCell cellHeightForLineCount:2];
+    } else {
+        return [ISYBookListTableViewCell cellHeight];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
-    return 8.0f;
+    return 94/2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.001f;
+    return [ISYBookRefreshFooterView height];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return nil;
+    HomeFoundItemModel *item = self.dataSource[section];
+    ISYBookHeaderFooterView *view = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ISYBookHeaderFooterViewID"];
+    if (view == nil) {
+        view = [[ISYBookHeaderFooterView alloc] initWithReuseIdentifier:@"ISYBookHeaderFooterViewID"];
+        
+    }
+    view.catogryTitleLabel.text = item.keyType;
+    __weak __typeof(self)weakSelf = self;
+    view.moreBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        ISYMoreViewController *moreVc = [[ISYMoreViewController alloc] init];
+        [strongSelf.navigationController pushViewController:moreVc animated:YES];
+    };
+    return view;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return nil;
+    HomeFoundItemModel *item = self.dataSource[section];
+    ISYBookRefreshFooterView *view = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ISYBookRefreshFooterViewID"];
+    if (view == nil) {
+        view = [[ISYBookRefreshFooterView alloc] initWithReuseIdentifier:@"ISYBookRefreshFooterViewID"];
+    }
+    __weak __typeof(self)weakSelf = self;
+    view.refreshBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf refreshRandaItem:item];
+        [strongSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationNone];
+    };
+    return view;
+    
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    HomeFoundItemModel *model = self.dataSource[indexPath.section];
+    if (model.cellType == HomeTableCellViewType_Table) {
+        HomeBookModel *item = model.randarDataSource[indexPath.row];
+        [self pushBookVC:item.show_id];
+    }
+}
+
 
 #pragma mark - get/set method
 
@@ -200,7 +217,8 @@
         if (@available(iOS 11, *)) {
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        [_tableView registerClass:[HomeTableCell class] forCellReuseIdentifier:@"HomeTableCell"];
+        [_tableView registerClass:[ISYBookTableViewCell class] forCellReuseIdentifier:[ISYBookTableViewCell cellID]];
+        [_tableView registerClass:[ISYBookListHotTableViewCell class] forCellReuseIdentifier:[ISYBookListHotTableViewCell cellID]];
         __weak __typeof(self) weakSelf = self;
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             __strong __typeof(weakSelf) strongSelf = weakSelf;

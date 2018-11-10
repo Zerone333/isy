@@ -13,6 +13,7 @@
 #import "MCDownloader.h"
 #import <AVFoundation/AVFoundation.h>
 #import "ISYDBManager.h"
+#import "PlayViewController.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) NSTimer *sleepTimer;
@@ -53,7 +54,8 @@
     // Override point for customization after application launch.
     
     [ZXPlayButton registerPlusButton];
-    _playVC = SBVC(@"PlayVC");
+    _playVC = [[PlayViewController alloc] init];
+//    SBVC(@"PlayVC");
     Float32 bufferLength = 0.1;
     [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance]setActive:YES error:nil];

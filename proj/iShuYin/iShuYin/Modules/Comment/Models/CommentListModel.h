@@ -63,4 +63,13 @@
 
 @property (nonatomic, assign) BOOL isLike;
 @property (nonatomic, assign) CGFloat cellHeight;
+
+@property (nonatomic, strong) NSString *id_value;//用户id
+@property (nonatomic, strong) NSString *email;//来源
+@property (nonatomic, strong) NSString *user_name;//状态 0=正常 1=删除
+@property (nonatomic, strong) NSString *add_time;//发表时间
+@property (nonatomic, strong) NSString *parent_id;//发表时间
+@property (nonatomic, strong) NSString *agree;//发表时间
+@property (nonatomic, strong) NSString *against;//发表时间
+
 @end

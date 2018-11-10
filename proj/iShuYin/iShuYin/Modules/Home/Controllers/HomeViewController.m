@@ -533,6 +533,11 @@
 - (HomeRecommendViewController *)vc3 {
     if (!_vc3) {
         _vc3 = [[HomeRecommendViewController alloc] init];
+        __weak __typeof(self)weakSelf = self;
+        _vc3.bookBlock = ^(NSString *bookId) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf pushToBookDetailWithIdentity:bookId];
+        } ;
     }
     return _vc3;
 }
@@ -540,6 +545,11 @@
 - (HomeHotViewController *)vc4 {
     if (!_vc4) {
         _vc4 = [[HomeHotViewController alloc] init];
+        __weak __typeof(self)weakSelf = self;
+        _vc4.bookBlock = ^(NSString *bookId) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf pushToBookDetailWithIdentity:bookId];
+        } ;
     }
     return _vc4;
 }

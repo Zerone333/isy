@@ -7,11 +7,9 @@
 //
 
 #import "ZXBaseViewController.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
+#import "HomeViewController.h"
+//推荐
 @interface HomeRecommendViewController : ZXBaseViewController
+@property (nonatomic, copy) HomeViewControllerBookBlock bookBlock;
 
 @end
-
-NS_ASSUME_NONNULL_END

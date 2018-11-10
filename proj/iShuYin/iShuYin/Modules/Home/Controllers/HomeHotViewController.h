@@ -8,10 +8,7 @@
 
 #import "ZXBaseViewController.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
+#import "HomeViewController.h"
 @interface HomeHotViewController : ZXBaseViewController
-
+@property (nonatomic, copy) HomeViewControllerBookBlock bookBlock;
 @end
-
-NS_ASSUME_NONNULL_END

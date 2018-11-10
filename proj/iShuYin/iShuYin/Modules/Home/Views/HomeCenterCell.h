@@ -11,7 +11,6 @@
 @class HomeBookModel;
 
 @interface HomeCenterCell : UICollectionViewCell
-
 @property (nonatomic, strong) HomeBookModel *bookModel;
 
 @end
