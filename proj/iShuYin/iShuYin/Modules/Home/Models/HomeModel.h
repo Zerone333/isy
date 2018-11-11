@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *today;//
 @property (nonatomic, strong) NSArray *week;//
 @property (nonatomic, strong) NSArray *month;//
+@property (nonatomic, strong) NSArray *search_keywords;//
 
 
 @property (nonatomic, copy) NSString *public_content;//公告

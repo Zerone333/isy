@@ -203,10 +203,10 @@
         case Query2getCommentList:query = @"getCommentList";break;
             //发表评论
         case Query2AddComment:query = @"addComment";break;
+        case Query2BookList:query = @"getBookList";break;//列表
         default:break;
     }
     return [APPDELEGATE.base_url_2 stringByAppendingString:query];
 }
 
 @end
-

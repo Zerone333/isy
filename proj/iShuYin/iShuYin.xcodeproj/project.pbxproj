@@ -154,6 +154,10 @@
 		18CB1A351F5F8FB3006F03B4 /* MineFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB1A341F5F8FB3006F03B4 /* MineFooter.m */; };
 		18CB1A371F5F8FC8006F03B4 /* MineFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CB1A361F5F8FC8006F03B4 /* MineFooter.xib */; };
 		18CB1A3A1F600194006F03B4 /* BookDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB1A391F600194006F03B4 /* BookDownloadViewController.m */; };
+		6D02EC8821981137006F41E5 /* ISYCategoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D02EC8721981137006F41E5 /* ISYCategoryDetailViewController.m */; };
+		6D02EC8B21981C4E006F41E5 /* ISYCategoryDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D02EC8A21981C4E006F41E5 /* ISYCategoryDetailTableViewCell.m */; };
+		6D02EC8F21981F45006F41E5 /* ISYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D02EC8E21981F45006F41E5 /* ISYSearchViewController.m */; };
+		6D38C5E1219833EC00337105 /* ISYSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D38C5E0219833EC00337105 /* ISYSearchResultViewController.m */; };
 		6D3C8E5B21858C3E00DB3C15 /* ISYDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E5A21858C3E00DB3C15 /* ISYDownLoadViewController.m */; };
 		6D3C8E622185938900DB3C15 /* ISYBookListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E612185938800DB3C15 /* ISYBookListTableViewCell.m */; };
 		6D3C8E652185943A00DB3C15 /* ISYDownLoadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3C8E642185943A00DB3C15 /* ISYDownLoadTableViewCell.m */; };
@@ -454,6 +458,14 @@
 		18CB1A391F600194006F03B4 /* BookDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDownloadViewController.m; sourceTree = "<group>"; };
 		5DD0F7E5297EE226F110F7B7 /* Pods-iShuYin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.release.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.release.xcconfig"; sourceTree = "<group>"; };
 		6777BA96BC9336E3F606CF0C /* libPods-iShuYin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iShuYin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D02EC8621981137006F41E5 /* ISYCategoryDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryDetailViewController.h; sourceTree = "<group>"; };
+		6D02EC8721981137006F41E5 /* ISYCategoryDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryDetailViewController.m; sourceTree = "<group>"; };
+		6D02EC8921981C4E006F41E5 /* ISYCategoryDetailTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryDetailTableViewCell.h; sourceTree = "<group>"; };
+		6D02EC8A21981C4E006F41E5 /* ISYCategoryDetailTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryDetailTableViewCell.m; sourceTree = "<group>"; };
+		6D02EC8D21981F45006F41E5 /* ISYSearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYSearchViewController.h; sourceTree = "<group>"; };
+		6D02EC8E21981F45006F41E5 /* ISYSearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSearchViewController.m; sourceTree = "<group>"; };
+		6D38C5DF219833EC00337105 /* ISYSearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYSearchResultViewController.h; sourceTree = "<group>"; };
+		6D38C5E0219833EC00337105 /* ISYSearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSearchResultViewController.m; sourceTree = "<group>"; };
 		6D3C8E5921858C3E00DB3C15 /* ISYDownLoadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownLoadViewController.h; sourceTree = "<group>"; };
 		6D3C8E5A21858C3E00DB3C15 /* ISYDownLoadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownLoadViewController.m; sourceTree = "<group>"; };
 		6D3C8E602185938800DB3C15 /* ISYBookListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISYBookListTableViewCell.h; sourceTree = "<group>"; };
@@ -733,6 +745,7 @@
 		184DAE2A1F2E25D900EAEA58 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6D02EC8C21981F2F006F41E5 /* Search */,
 				6D3C8E5821858C2700DB3C15 /* Download */,
 				1880EFDF1F9D13A5006BADCB /* Comment */,
 				184DAE791F2E393D00EAEA58 /* LaunchGuide */,
@@ -895,6 +908,8 @@
 			children = (
 				184DAEB61F2E3EA300EAEA58 /* CategoryViewController.h */,
 				184DAEB71F2E3EA300EAEA58 /* CategoryViewController.m */,
+				6D02EC8621981137006F41E5 /* ISYCategoryDetailViewController.h */,
+				6D02EC8721981137006F41E5 /* ISYCategoryDetailViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1234,6 +1249,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		6D02EC8C21981F2F006F41E5 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				6D02EC8D21981F45006F41E5 /* ISYSearchViewController.h */,
+				6D02EC8E21981F45006F41E5 /* ISYSearchViewController.m */,
+				6D38C5DF219833EC00337105 /* ISYSearchResultViewController.h */,
+				6D38C5E0219833EC00337105 /* ISYSearchResultViewController.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		6D3C8E5821858C2700DB3C15 /* Download */ = {
 			isa = PBXGroup;
 			children = (
@@ -1295,6 +1321,8 @@
 				6D3D45EA21968B03004D13E6 /* ISYBookListHotTableViewCell.m */,
 				6D3D45EC21969CAC004D13E6 /* ISYBookRefreshFooterView.h */,
 				6D3D45ED21969CAC004D13E6 /* ISYBookRefreshFooterView.m */,
+				6D02EC8921981C4E006F41E5 /* ISYCategoryDetailTableViewCell.h */,
+				6D02EC8A21981C4E006F41E5 /* ISYCategoryDetailTableViewCell.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1593,6 +1621,7 @@
 				184DAE571F2E2DC000EAEA58 /* ZXProgressHUD.m in Sources */,
 				1846234620283F9C00AE9A87 /* ZXEmptyView.m in Sources */,
 				18A4A7D61F40B80200A02BE8 /* BookDetailModel.m in Sources */,
+				6D02EC8F21981F45006F41E5 /* ISYSearchViewController.m in Sources */,
 				185638DA1F4B724B00DD0184 /* BookPlayControlView.m in Sources */,
 				9B5CDC632174DFF800EA5D60 /* HistoryViewController.m in Sources */,
 				184DAE3B1F2E29CD00EAEA58 /* SVRadialGradientLayer.m in Sources */,
@@ -1616,6 +1645,7 @@
 				18103F551F71ED5E00E56116 /* ZXTextView.m in Sources */,
 				184DAE371F2E29CD00EAEA58 /* SVIndefiniteAnimatedView.m in Sources */,
 				183396C01F44C5F800491F22 /* ModifyPswdViewController.m in Sources */,
+				6D38C5E1219833EC00337105 /* ISYSearchResultViewController.m in Sources */,
 				184DAE751F2E379D00EAEA58 /* ZXCycleView.m in Sources */,
 				184841681F81D0B000AF809B /* SubscribeListViewController.m in Sources */,
 				184DAE691F2E2FC300EAEA58 /* ZXCountDownButton.m in Sources */,
@@ -1645,6 +1675,7 @@
 				18103F4E1F717EA300E56116 /* FeedbackAdminCell.m in Sources */,
 				9B738D86217366F8008D549E /* HomeFoundItemModel.m in Sources */,
 				9B72DFA32174D9C600DC99B5 /* CarHomeViewController.m in Sources */,
+				6D02EC8B21981C4E006F41E5 /* ISYCategoryDetailTableViewCell.m in Sources */,
 				189C45F91FE7D45B004B7666 /* MCDownloadReceipt.m in Sources */,
 				184DAE541F2E2DA200EAEA58 /* ZXPopView.m in Sources */,
 				18103F491F717CBC00E56116 /* FeedbackUserCell.m in Sources */,
@@ -1680,6 +1711,7 @@
 				188471EF1FEBB82D0018CC3B /* SleepModel.m in Sources */,
 				184DAEAB1F2E3E4300EAEA58 /* RegisterViewController.m in Sources */,
 				184DAE381F2E29CD00EAEA58 /* SVProgressAnimatedView.m in Sources */,
+				6D02EC8821981137006F41E5 /* ISYCategoryDetailViewController.m in Sources */,
 				6D3C8E782185A6CB00DB3C15 /* FMDatabasePool.m in Sources */,
 				1819F0A71F9679F80040CB58 /* SettingViewController.m in Sources */,
 				C3B2A9F92125DEFD006B9589 /* ZXInputView.m in Sources */,

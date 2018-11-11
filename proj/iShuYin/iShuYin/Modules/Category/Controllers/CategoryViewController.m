@@ -12,6 +12,7 @@
 #import "CategoryChildCell.h"
 #import "CategoryChildHeader.h"
 #import "MoreListViewController.h"
+#import "ISYCategoryDetailViewController.h"
 
 #define kTableViewWidth (0)
 @interface CategoryViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
@@ -62,7 +63,11 @@
         make.top.mas_equalTo(self.view.mas_top).offset(0);
         make.left.mas_equalTo(self.tableView.mas_right);
         make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-kTabBarOffset);
+        if (@available(iOS 11.0, *)) {
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+        } else {
+            make.bottom.equalTo(self.view);
+        }
     }];
 }
 
@@ -153,7 +158,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     CategoryModel *model = _dataArray[indexPath.section];
     CategoryModel *child = model.son_cats[indexPath.item];
-    MoreListViewController *vc = [[MoreListViewController alloc]init];
+    ISYCategoryDetailViewController *vc = [[ISYCategoryDetailViewController alloc]init];
     vc.category = child;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -213,7 +218,7 @@
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         CGFloat space = 16;
-        CGFloat w = (kScreenWidth-kTableViewWidth-4*space)/3.0;
+        CGFloat w = floor((kScreenWidth-kTableViewWidth-5*space)/4.0);
         CGFloat h = 40;
         layout.minimumLineSpacing = 16;
         layout.minimumInteritemSpacing = space;

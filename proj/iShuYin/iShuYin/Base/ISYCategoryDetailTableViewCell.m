@@ -1,17 +1,15 @@
 //
-//  ISYBookListHotTableViewCell.m
+//  ISYCategoryDetailTableViewCell.m
 //  iShuYin
 //
-//  Created by ND on 2018/11/10.
+//  Created by ND on 2018/11/11.
 //  Copyright © 2018年 ishuyin. All rights reserved.
 //
 
-#import "ISYBookListHotTableViewCell.h"
+#import "ISYCategoryDetailTableViewCell.h"
 
+@interface ISYCategoryDetailTableViewCell()
 
-@interface ISYBookListHotTableViewCell ()
-@property (nonatomic, strong) UIView *categryBgView;
-@property (nonatomic, strong) UILabel *categryLabel;
 @property (nonatomic, strong) UIImageView *statuImage;
 @property (nonatomic, strong) UILabel *statuLabel;
 @property (nonatomic, strong) UILabel *desLabel;
@@ -20,11 +18,21 @@
 @property (nonatomic, strong) UILabel *chaperCountLabel;
 @property (nonatomic, strong) UIImageView *chaperImage;
 @end
-
-@implementation ISYBookListHotTableViewCell
+@implementation ISYCategoryDetailTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
++ (NSString *)cellID {
+    return @"ISYCategoryDetailTableViewCellID";
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -34,21 +42,10 @@
         [self.contentView addSubview:self.chaperImage];
         [self.contentView addSubview:self.chaperCountLabel];
         
-        [self.contentView addSubview:self.categryBgView];
-        [self.contentView addSubview:self.categryLabel];
-        
-        [self.contentView addSubview:self.desLabel];
+         [self.contentView addSubview:self.desLabel];
         [self.contentView addSubview:self.timesLabel];
         [self.contentView addSubview:self.timesIcon];
         
-        [self.categryBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.equalTo(self.thumImageView);
-            make.width.mas_equalTo(50);
-            make.height.mas_equalTo(18);
-        }];
-        [self.categryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.categryBgView);
-        }];
         
         [self.statuImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.thumImageView);
@@ -89,17 +86,9 @@
     return self;
 }
 
-+ (NSString *)cellID {
-    return @"ISYBookListHotTableViewCellID";
-}
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-}
-
 - (void)setModel:(HomeBookModel *)model {
     [super setModel:model];
-    self.chaperCountLabel.text = [NSString stringWithFormat:@"%@章节", model.jishu];
+    self.chaperCountLabel.text = model.director;
     if ([model.status isEqualToString:@"完结"]) {
         self.statuImage.hidden = NO;
         self.statuLabel.hidden = YES;
@@ -109,7 +98,6 @@
     }
     
     self.timesLabel.text = [NSString stringWithFormat:@"%@次", model.click_count];
-    self.categryLabel.text = model.cat_name;
 }
 
 #pragma mark -getter
@@ -166,24 +154,4 @@
     }
     return _timesIcon;
 }
-
-- (UILabel *)categryLabel {
-    if (!_categryLabel) {
-        _categryLabel = [[UILabel alloc] init];
-        _categryLabel.textColor = [UIColor whiteColor];
-        _categryLabel.font = [UIFont systemFontOfSize:11];
-    }
-    return _categryLabel;
-}
-
-
-- (UIView *)categryBgView {
-    if (!_categryBgView) {
-        _categryBgView = [[UIView alloc] init];
-        _categryBgView.backgroundColor = [UIColor redColor];
-    }
-    return _categryBgView;
-}
-
-
 @end

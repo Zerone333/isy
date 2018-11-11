@@ -22,6 +22,10 @@ const struct ISYTable_ReadHistory {
     __unsafe_unretained NSString *bookId;
     __unsafe_unretained NSString *readtime;
 } ISYTable_ReadHistory;
+const struct ISYTable_Search_Keyword {
+    __unsafe_unretained NSString *tableName;
+    __unsafe_unretained NSString *keyWord;
+} ISYTable_ReadSearch_Keyword;
 
 const struct ISYTable_Book ISY_BookTable = {
     .tableName = @"ISY_BookTable",
@@ -33,6 +37,11 @@ const struct ISYTable_ReadHistory ISY_ReadHistoryTable = {
     .tableName = @"ISY_ReadHistoryTable",
     .bookId = @"bookId",
     .readtime = @"readtime",
+};
+
+const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
+    .tableName = @"ISYTable_KeywordTable",
+    .keyWord = @"keyWord",
 };
 
 @interface ISYDBManager ()
@@ -61,6 +70,7 @@ const struct ISYTable_ReadHistory ISY_ReadHistoryTable = {
 - (void)setupDB {
     [self createBookTable];
     [self createHistoryTable];
+    [self createHistorySearchTable];
 }
 
 
@@ -117,6 +127,24 @@ const struct ISYTable_ReadHistory ISY_ReadHistoryTable = {
     }
 }
 
+//搜索记录
+- (void)createHistorySearchTable {
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        // Book_Table
+        NSString *sql = [NSString stringWithFormat:@"create table if not exists %@ ('ID' INTEGER PRIMARY KEY AUTOINCREMENT,'%@' TEXT NOT NULL)",
+                         ISYTable_ReadSearchKeywordTable.tableName,
+                         ISYTable_ReadSearchKeywordTable.keyWord];
+        result = [db executeUpdate:sql];
+        [db commit];
+    }];
+    
+    if (result) {
+        NSLog(@"create table success");
+    }
+}
+
 /**
  插入书表
 
@@ -148,6 +176,45 @@ const struct ISYTable_ReadHistory ISY_ReadHistoryTable = {
         [db commit];
     }];
     return result;
+}
+
+- (BOOL)insertSearchKeyword:(NSString *)keyworkd {
+
+    NSString *deleteSqlString = [NSString stringWithFormat:@"DELETE * FROM %@ WHERE %@ = ?)",
+                                 ISYTable_ReadSearchKeywordTable.tableName,
+                                 ISYTable_ReadSearchKeywordTable.keyWord];
+    NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@) VALUES (?)",
+                                 ISYTable_ReadSearchKeywordTable.tableName,
+                                 ISYTable_ReadSearchKeywordTable.keyWord];
+    
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        result = [db executeUpdate:deleteSqlString,
+                  keyworkd];
+        result = result & [db executeUpdate:insertSqlString,
+                  keyworkd];
+        [db commit];
+    }];
+    return result;
+}
+
+- (NSArray *)querySearchKewords {
+    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM %@",
+                           ISYTable_ReadSearchKeywordTable.tableName];
+    
+    __block NSMutableArray *list = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        while ([rs next]) {
+            NSString *keyword =  [rs stringForColumn:ISYTable_ReadSearchKeywordTable.keyWord];
+            [list addObject:keyword];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    return [list copy];
 }
 
 /**

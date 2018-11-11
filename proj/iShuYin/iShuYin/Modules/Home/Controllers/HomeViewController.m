@@ -23,6 +23,7 @@
 #import "CarHomeViewController.h"
 #import "HistoryViewController.h"
 #import "ISYDownLoadViewController.h"
+#import "ISYSearchViewController.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -331,13 +332,20 @@
 }
 
 #pragma mark - UISearchBarDelegate
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if (!searchBar.text.length) {
-        return;
-    }
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    if (!searchBar.text.length) {
+//        return;
+//    }
+//    [searchBar resignFirstResponder];
+//    MoreListViewController *vc = [[MoreListViewController alloc]init];
+//    vc.keyword = searchBar.text;
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
-    MoreListViewController *vc = [[MoreListViewController alloc]init];
-    vc.keyword = searchBar.text;
+    ISYSearchViewController *vc = [[ISYSearchViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

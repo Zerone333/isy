@@ -102,7 +102,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "563536021.9595"
+            timestampString = "563612728.2111551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "326"
@@ -185,7 +185,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "563536021.959934"
+            timestampString = "563612728.212315"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "354"
@@ -201,7 +201,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "563535188.5632679"
+                  timestampString = "563624829.457942"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "354"
@@ -216,7 +216,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "563535188.5656559"
+                  timestampString = "563624829.460927"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "355"
@@ -231,7 +231,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "563535188.567977"
+                  timestampString = "563624829.464388"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "354"
@@ -248,7 +248,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "563536021.960197"
+            timestampString = "563612728.21269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "623"
@@ -287,6 +287,16 @@
             endingLineNumber = "92"
             landmarkName = "-putCommentBtnClick"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

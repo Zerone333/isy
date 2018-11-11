@@ -28,4 +28,9 @@
  @return BookDetailModel
  */
 - (BookDetailModel *)queryBook:(NSString *)bookId;
+
+//历史搜索记录
+- (BOOL)insertSearchKeyword:(NSString *)keyworkd;
+
+- (NSArray *)querySearchKewords;
 @end

@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger,Query2) {
     Query2IndexHot,//首页-热播
     Query2getCommentList,//评论列表
     Query2AddComment,//发表评论
-    
+    Query2BookList,//列表
 };
 
 @interface ZXNetworkManager : NSObject
