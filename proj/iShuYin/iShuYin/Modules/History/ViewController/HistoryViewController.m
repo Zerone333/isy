@@ -76,11 +76,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0.01;
+    return [ISYBookRefreshFooterView height];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return [ISYBookRefreshFooterView height];
+    return 0.01;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -88,9 +88,13 @@
     if (view == nil) {
         view = [[ISYBookHeaderFooterView alloc] initWithReuseIdentifier:@"HistoryViewControllerHeadID"];
         view.backgroundColor = [UIColor whiteColor];
-        
+
     }
-    view.textLabel.text = @"最近";
+    if (section == 0) {
+        view.textLabel.text = @"最近";
+    } else {
+        view.textLabel.text = @"历史";
+    }
     view.textLabel.font = [UIFont boldSystemFontOfSize:16];
     view.textLabel.textColor = kColorValue(0x282828);
     return view;

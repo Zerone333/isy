@@ -238,7 +238,7 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db beginTransaction];
         FMResultSet *rs = [db executeQuery:sqlString];
-        if ([rs next]) {
+        while ([rs next]) {
             NSString *jsonString =  [rs stringForColumn:ISY_BookTable.bookDesJson];
             NSInteger chaperNumber =  [rs intForColumn:ISYTable_HistoryListenTable.chaperNumber];
             NSInteger time =  [rs intForColumn:ISYTable_HistoryListenTable.time];
