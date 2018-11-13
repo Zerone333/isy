@@ -15,6 +15,7 @@
 #import "ISYCommentTableViewCell.h"
 #import "ISYCommentListViewController.h"
 #import "ISYPutCommentView.h"
+#import "ISYDBManager.h"
 
 #import <FSAudioStream.h>
 #import <AVFoundation/AVFoundation.h>
@@ -945,6 +946,9 @@
     //播放
     [self playChapterAtIndex:idx];
     [[NSNotificationCenter defaultCenter]postNotificationName:kNotiNameAnimationAdd object:nil];
+    
+    // 插入播放记录
+    [self insertHistoryListenBook:detailModel chaperNumber:idx time:0 listentime:[[NSDate date] timeIntervalSince1970]];
 }
 
 - (void)pauseOrPlay {
@@ -1011,6 +1015,11 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
+}
+
+#pragma makr - DB
+- (void)insertHistoryListenBook:(BookDetailModel *)book chaperNumber:(NSInteger)chaperNumber time:(NSInteger)time listentime:(NSInteger)listentime{
+    [[ISYDBManager shareInstance] insertHistoryListenBook:book chaperNumber:chaperNumber time:time listentime:listentime];
 }
 
 

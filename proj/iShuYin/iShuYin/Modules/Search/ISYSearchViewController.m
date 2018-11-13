@@ -13,6 +13,8 @@
 #import "ISYDBManager.h"
 #import "ISYSearchResultViewController.h"
 #import "HomeBookModel.h"
+#import "ISYHeadModel.h"
+#import "ISYHeadCollectionReusableView.h"
 
 @interface ISYSearchViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -22,6 +24,7 @@
 @property (nonatomic, copy) UISearchBar *searchBar;
 @property (nonatomic, strong) ISYSearchResultViewController *vc;
 @property (nonatomic, strong) UIButton *leftButton;
+@property (nonatomic, copy) NSArray <ISYHeadModel *> *titleArray;
 @end
 
 @implementation ISYSearchViewController
@@ -190,11 +193,13 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    ISYHeadModel *model = self.titleArray[indexPath.section];
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        static NSString *reuseId_header = @"CategoryChildHeader";
-        CategoryChildHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseId_header forIndexPath:indexPath];
+        static NSString *reuseId_header = @"ISYHeadCollectionReusableViewid";
+        ISYHeadCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseId_header forIndexPath:indexPath];
 //        CategoryModel *model = _dataArray[indexPath.section];
-        headerView.header = @"test";
+        headerView.titleLabel.text = model.titleString;
+        headerView.imageView.image = [UIImage imageNamed:model.imageName];
         headerView.backgroundColor =  [UIColor whiteColor];
         return headerView;
     }
@@ -269,8 +274,10 @@
         if (@available(iOS 11, *)) {
             _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
+        
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ISYSearchViewControllerTextCellID"];
-       [_collectionView registerNib:[UINib nibWithNibName:@"CategoryChildHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CategoryChildHeader"];
+//       [_collectionView registerNib:[UINib nibWithNibName:@"CategoryChildHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CategoryChildHeader"];
+        [_collectionView registerClass:[ISYHeadCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ISYHeadCollectionReusableViewid"];
         [_collectionView registerNib:[UINib nibWithNibName:@"HomeCenterCell" bundle:nil] forCellWithReuseIdentifier:@"HomeCenterCell"];
     }
     return _collectionView;
@@ -298,5 +305,14 @@
         [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     }
     return _searchBar;
+}
+
+- (NSArray *)titleArray {
+    if (!_titleArray) {
+        _titleArray = @[[ISYHeadModel itemWithTitleString:@"热门搜索" imageName:@"进度"],
+                        [ISYHeadModel itemWithTitleString:@"历史搜索" imageName:@"进度"],
+                        [ISYHeadModel itemWithTitleString:@"热播" imageName:@"进度"]];
+    }
+    return _titleArray;
 }
 @end

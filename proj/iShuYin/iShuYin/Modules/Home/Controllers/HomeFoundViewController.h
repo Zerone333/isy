@@ -8,6 +8,10 @@
 
 #import "ZXBaseViewController.h"
 #import "HomeViewController.h"
+
+typedef void(^HomeFoundViewControllerMoreBlock)(NSInteger index);
+
 @interface HomeFoundViewController : ZXBaseViewController
 @property (nonatomic, copy) HomeViewControllerBookBlock bookBlock;
+@property (nonatomic, copy) HomeFoundViewControllerMoreBlock moreBlock;
 @end

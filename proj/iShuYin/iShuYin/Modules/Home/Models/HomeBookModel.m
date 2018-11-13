@@ -10,4 +10,7 @@
 
 @implementation HomeBookModel
 
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{@"descriptionString":@"description"};
+}
 @end

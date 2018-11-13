@@ -9,6 +9,7 @@
 #import "ISYDBManager.h"
 #import "FMDB.h"
 #import <sqlite3.h>
+#import "ISYHistoryListenModel.h"
 
 
 // 数据库表名称表
@@ -26,6 +27,23 @@ const struct ISYTable_Search_Keyword {
     __unsafe_unretained NSString *tableName;
     __unsafe_unretained NSString *keyWord;
 } ISYTable_ReadSearch_Keyword;
+
+const struct ISYTable_History_Listen {
+    __unsafe_unretained NSString *tableName;
+    __unsafe_unretained NSString *bookId;
+    __unsafe_unretained NSString *time;     ///< 收听的进度
+    __unsafe_unretained NSString *listenTime;     ///< 收听时间
+    __unsafe_unretained NSString *chaperNumber;  ///< 收听的集数
+} ISYTable_ReadHistory_Listen;
+
+
+const struct ISYTable_History_Listen ISYTable_HistoryListenTable = {
+    .tableName = @"ISYTable_HistoryListenTable",
+    .bookId = @"bookId",
+    .time = @"time",
+    .chaperNumber = @"chaperNumber",
+    .listenTime = @"listenTime",
+};
 
 const struct ISYTable_Book ISY_BookTable = {
     .tableName = @"ISY_BookTable",
@@ -71,6 +89,7 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     [self createBookTable];
     [self createHistoryTable];
     [self createHistorySearchTable];
+    [self createHistoryListenTable];
 }
 
 
@@ -145,6 +164,101 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     }
 }
 
+
+//收听记录
+- (void)createHistoryListenTable {
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        // Book_Table
+        NSString *sql = [NSString stringWithFormat:@"create table if not exists %@\
+                         ('ID' INTEGER PRIMARY KEY AUTOINCREMENT,\
+                         '%@' TEXT NOT NULL,\
+                         '%@' INTERGE NOT NULL,\
+                         '%@' INTERGE NOT NULL,\
+                         '%@' INTERGE NOT NULL)",
+                         ISYTable_HistoryListenTable.tableName,
+                         ISYTable_HistoryListenTable.bookId,
+                         ISYTable_HistoryListenTable.time,
+                         ISYTable_HistoryListenTable.chaperNumber,
+                         ISYTable_HistoryListenTable.listenTime];
+        result = [db executeUpdate:sql];
+        [db commit];
+    }];
+    
+    if (result) {
+        NSLog(@"create table success");
+    }
+}
+
+/**
+ 历史收听
+ 
+ @param book BookDetailModel
+ @return 插入结果
+ */
+- (BOOL)insertHistoryListenBook:(BookDetailModel *)book chaperNumber:(NSInteger)chaperNumber time:(NSInteger)time listentime:(NSInteger)listentime{
+    NSString *bookId = book.show_id;
+    
+    NSString *deleteSqlString = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = ?)",
+                                 ISYTable_HistoryListenTable.tableName,
+                                 ISYTable_HistoryListenTable.bookId];
+     NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@) VALUES ( ?, ?, ?, ?)",
+                                  ISYTable_HistoryListenTable.tableName,
+                                  ISYTable_HistoryListenTable.bookId,
+                                  ISYTable_HistoryListenTable.time,
+                                  ISYTable_HistoryListenTable.chaperNumber,
+                                  ISYTable_HistoryListenTable.listenTime];
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        result = [db executeUpdate:deleteSqlString,
+                  bookId];
+        result = result & [db executeUpdate:insertSqlString,
+                           bookId,
+                           @(time),
+                           @(chaperNumber),
+                           @(listentime)];
+        [db commit];
+    }];
+    return result;
+}
+
+- (NSArray  *)queryBookHistoryListen {
+    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM %@, %@ WHERE %@.%@ = %@.%@ order by %@ desc LIMIT 50",
+                           ISYTable_HistoryListenTable.tableName,
+                           ISY_BookTable.tableName,
+                           ISYTable_HistoryListenTable.tableName,
+                           ISYTable_HistoryListenTable.bookId,
+                           ISY_BookTable.tableName,
+                           ISY_BookTable.bookId,
+                           ISYTable_HistoryListenTable.listenTime];
+    
+    __block NSMutableArray  *list = [ NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        if ([rs next]) {
+            NSString *jsonString =  [rs stringForColumn:ISY_BookTable.bookDesJson];
+            NSInteger chaperNumber =  [rs intForColumn:ISYTable_HistoryListenTable.chaperNumber];
+            NSInteger time =  [rs intForColumn:ISYTable_HistoryListenTable.time];
+            NSInteger listenTime =  [rs intForColumn:ISYTable_HistoryListenTable.listenTime];
+            BookDetailModel *model = [BookDetailModel yy_modelWithJSON:jsonString];
+            
+            
+            ISYHistoryListenModel *listenModel = [[ISYHistoryListenModel alloc] init];
+            listenModel.bookModel = model;
+            listenModel.chaperNumber = chaperNumber;
+            listenModel.time = time;
+            listenModel.listenTime = listenTime;
+            [list addObject:listenModel];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    return [list copy];
+}
+
 /**
  插入书表
 
@@ -180,7 +294,7 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
 
 - (BOOL)insertSearchKeyword:(NSString *)keyworkd {
 
-    NSString *deleteSqlString = [NSString stringWithFormat:@"DELETE * FROM %@ WHERE %@ = ?)",
+    NSString *deleteSqlString = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = ?)",
                                  ISYTable_ReadSearchKeywordTable.tableName,
                                  ISYTable_ReadSearchKeywordTable.keyWord];
     NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@) VALUES (?)",

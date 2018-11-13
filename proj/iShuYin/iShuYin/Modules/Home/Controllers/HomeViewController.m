@@ -44,7 +44,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.seg.selectedSegmentIndex = 0;
+//    self.seg.selectedSegmentIndex = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,6 +72,7 @@
     [self setupUI];
     [self requestData];
     [self requestAppUpdate];
+    self.seg.selectedSegmentIndex = 0;
 }
 
 //- (void)viewDidLayoutSubviews {
@@ -364,8 +365,8 @@
 
 - (void)leftButtonClick {
     //历史记录
-//    HistoryViewController *vc = [[HistoryViewController alloc] init];
-    ISYDownLoadViewController *vc = [[ISYDownLoadViewController alloc] init];
+    HistoryViewController *vc = [[HistoryViewController alloc] init];
+//    ISYDownLoadViewController *vc = [[ISYDownLoadViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -527,6 +528,16 @@
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf pushToBookDetailWithIdentity:bookId];
         } ;
+        _vc1.moreBlock = ^(NSInteger index) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            if (index == 0) {
+                [strongSelf.seg setSelectedSegmentIndex:2 animated:YES];
+                strongSelf.seg.indexChangeBlock(2);
+            } else if (index == 1) {
+                [strongSelf.seg setSelectedSegmentIndex:3 animated:YES];
+                strongSelf.seg.indexChangeBlock(3);
+            }
+        };
     }
     return _vc1;
 }

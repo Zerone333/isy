@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BookDetailModel.h"
+#import "ISYHistoryListenModel.h"
 
 
 @interface ISYDBManager : NSObject
@@ -33,4 +34,9 @@
 - (BOOL)insertSearchKeyword:(NSString *)keyworkd;
 
 - (NSArray *)querySearchKewords;
+
+//查询历史收听记录
+- (NSArray <ISYHistoryListenModel *> *)queryBookHistoryListen;
+//插入历史收听记录
+- (BOOL)insertHistoryListenBook:(BookDetailModel *)book chaperNumber:(NSInteger)chaperNumber time:(NSInteger)time listentime:(NSInteger)listentime;
 @end

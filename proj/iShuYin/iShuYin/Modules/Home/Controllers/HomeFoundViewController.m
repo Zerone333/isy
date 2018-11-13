@@ -193,6 +193,9 @@
     __weak __typeof(self)weakSelf = self;
     view.moreBlock = ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if (section == 0 || section == 1) {
+            strongSelf.moreBlock(section);
+        }
 //        ISYMoreViewController *moreVc = [[ISYMoreViewController alloc] init];
 //        [strongSelf.navigationController pushViewController:moreVc animated:YES];
     };

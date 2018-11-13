@@ -79,6 +79,8 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.text = @"name";
+        _nameLabel.font =[UIFont systemFontOfSize:16];
+        _nameLabel.textColor = kColorValue(0x282828);
     }
     return _nameLabel;
 }

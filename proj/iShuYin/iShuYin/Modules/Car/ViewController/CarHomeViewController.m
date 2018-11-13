@@ -11,6 +11,8 @@
 #import "HomeFoundItemModel.h"
 #import "ISYBookListTableViewCell.h"
 #import "CarMoreViewController.h"
+#import "ISYBookHeaderFooterView.h"
+#import "ISYBookListTableCarViewCell.h"
 
 @interface CarHomeViewController ()
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -90,7 +92,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HomeFoundItemModel *model = self.dataSource[indexPath.section];
-    ISYBookListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListTableViewCell cellID]];
+    ISYBookListTableCarViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListTableCarViewCell cellID]];
     cell.model = model.dataSource[indexPath.row];
     return cell;
 }
@@ -101,41 +103,29 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 94/2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0;
 }
 
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    HomeFoundItemModel *model = self.dataSource[section];
-    UITableViewHeaderFooterView *view = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"homeHotHeadid"];
+    ISYBookHeaderFooterView *view = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ISYBookHeaderFooterViewID"];
     if (view == nil) {
-        view = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"homeHotHeadid"];
-        view.contentView.backgroundColor = [UIColor whiteColor];
-        UILabel *titleLabel = [[UILabel alloc] init];
-        [view.contentView addSubview:titleLabel];
-        titleLabel.tag = 5352324;
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(view.contentView);
-            make.left.mas_equalTo(view.contentView).mas_offset(12);
-        }];
+        view = [[ISYBookHeaderFooterView alloc] initWithReuseIdentifier:@"ISYBookHeaderFooterViewID"];
         
-        UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [moreButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        [moreButton setTitle:@"更多" forState:UIControlStateNormal];
-        [view.contentView addSubview:moreButton];
-        [moreButton addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(view.contentView).mas_offset(-12);
-            make.centerY.equalTo(view.contentView);
-        }];
     }
-    UILabel *label = [view.contentView viewWithTag:5352324];
-    label.text = model.keyType;
+    view.catogryTitleLabel.text = @"推荐";
+    __weak __typeof(self)weakSelf = self;
+    view.moreBlock = ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf moreBtnClick];
+    };
     return view;
 }
+
 - (void)moreBtnClick {
     CarMoreViewController *vc = [[CarMoreViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
@@ -158,7 +148,7 @@
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
-        [_tableView registerClass:[ISYBookListTableViewCell class] forCellReuseIdentifier:[ISYBookListTableViewCell cellID]];
+        [_tableView registerClass:[ISYBookListTableCarViewCell class] forCellReuseIdentifier:[ISYBookListTableCarViewCell cellID]];
         if (@available(iOS 11, *)) {
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }

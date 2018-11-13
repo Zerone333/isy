@@ -9,7 +9,7 @@
 #import "CarMoreViewController.h"
 #import "HomeModel.h"
 #import "HomeFoundItemModel.h"
-#import "ISYBookListTableViewCell.h"
+#import "ISYBookListSortingTableViewCell.h"
 
 @interface CarMoreViewController ()
 @property (nonatomic, strong) UITableView *tableView;
@@ -84,8 +84,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HomeFoundItemModel *model = self.dataSource[indexPath.section];
-    ISYBookListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListTableViewCell cellID]];
-    cell.model = model.dataSource[indexPath.row];
+    ISYBookListSortingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListSortingTableViewCell cellID]];
+//    cell.model = model.dataSource[indexPath.row];
+    [cell setModel:model.dataSource[indexPath.row] index:indexPath.row];
     return cell;
 }
 
@@ -95,11 +96,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0;
+    return 0.01;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0;
+    return 0.01;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -121,7 +122,7 @@
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
-        [_tableView registerClass:[ISYBookListTableViewCell class] forCellReuseIdentifier:[ISYBookListTableViewCell cellID]];
+        [_tableView registerClass:[ISYBookListSortingTableViewCell class] forCellReuseIdentifier:[ISYBookListSortingTableViewCell cellID]];
         if (@available(iOS 11, *)) {
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
