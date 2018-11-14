@@ -20,4 +20,6 @@
 
 @property (nonatomic, strong) NSString *balance;//余额
 
+@property (nonatomic, strong) LoginModel *loginModel;
+
 @end

@@ -11,9 +11,9 @@
 @interface MineHeader ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;//头像
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *coinLabel;//听币
-//@property (weak, nonatomic) IBOutlet UILabel *pointLabel;//积分
-//@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;//余额
+@property (weak, nonatomic) IBOutlet UILabel *coinLabel;//听币
+@property (weak, nonatomic) IBOutlet UILabel *pointLabel;//积分
+@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;//余额
 @end
 
 @implementation MineHeader
@@ -27,20 +27,43 @@
 }
 
 #pragma mark - Setter
-//昵称
-- (void)setName:(NSString *)name {
-    _name = name;
-    _nameLabel.text = name;
-}
 
 //头像
 - (void)setConfig:(NSString *)config {
     _config = config;
     if (![NSString isEmpty:config] && config.integerValue == 1) {
-        _imgView.image = [UIImage imageNamed:@"ph_women"];
+        _imgView.image = [UIImage imageNamed:@"mine_girl"];
     }else {
-        _imgView.image = [UIImage imageNamed:@"ph_man"];
+        _imgView.image = [UIImage imageNamed:@"mine_boy"];
     }
+}
+
+
+- (void)setLoginModel:(LoginModel *)loginModel {
+    _loginModel = loginModel;
+    _nameLabel.text = loginModel.user_name;
+    
+    if (![NSString isEmpty:loginModel.user_point] && loginModel.user_point.integerValue == 1) {
+        _imgView.image = [UIImage imageNamed:@"mine_girl"];
+    }else {
+        _imgView.image = [UIImage imageNamed:@"mine_boy"];
+    }
+    NSDictionary *dict1 = @{NSForegroundColorAttributeName:kColorValue(0x666666),NSFontAttributeName:kFontSystem(12)};
+    NSDictionary *dict2 = @{NSForegroundColorAttributeName:kColorValue(0x9b9b9b),NSFontAttributeName:kFontBold(15)};
+    NSString *str1 = [NSString stringWithFormat:@"%@\n听币",loginModel.user_point];
+    NSMutableAttributedString *attr1 = [[NSMutableAttributedString alloc]initWithString:str1 attributes:dict1];
+    [attr1 addAttributes:dict2 range:NSMakeRange(0, str1.length-2)];
+    self.coinLabel.attributedText = attr1;
+    
+     NSString *str2 = [NSString stringWithFormat:@"%@\n积分",loginModel.pay_point];
+    NSMutableAttributedString *attr2 = [[NSMutableAttributedString alloc]initWithString:str2 attributes:dict1];
+    [attr2 addAttributes:dict2 range:NSMakeRange(0, str2.length-2)];
+    self.pointLabel.attributedText = attr2;
+    
+    NSString *str3 = [NSString stringWithFormat:@"%@\n余额",loginModel.user_money];
+    NSMutableAttributedString *attr3 = [[NSMutableAttributedString alloc]initWithString:str3 attributes:dict1];
+    [attr3 addAttributes:dict2 range:NSMakeRange(0, str3.length-2)];
+    self.balanceLabel.attributedText = attr3;
 }
 
 /*
@@ -84,12 +107,12 @@
     __weak __typeof(self)weakSelf = self;
     [sheet addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.imgView.image = [UIImage imageNamed:@"ph_man"];
+        strongSelf.imgView.image = [UIImage imageNamed:@"mine_boy"];
         [USERDEFAULTS setObject:@"0" forKey:kUserConfigHeader];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.imgView.image = [UIImage imageNamed:@"ph_women"];
+        strongSelf.imgView.image = [UIImage imageNamed:@"mine_girl"];
         [USERDEFAULTS setObject:@"1" forKey:kUserConfigHeader];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -110,5 +133,12 @@
     [SVProgressHUD showImage:nil status:@"敬请期待～"];
 }
  */
+- (IBAction)bookingButtonClick:(id)sender {
+}
 
+- (IBAction)downloadButtonClick:(id)sender {
+}
+
+- (IBAction)histroyButtonClick:(id)sender {
+}
 @end

@@ -22,10 +22,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    self.header.coin = APPDELEGATE.loginModel.user_point;
-    self.header.point = APPDELEGATE.loginModel.pay_point;
-    self.header.balance = APPDELEGATE.loginModel.user_money;
-    self.header.name = APPDELEGATE.loginModel.user_name;
+    
+//    self.header.coin = APPDELEGATE.loginModel.user_point;
+//    self.header.point = APPDELEGATE.loginModel.pay_point;
+//    self.header.balance = APPDELEGATE.loginModel.user_money;
+//    self.header.name = APPDELEGATE.loginModel.user_name;
+    self.header.loginModel = APPDELEGATE.loginModel;
     self.header.config = [USERDEFAULTS objectForKey:kUserConfigHeader];
 }
 
@@ -44,7 +46,7 @@
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"我的"];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kNavBarOffset, 0, kTabBarOffset, 0));
+        make.edges.mas_equalTo(self.view);
     }];
 }
 
@@ -66,8 +68,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 188.f;
-    return 128.f;
+    return 332;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -129,11 +130,13 @@
 #pragma mark - Getter
 - (NSArray *)dataArray {
     return @[
-             //@{@"title":@"VIP特权",@"image":@"mine_vip",@"ctrl":@""},
-             @{@"title":@"我的留言",@"image":@"mine_feedback",@"ctrl":@"FeedbackManageViewController"},
-             //@{@"title":@"消费记录",@"image":@"mine_pay",@"ctrl":@""},
-             @{@"title":@"点播记录",@"image":@"mine_broadcast",@"ctrl":@"RecentPlayViewController"},
+             @{@"title":@"vip",@"image":@"mine_vip",@"ctrl":@""},
+             @{@"title":@"留言",@"image":@"mine_liuyan",@"ctrl":@"FeedbackManageViewController"},
+             @{@"title":@"修改密码",@"image":@"mine_password",@"ctrl":@""},
+             @{@"title":@"检测更新",@"image":@"mine_version",@"ctrl":@""},
+//             @{@"title":@"点播记录",@"image":@"mine_broadcast",@"ctrl":@"RecentPlayViewController"},
              @{@"title":@"设置",@"image":@"mine_setting",@"ctrl":@"SettingViewController"},
+             @{@"title":@"帮助",@"image":@"mine_help",@"ctrl":@""}
              ];
 }
 

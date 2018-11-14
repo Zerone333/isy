@@ -44,8 +44,8 @@
                            ];
     self.tabBarItemsAttributes = itemArray;
     
-    NSArray *vcArray = @[@"HomeViewController",@"SubscribeViewController",
-                         @"SubscribeViewController",@"MineViewController"];
+    NSArray *vcArray = @[@"HomeViewController",@"ISYSubscribeViewController",
+                         @"ISYDownLoadViewController",@"MineViewController"];
     NSMutableArray *mArray = [NSMutableArray arrayWithCapacity:vcArray.count];
     for (NSString *str in vcArray) {
         Class cls = NSClassFromString(str);
@@ -65,6 +65,7 @@
     if (APPDELEGATE.loginModel) {
         return YES;
     }
+    //取消登录弹出
     LoginViewController *vc = SBVC(@"LoginVC");
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];

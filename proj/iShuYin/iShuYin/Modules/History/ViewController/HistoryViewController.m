@@ -48,6 +48,16 @@
     self.dataSource =  [[ISYDBManager shareInstance] queryBookHistoryListen];
     [self.tableView reloadData];
 }
+- (void)continuPlay:(ISYHistoryListenModel *)model {
+    
+//    BookChapterModel *chapterModel = model.bookModel.chapters[model.chaperNumber];
+    [APPDELEGATE.playVC playWithBook:model.bookModel index:model.chaperNumber];
+    if ([self.navigationController.viewControllers containsObject:APPDELEGATE.playVC]) {
+        [self.navigationController popToViewController:APPDELEGATE.playVC animated:YES];
+    }else {
+        [self.navigationController pushViewController:APPDELEGATE.playVC animated:YES];
+    }
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -67,6 +77,11 @@
     ISYHistoryListenModel *model = self.dataSource[indexPath.row];
     ISYHisotyLisenBookListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYHisotyLisenBookListTableViewCell cellID]];
     cell.historyListenModel = model;
+    
+    __weak typeof(self) weakSelf = self;
+    cell.playBlock = ^(ISYHistoryListenModel *model) {
+        [self continuPlay: model];
+    };
     return cell;
 }
 

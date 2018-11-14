@@ -180,6 +180,12 @@
 		6D3D45F12196C176004D13E6 /* ISYCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D45F02196C176004D13E6 /* ISYCommentTableViewCell.m */; };
 		6D3D45F42196C8FA004D13E6 /* ISYCommentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D45F32196C8F9004D13E6 /* ISYCommentListViewController.m */; };
 		6D3D45F72196D1A3004D13E6 /* ISYPutCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D45F62196D1A3004D13E6 /* ISYPutCommentView.m */; };
+		6DC41DEF219BD1D0001EEBCE /* ISYSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DEE219BD1D0001EEBCE /* ISYSettingModel.m */; };
+		6DC41DF2219BD4F0001EEBCE /* ISYSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DF1219BD4F0001EEBCE /* ISYSettingTableViewCell.m */; };
+		6DC41DF5219C098C001EEBCE /* ISYUserConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DF4219C098C001EEBCE /* ISYUserConfigManager.m */; };
+		6DC41DF8219C0A26001EEBCE /* ISYSettingConfgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DF7219C0A26001EEBCE /* ISYSettingConfgModel.m */; };
+		6DC41DFB219C1A07001EEBCE /* ISYSubscribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DFA219C1A07001EEBCE /* ISYSubscribeViewController.m */; };
+		6DC41DFE219C1B3C001EEBCE /* ISYBookingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DFD219C1B3C001EEBCE /* ISYBookingTableViewCell.m */; };
 		6DF039D82184370800EFDB38 /* ISYBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */; };
 		6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */; };
 		6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */; };
@@ -518,6 +524,18 @@
 		6D3D45F52196D1A3004D13E6 /* ISYPutCommentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYPutCommentView.h; sourceTree = "<group>"; };
 		6D3D45F62196D1A3004D13E6 /* ISYPutCommentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYPutCommentView.m; sourceTree = "<group>"; };
 		6D699B56B1F74F164D3CB22B /* Pods-iShuYin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iShuYin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iShuYin/Pods-iShuYin.debug.xcconfig"; sourceTree = "<group>"; };
+		6DC41DED219BD1D0001EEBCE /* ISYSettingModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYSettingModel.h; sourceTree = "<group>"; };
+		6DC41DEE219BD1D0001EEBCE /* ISYSettingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSettingModel.m; sourceTree = "<group>"; };
+		6DC41DF0219BD4F0001EEBCE /* ISYSettingTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYSettingTableViewCell.h; sourceTree = "<group>"; };
+		6DC41DF1219BD4F0001EEBCE /* ISYSettingTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSettingTableViewCell.m; sourceTree = "<group>"; };
+		6DC41DF3219C098C001EEBCE /* ISYUserConfigManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYUserConfigManager.h; sourceTree = "<group>"; };
+		6DC41DF4219C098C001EEBCE /* ISYUserConfigManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYUserConfigManager.m; sourceTree = "<group>"; };
+		6DC41DF6219C0A26001EEBCE /* ISYSettingConfgModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYSettingConfgModel.h; sourceTree = "<group>"; };
+		6DC41DF7219C0A26001EEBCE /* ISYSettingConfgModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSettingConfgModel.m; sourceTree = "<group>"; };
+		6DC41DF9219C1A07001EEBCE /* ISYSubscribeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYSubscribeViewController.h; sourceTree = "<group>"; };
+		6DC41DFA219C1A07001EEBCE /* ISYSubscribeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSubscribeViewController.m; sourceTree = "<group>"; };
+		6DC41DFC219C1B3C001EEBCE /* ISYBookingTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookingTableViewCell.h; sourceTree = "<group>"; };
+		6DC41DFD219C1B3C001EEBCE /* ISYBookingTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookingTableViewCell.m; sourceTree = "<group>"; };
 		6DF039D62184370800EFDB38 /* ISYBookTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookTableViewCell.h; sourceTree = "<group>"; };
 		6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookTableViewCell.m; sourceTree = "<group>"; };
 		6DF039D92184427900EFDB38 /* ISYBookHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookHeaderFooterView.h; sourceTree = "<group>"; };
@@ -996,6 +1014,8 @@
 				18103F341F71717F00E56116 /* FeedbackModel.m */,
 				188471ED1FEBB82D0018CC3B /* SleepModel.h */,
 				188471EE1FEBB82D0018CC3B /* SleepModel.m */,
+				6DC41DED219BD1D0001EEBCE /* ISYSettingModel.h */,
+				6DC41DEE219BD1D0001EEBCE /* ISYSettingModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1036,6 +1056,8 @@
 				1819F0AB1F967A960040CB58 /* SettingCell.h */,
 				1819F0AC1F967A960040CB58 /* SettingCell.m */,
 				1819F0AD1F967A960040CB58 /* SettingCell.xib */,
+				6DC41DF0219BD4F0001EEBCE /* ISYSettingTableViewCell.h */,
+				6DC41DF1219BD4F0001EEBCE /* ISYSettingTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1067,6 +1089,8 @@
 				184DAEC11F2E3EFF00EAEA58 /* SubscribeViewController.m */,
 				184841661F81D0B000AF809B /* SubscribeListViewController.h */,
 				184841671F81D0B000AF809B /* SubscribeListViewController.m */,
+				6DC41DF9219C1A07001EEBCE /* ISYSubscribeViewController.h */,
+				6DC41DFA219C1A07001EEBCE /* ISYSubscribeViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1292,6 +1316,8 @@
 			isa = PBXGroup;
 			children = (
 				6D3C8B5F219AC0410023A0F0 /* Model */,
+				6DC41DF3219C098C001EEBCE /* ISYUserConfigManager.h */,
+				6DC41DF4219C098C001EEBCE /* ISYUserConfigManager.m */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -1301,6 +1327,8 @@
 			children = (
 				6D3C8B60219AC0600023A0F0 /* ISYHistoryListenModel.h */,
 				6D3C8B61219AC0600023A0F0 /* ISYHistoryListenModel.m */,
+				6DC41DF6219C0A26001EEBCE /* ISYSettingConfgModel.h */,
+				6DC41DF7219C0A26001EEBCE /* ISYSettingConfgModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1377,6 +1405,8 @@
 				6D3C8B5C219A7CF40023A0F0 /* ISYBookListSortingTableViewCell.m */,
 				6D3C8B63219AC85E0023A0F0 /* ISYHisotyLisenBookListTableViewCell.h */,
 				6D3C8B64219AC85E0023A0F0 /* ISYHisotyLisenBookListTableViewCell.m */,
+				6DC41DFC219C1B3C001EEBCE /* ISYBookingTableViewCell.h */,
+				6DC41DFD219C1B3C001EEBCE /* ISYBookingTableViewCell.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1671,6 +1701,7 @@
 				184DAE851F2E396B00EAEA58 /* LaunchViewController.m in Sources */,
 				6D3C8E682185977C00DB3C15 /* ISYDownLoadListViewController.m in Sources */,
 				9B738D61217344CA008D549E /* HomeFoundViewController.m in Sources */,
+				6DC41DF2219BD4F0001EEBCE /* ISYSettingTableViewCell.m in Sources */,
 				184DAE6F1F2E324200EAEA58 /* ZXScrollView.m in Sources */,
 				184DAE571F2E2DC000EAEA58 /* ZXProgressHUD.m in Sources */,
 				1846234620283F9C00AE9A87 /* ZXEmptyView.m in Sources */,
@@ -1697,6 +1728,7 @@
 				9B72DF9C2174CE8500DC99B5 /* HomeHotViewController.m in Sources */,
 				18A4A7B41F3B725300A02BE8 /* CategoryChildCell.m in Sources */,
 				18103F551F71ED5E00E56116 /* ZXTextView.m in Sources */,
+				6DC41DFB219C1A07001EEBCE /* ISYSubscribeViewController.m in Sources */,
 				184DAE371F2E29CD00EAEA58 /* SVIndefiniteAnimatedView.m in Sources */,
 				183396C01F44C5F800491F22 /* ModifyPswdViewController.m in Sources */,
 				6D38C5E1219833EC00337105 /* ISYSearchResultViewController.m in Sources */,
@@ -1722,6 +1754,7 @@
 				184DAE601F2E2F0700EAEA58 /* NSString+ZXAdd.m in Sources */,
 				6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */,
 				18A4A7D31F40B7E000A02BE8 /* BookDetailViewController.m in Sources */,
+				6DC41DF8219C0A26001EEBCE /* ISYSettingConfgModel.m in Sources */,
 				6D3C8B5A219A79A30023A0F0 /* ISYBookListTableCarViewCell.m in Sources */,
 				185638CE1F4B610500DD0184 /* BookChapterCell.m in Sources */,
 				18CB1A351F5F8FB3006F03B4 /* MineFooter.m in Sources */,
@@ -1729,6 +1762,7 @@
 				18103F521F71EB7700E56116 /* FeedbackAddViewController.m in Sources */,
 				18A4A7B61F3B725300A02BE8 /* CategoryChildHeader.m in Sources */,
 				18103F4E1F717EA300E56116 /* FeedbackAdminCell.m in Sources */,
+				6DC41DEF219BD1D0001EEBCE /* ISYSettingModel.m in Sources */,
 				9B738D86217366F8008D549E /* HomeFoundItemModel.m in Sources */,
 				9B72DFA32174D9C600DC99B5 /* CarHomeViewController.m in Sources */,
 				6D02EC8B21981C4E006F41E5 /* ISYCategoryDetailTableViewCell.m in Sources */,
@@ -1751,12 +1785,14 @@
 				6D3C8B54219A71AD0023A0F0 /* ISYHeadModel.m in Sources */,
 				6D3C8E652185943A00DB3C15 /* ISYDownLoadTableViewCell.m in Sources */,
 				6D3D45EE21969CAC004D13E6 /* ISYBookRefreshFooterView.m in Sources */,
+				6DC41DFE219C1B3C001EEBCE /* ISYBookingTableViewCell.m in Sources */,
 				1880EFF01F9D3E48006BADCB /* CommentListHeader.m in Sources */,
 				18386CF31F374FD900CBF32B /* FinishManageViewController.m in Sources */,
 				184DAE991F2E3C4B00EAEA58 /* ZXMainViewController.m in Sources */,
 				9B9AAFB4217C1FE80080A662 /* BookDetailSubDownLoadViewController.m in Sources */,
 				184DAE511F2E2D9600EAEA58 /* ZXNetworkManager.m in Sources */,
 				184DAE5D1F2E2EDC00EAEA58 /* UIButton+ZXAdd.m in Sources */,
+				6DC41DF5219C098C001EEBCE /* ISYUserConfigManager.m in Sources */,
 				183CC4041FA86E2600B356B4 /* ZXPlayButton.m in Sources */,
 				6D3D45EB21968B03004D13E6 /* ISYBookListHotTableViewCell.m in Sources */,
 				18A4A7D91F40C5D800A02BE8 /* BookDetailInfoView.m in Sources */,

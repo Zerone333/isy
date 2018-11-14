@@ -68,9 +68,17 @@
     bookModel.thumb = historyListenModel.bookModel.thumb;
     self.model = bookModel;
     
-    self.chaperLabel.text = [NSString stringWithFormat:@"第%ld集", (long)historyListenModel.chaperNumber];
+    self.chaperLabel.text = [NSString stringWithFormat:@"第%ld集", (long)historyListenModel.chaperNumber + 1];
     self.currentTimeLabe.text = [NSString stringWithFormat:@"场次播放至%ld", (long)historyListenModel.time];
 }
+
+#pragma mark - Event
+- (void)continueButtonClick {
+    if (self.playBlock != nil) {
+        self.playBlock(self.historyListenModel);
+    }
+}
+
 #pragma mark - getter
 - (UILabel *)chaperLabel {
     if (!_chaperLabel) {
@@ -106,7 +114,9 @@
         [_continueButton setTitle:@"继续收听" forState:UIControlStateNormal];
         _continueButton.backgroundColor =[ UIColor redColor];
         _continueButton.layer.masksToBounds = YES;
-        _continueButton.layer.cornerRadius = 4;
+        _continueButton.layer.cornerRadius = 2;
+        _continueButton.titleLabel.font = [UIFont systemFontOfSize:11];
+        [_continueButton addTarget:self action:@selector(continueButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _continueButton;
 }

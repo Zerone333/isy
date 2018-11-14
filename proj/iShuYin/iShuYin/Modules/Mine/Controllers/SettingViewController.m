@@ -9,18 +9,20 @@
 #import "SettingViewController.h"
 #import "SettingCell.h"
 #import "MCDownloader.h"
+#import "ISYSettingModel.h"
+#import "ISYSettingTableViewCell.h"
+#import "ISYUserConfigManager.h"
 
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) ISYSettingConfgModel *confgModel;
 @end
 
 @implementation SettingViewController
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.dataArray = nil;
-    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -34,31 +36,31 @@
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"设置"];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view).insets(UIEdgeInsetsMake(kNavBarOffset, 0, 0, 0));
+        make.edges.equalTo(self.view);
     }];
 }
 
 #pragma mark - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dataArray.count;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionArray = self.dataArray[section];
-    return sectionArray.count;
+     return self.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseId = @"SettingCell";
-    SettingCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
-    NSArray *sectionArray = self.dataArray[indexPath.section];
-    cell.dict = sectionArray[indexPath.row];
+//    static NSString *reuseId = @"SettingCell";
+//    SettingCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+//    NSArray *sectionArray = self.dataArray[indexPath.section];
+//    cell.dict = sectionArray[indexPath.row];
+//    return cell;
+    ISYSettingModel *model = self.dataArray[indexPath.row];
+    ISYSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYSettingTableViewCell cellId]];
+    cell.model = model;
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.0f;
+    return 50.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -79,18 +81,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSArray *sectionArray = self.dataArray[indexPath.section];
-    NSDictionary *dict = sectionArray[indexPath.row];
-    NSString *title = dict[@"title"];
-    if ([title isEqualToString:@"清除缓存"]) {
-        [self clearLoacalCache];
-    }else if ([title isEqualToString:@"定时关闭"]) {
-        [self showSleepSheet];
-    }else if ([title isEqualToString:@"关于我们"]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"爱书音" message:@"解放双眼，畅听阅读乐趣" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+    if (indexPath.row == self.dataArray.count -1) {
+        ISYSettingModel *model = self.dataArray[indexPath.row];
+        model.switchValueChagneBlock(0);
     }
+  
 }
 
 #pragma mark - Methods
@@ -179,22 +174,62 @@
         if (@available(iOS 11, *)) {
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        [_tableView registerNib:[UINib nibWithNibName:@"SettingCell" bundle:nil] forCellReuseIdentifier:@"SettingCell"];
+        [_tableView registerClass:[ISYSettingTableViewCell class] forCellReuseIdentifier:[ISYSettingTableViewCell cellId]];
     }
     return _tableView;
 }
 
 - (NSArray *)dataArray {
-    return @[
-             @[
-               @{@"title":@"定时关闭",@"info":@"",@"hidden":@(NO)},
-               ],
-             @[
-               @{@"title":@"关于我们",@"info":@"",@"hidden":@(NO)},
-               @{@"title":@"清除缓存",@"info":[self calculateCacheSize],@"hidden":@(NO)},
-               ],
-             ];
+        __weak typeof(self) weakSelf = self;
+        ISYSettingConfgModel *model = self.confgModel;
+        ISYSettingModel *model1 = [ISYSettingModel modelTitle:@"流量收听" imageName:@"setting_liuliang" settingType:ISYSettingModelSettingType_Swich block:^(BOOL switchValue) {
+            weakSelf.confgModel.allowTraffic = switchValue == YES;
+            [[ISYUserConfigManager shareInstance] updateSettingConfig:weakSelf.confgModel];
+            [weakSelf.tableView reloadData];
+        }];
+        model1.valueString = model.allowTraffic ? @"1" : @"0";
+        
+        ISYSettingModel *model2 = [ISYSettingModel modelTitle:@"仅在wifi网络下载" imageName:@"setting_wifi" settingType:ISYSettingModelSettingType_Swich block:^(BOOL switchValue) {
+            weakSelf.confgModel.allowWifiDownload = switchValue == YES;
+            [[ISYUserConfigManager shareInstance] updateSettingConfig:weakSelf.confgModel];
+            [weakSelf.tableView reloadData];
+            
+        }];
+        model2.valueString = model.allowWifiDownload ? @"1" : @"0";
+        
+        ISYSettingModel *model3 = [ISYSettingModel modelTitle:@"拔出耳机暂停播放" imageName:@"setting_erji" settingType:ISYSettingModelSettingType_Swich block:^(BOOL switchValue) {
+            weakSelf.confgModel.outputHeadsetPlay = switchValue == YES;
+            [[ISYUserConfigManager shareInstance] updateSettingConfig:weakSelf.confgModel];
+            [weakSelf.tableView reloadData];
+            
+        }];
+        model3.valueString = model.outputHeadsetPlay ? @"1" : @"0";
+        ISYSettingModel *model4 = [ISYSettingModel modelTitle:@"插入耳机自动播放" imageName:@"setting_erji" settingType:ISYSettingModelSettingType_Swich block:^(BOOL switchValue) {
+            weakSelf.confgModel.inputHeadsetPlay = switchValue == YES;
+            [[ISYUserConfigManager shareInstance] updateSettingConfig:weakSelf.confgModel];
+            [weakSelf.tableView reloadData];
+            
+        }];
+        model4.valueString = model.inputHeadsetPlay ? @"1" : @"0";
+        
+        ISYSettingModel *model5= [ISYSettingModel modelTitle:@"清空缓存" imageName:@"setting_clear" settingType:ISYSettingModelSettingType_info block:^(BOOL switchValue) {
+            [weakSelf clearLoacalCache];
+            
+        }];
+        model5.valueString = [self calculateCacheSize];
+        
+        return  @[model1, model2, model3, model4, model5];
+    
+  
 }
+
+- (ISYSettingConfgModel *)confgModel {
+    if (!_confgModel) {
+        _confgModel = [[ISYUserConfigManager shareInstance] currentSettingConfig];
+    }
+    return _confgModel;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

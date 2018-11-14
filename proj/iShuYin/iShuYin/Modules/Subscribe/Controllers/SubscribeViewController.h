@@ -7,7 +7,7 @@
 //
 
 #import "ZXBaseViewController.h"
-
+//订阅
 @interface SubscribeViewController : ZXBaseViewController
 
 @end

@@ -200,7 +200,7 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
 - (BOOL)insertHistoryListenBook:(BookDetailModel *)book chaperNumber:(NSInteger)chaperNumber time:(NSInteger)time listentime:(NSInteger)listentime{
     NSString *bookId = book.show_id;
     
-    NSString *deleteSqlString = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = ?)",
+    NSString *deleteSqlString = [NSString stringWithFormat:@"delete from %@ where %@ = ?",
                                  ISYTable_HistoryListenTable.tableName,
                                  ISYTable_HistoryListenTable.bookId];
      NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@) VALUES ( ?, ?, ?, ?)",

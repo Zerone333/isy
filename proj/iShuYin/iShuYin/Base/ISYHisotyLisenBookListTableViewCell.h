@@ -9,6 +9,9 @@
 #import "ISYBookListTableViewCell.h"
 #import "ISYHistoryListenModel.h"
 
+typedef void(^ISYHisotyLisenBookListTableViewCellBlock)(ISYHistoryListenModel *model);
+
 @interface ISYHisotyLisenBookListTableViewCell : ISYBookListTableViewCell
 @property (nonatomic, strong) ISYHistoryListenModel * historyListenModel;
+@property (nonatomic, copy) ISYHisotyLisenBookListTableViewCellBlock playBlock;
 @end

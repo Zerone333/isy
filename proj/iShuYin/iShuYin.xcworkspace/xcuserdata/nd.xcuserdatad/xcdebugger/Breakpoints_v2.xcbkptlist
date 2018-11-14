@@ -201,7 +201,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "563801527.531136"
+                  timestampString = "563877482.770281"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "355"
@@ -216,7 +216,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "563801527.533937"
+                  timestampString = "563877482.773308"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "356"
@@ -231,7 +231,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "563801527.536639"
+                  timestampString = "563877482.776314"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "355"
@@ -326,7 +326,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "563801525.678179"
+            timestampString = "563879106.628464"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "213"
@@ -342,7 +342,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/DB/ISYDBManager.m"
-                  timestampString = "563801527.626743"
+                  timestampString = "563877482.809675"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "213"
@@ -357,7 +357,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/DB/ISYDBManager.m"
-                  timestampString = "563801527.6299599"
+                  timestampString = "563877482.812819"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "213"
@@ -372,7 +372,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/work/isy/isy/proj/iShuYin/iShuYin/DB/ISYDBManager.m"
-                  timestampString = "563801527.633534"
+                  timestampString = "563877482.816717"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "213"
@@ -389,7 +389,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "563801525.678511"
+            timestampString = "563879106.629109"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "224"
@@ -405,7 +405,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "563801525.678604"
+            timestampString = "563879106.629198"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "217"
@@ -422,6 +422,32 @@
             continueAfterRunningActions = "No"
             scope = "0"
             stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/DB/ISYDBManager.m"
+            timestampString = "563879106.629274"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "-insertHistoryListenBook:chaperNumber:time:listentime:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
