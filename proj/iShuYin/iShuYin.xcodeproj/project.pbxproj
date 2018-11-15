@@ -186,6 +186,8 @@
 		6DC41DF8219C0A26001EEBCE /* ISYSettingConfgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DF7219C0A26001EEBCE /* ISYSettingConfgModel.m */; };
 		6DC41DFB219C1A07001EEBCE /* ISYSubscribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DFA219C1A07001EEBCE /* ISYSubscribeViewController.m */; };
 		6DC41DFE219C1B3C001EEBCE /* ISYBookingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41DFD219C1B3C001EEBCE /* ISYBookingTableViewCell.m */; };
+		6DD26FAA219D1CAA00F183C5 /* ISYNOSubscribeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD26FA9219D1CAA00F183C5 /* ISYNOSubscribeView.m */; };
+		6DD26FAC219D1CBA00F183C5 /* ISYNOSubscribeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DD26FAB219D1CBA00F183C5 /* ISYNOSubscribeView.xib */; };
 		6DF039D82184370800EFDB38 /* ISYBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */; };
 		6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */; };
 		6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */; };
@@ -536,6 +538,9 @@
 		6DC41DFA219C1A07001EEBCE /* ISYSubscribeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYSubscribeViewController.m; sourceTree = "<group>"; };
 		6DC41DFC219C1B3C001EEBCE /* ISYBookingTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookingTableViewCell.h; sourceTree = "<group>"; };
 		6DC41DFD219C1B3C001EEBCE /* ISYBookingTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookingTableViewCell.m; sourceTree = "<group>"; };
+		6DD26FA8219D1CAA00F183C5 /* ISYNOSubscribeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYNOSubscribeView.h; sourceTree = "<group>"; };
+		6DD26FA9219D1CAA00F183C5 /* ISYNOSubscribeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYNOSubscribeView.m; sourceTree = "<group>"; };
+		6DD26FAB219D1CBA00F183C5 /* ISYNOSubscribeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ISYNOSubscribeView.xib; sourceTree = "<group>"; };
 		6DF039D62184370800EFDB38 /* ISYBookTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookTableViewCell.h; sourceTree = "<group>"; };
 		6DF039D72184370800EFDB38 /* ISYBookTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYBookTableViewCell.m; sourceTree = "<group>"; };
 		6DF039D92184427900EFDB38 /* ISYBookHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYBookHeaderFooterView.h; sourceTree = "<group>"; };
@@ -1117,6 +1122,9 @@
 				184841711F8230A200AF809B /* SubRecentCell.h */,
 				184841721F8230A200AF809B /* SubRecentCell.m */,
 				184841731F8230A200AF809B /* SubRecentCell.xib */,
+				6DD26FA8219D1CAA00F183C5 /* ISYNOSubscribeView.h */,
+				6DD26FA9219D1CAA00F183C5 /* ISYNOSubscribeView.m */,
+				6DD26FAB219D1CBA00F183C5 /* ISYNOSubscribeView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1582,6 +1590,7 @@
 				18A4A7A51F38D49200A02BE8 /* HomeListCell.xib in Resources */,
 				184841751F8230A200AF809B /* SubRecentCell.xib in Resources */,
 				183CC4161FAC48F500B356B4 /* SubDownloadCell.xib in Resources */,
+				6DD26FAC219D1CBA00F183C5 /* ISYNOSubscribeView.xib in Resources */,
 				185638DC1F4B725200DD0184 /* BookPlayControlView.xib in Resources */,
 				1846234720283F9C00AE9A87 /* ZXEmptyView.xib in Resources */,
 				18CB1A371F5F8FC8006F03B4 /* MineFooter.xib in Resources */,
@@ -1709,6 +1718,7 @@
 				6D02EC8F21981F45006F41E5 /* ISYSearchViewController.m in Sources */,
 				185638DA1F4B724B00DD0184 /* BookPlayControlView.m in Sources */,
 				9B5CDC632174DFF800EA5D60 /* HistoryViewController.m in Sources */,
+				6DD26FAA219D1CAA00F183C5 /* ISYNOSubscribeView.m in Sources */,
 				184DAE3B1F2E29CD00EAEA58 /* SVRadialGradientLayer.m in Sources */,
 				184DAE0E1F2E24F600EAEA58 /* main.m in Sources */,
 				18CB19B61F51DBEE006F03B4 /* PlayViewController.m in Sources */,
