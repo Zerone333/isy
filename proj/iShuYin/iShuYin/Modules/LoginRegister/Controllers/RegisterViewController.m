@@ -7,12 +7,14 @@
 //
 
 #import "RegisterViewController.h"
+#import "ISYRegister3ViewController.h"
 
 @interface RegisterViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *accountTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pswdOneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pswdTwoTextField;
+@property (weak, nonatomic) IBOutlet UIButton *goLoginBtn;
 @end
 
 @implementation RegisterViewController
@@ -22,12 +24,28 @@
     // Do any additional setup after loading the view.
     
     [self configUI];
+    
 }
 
 - (void)configUI {
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"注册"];
+    
+    [self.goLoginBtn setTitle:@"" forState:UIControlStateNormal];
+    
+    
+    NSString *str1 = @"已有账号，";
+    NSString *str2 = @"点此登陆";
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",str1,str2]];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(str1.length,str2.length)];
+    [self.goLoginBtn setAttributedTitle:noteStr forState:UIControlStateNormal];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+}
 #pragma mark - Actions
 //同意
 - (IBAction)agreeBtnClick:(id)sender {
@@ -94,6 +112,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)goLogin:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (IBAction)qqRegister:(id)sender {
+    ISYRegister3ViewController *vc = [[ISYRegister3ViewController alloc] init];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (IBAction)wechatRegister:(id)sender {
+    
+    ISYRegister3ViewController *vc = [[ISYRegister3ViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

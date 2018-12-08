@@ -23,6 +23,11 @@
     [self configUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+}
 - (void)configUI {
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"修改密码"];
 }

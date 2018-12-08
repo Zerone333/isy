@@ -38,6 +38,7 @@
 @property (nonatomic, strong) HomeRecommendViewController *vc3;
 @property (nonatomic, strong) HomeHotViewController *vc4;
 @property (nonatomic, strong) UIScrollView *contentScrollView;
+@property (nonatomic, strong) UIView *continueView;
 @end
 
 @implementation HomeViewController
@@ -73,6 +74,8 @@
     [self requestData];
     [self requestAppUpdate];
     self.seg.selectedSegmentIndex = 0;
+    //查询历史播放记录
+    [self qureyHisoryRead];
 }
 
 //- (void)viewDidLayoutSubviews {
@@ -170,6 +173,26 @@
         make.top.equalTo(self.contentScrollView);
         make.right.equalTo(self.vc4.view);
     }];
+}
+
+//查询历史播放记录
+- (void)qureyHisoryRead {
+    NSTimer *timer  = [NSTimer timerWithTimeInterval:3.0 target:self selector:@selector(timerMethod1) userInfo:nil repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    
+    [self.view addSubview:self.continueView];
+    [self.continueView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(100);
+        make.height.mas_equalTo(20);
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(self.view).mas_offset(-30);
+    }];
+    
+   
+}
+- (void)timerMethod1 {
+    [self.continueView removeFromSuperview];
+    self.continueView = nil;
 }
 
 - (void)configUI {
@@ -581,5 +604,13 @@
         _contentScrollView.scrollEnabled = NO;
     }
     return _contentScrollView;
+}
+
+- (UIView *)continueView {
+    if (!_continueView) {
+        _continueView = [[UIView alloc] init];
+        _continueView.backgroundColor = [UIColor redColor];
+    }
+    return _continueView;
 }
 @end

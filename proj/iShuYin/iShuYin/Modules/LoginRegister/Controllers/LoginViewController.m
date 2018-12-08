@@ -31,6 +31,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    self.navigationController.navigationBar.barTintColor =  [UIColor greenColor];
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    UIColor *color = [[UIColor whiteColor] colorWithAlphaComponent:1];
+    UIImage *img = [UIImage imageWithColor:color size:CGSizeMake(1, 1)];
+    [self.navigationController.navigationBar setBackgroundImage:img
+                                                  forBarMetrics:UIBarMetricsDefault];
+
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    
     
     if (![USERDEFAULTS objectForKey:kVersion]) {
         _accountTextField.text = @"";
@@ -60,6 +70,10 @@
     [USERDEFAULTS synchronize];
 }
 
+- (void)addBackBtn {
+    [self addNavBtnWithImage:@"back_hover" target:self action:@selector(popBack:) isLeft:YES];
+}
+
 - (void)popBack:(UIButton *)btn {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -72,9 +86,29 @@
 }
 
 - (void)configUI {
+    self.view.backgroundColor = [UIColor whiteColor];
+//    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    leftBtn.backgroundColor = [UIColor redColor];
+//    [leftBtn addTarget:self action:@selector(popBack:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:leftBtn];
+//    [leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        if (@available(iOS 11.0, *)) {
+//            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+//        } else {
+//             make.top.equalTo(self.view.mas_top);
+//        }
+//        make.size.mas_equalTo(CGSizeMake(44, 44));
+//        make.left.equalTo(self.view).mas_offset(12);
+//    }];
+//
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"登录"];
-    _registerBtn.layer.borderWidth = 1.0f;
-    _registerBtn.layer.borderColor = kColorValue(0x8dc44b).CGColor;
+    [self.registerBtn setTitle:@"新用户注册" forState:UIControlStateNormal];
+//    _registerBtn.layer.borderWidth = 1.0f;
+//    _registerBtn.layer.borderColor = kColorValue(0x8dc44b).CGColor;
+    self.rememberPswdBtn.hidden = YES;
+    self.autoLoginBtn.hidden = YES;
+    self.rememberPswdBtn.selected = YES;
+    self.autoLoginBtn.selected = YES;
 }
 
 #pragma mark - Actions

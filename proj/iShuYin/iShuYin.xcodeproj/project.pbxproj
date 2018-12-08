@@ -203,6 +203,7 @@
 		9B9AAFB1217C1EF30080A662 /* BookSubDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB0217C1EF30080A662 /* BookSubDetailViewController.m */; };
 		9B9AAFB4217C1FE80080A662 /* BookDetailSubDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB3217C1FE80080A662 /* BookDetailSubDownLoadViewController.m */; };
 		9B9AAFB7217C24F80080A662 /* BookChapterIntervalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */; };
+		9BC17B0221A6E42E0056DB95 /* ISYRegister3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC17B0021A6E42E0056DB95 /* ISYRegister3ViewController.m */; };
 		C3B2A9F32125DEBD006B9589 /* UpdateForceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3B2A9EE2125DEBD006B9589 /* UpdateForceView.xib */; };
 		C3B2A9F42125DEBD006B9589 /* UpdateRemindView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A9EF2125DEBD006B9589 /* UpdateRemindView.m */; };
 		C3B2A9F52125DEBD006B9589 /* UpdateRemindView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3B2A9F12125DEBD006B9589 /* UpdateRemindView.xib */; };
@@ -569,6 +570,8 @@
 		9B9AAFB3217C1FE80080A662 /* BookDetailSubDownLoadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookDetailSubDownLoadViewController.m; sourceTree = "<group>"; };
 		9B9AAFB5217C24F80080A662 /* BookChapterIntervalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookChapterIntervalView.h; sourceTree = "<group>"; };
 		9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookChapterIntervalView.m; sourceTree = "<group>"; };
+		9BC17AFF21A6E42E0056DB95 /* ISYRegister3ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYRegister3ViewController.h; sourceTree = "<group>"; };
+		9BC17B0021A6E42E0056DB95 /* ISYRegister3ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYRegister3ViewController.m; sourceTree = "<group>"; };
 		C3B2A9ED2125DEBD006B9589 /* UpdateRemindView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateRemindView.h; sourceTree = "<group>"; };
 		C3B2A9EE2125DEBD006B9589 /* UpdateForceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateForceView.xib; sourceTree = "<group>"; };
 		C3B2A9EF2125DEBD006B9589 /* UpdateRemindView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateRemindView.m; sourceTree = "<group>"; };
@@ -915,6 +918,8 @@
 				183396BC1F44C5A600491F22 /* FindPswdViewController.m */,
 				183396BE1F44C5F800491F22 /* ModifyPswdViewController.h */,
 				183396BF1F44C5F800491F22 /* ModifyPswdViewController.m */,
+				9BC17AFF21A6E42E0056DB95 /* ISYRegister3ViewController.h */,
+				9BC17B0021A6E42E0056DB95 /* ISYRegister3ViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1716,6 +1721,7 @@
 				1846234620283F9C00AE9A87 /* ZXEmptyView.m in Sources */,
 				18A4A7D61F40B80200A02BE8 /* BookDetailModel.m in Sources */,
 				6D02EC8F21981F45006F41E5 /* ISYSearchViewController.m in Sources */,
+				9BC17B0221A6E42E0056DB95 /* ISYRegister3ViewController.m in Sources */,
 				185638DA1F4B724B00DD0184 /* BookPlayControlView.m in Sources */,
 				9B5CDC632174DFF800EA5D60 /* HistoryViewController.m in Sources */,
 				6DD26FAA219D1CAA00F183C5 /* ISYNOSubscribeView.m in Sources */,
@@ -1981,7 +1987,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iShuYin/Utilities/PrefixHeader.pch";
 				INFOPLIST_FILE = iShuYin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2008,7 +2014,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iShuYin/Utilities/PrefixHeader.pch";
 				INFOPLIST_FILE = iShuYin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
