@@ -9,6 +9,7 @@
 #import "SleepView.h"
 #import "SleepCell.h"
 #import "SleepModel.h"
+#import "Const.h"
 
 @interface SleepView()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -68,6 +69,7 @@
     m.isSelected = YES;
     APPDELEGATE.sleepType = m.sleepType;
     [APPDELEGATE startSleepTimerWithInterval:(m.sleepType*60)];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotiTimerChange object:m];
     [tableView beginUpdates];
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [tableView endUpdates];
@@ -94,7 +96,7 @@
 - (NSMutableArray *)dataArray {
     if (!_dataArray) {
         _dataArray = [NSMutableArray array];
-        for (NSNumber *obj in @[@(SleepType0),@(SleepType20),@(SleepType30),@(SleepType45),@(SleepType60)]) {
+        for (NSNumber *obj in @[@(SleepType0),@(SleepType15),@(SleepType20),@(SleepType30),@(SleepType45),@(SleepType60),@(SleepType90)]) {
             SleepModel *m = [[SleepModel alloc]init];
             m.sleepType = obj.integerValue;
             if (APPDELEGATE.sleepType == m.sleepType) {

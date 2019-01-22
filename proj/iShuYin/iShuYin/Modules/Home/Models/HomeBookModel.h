@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString *keywords;
 @property (nonatomic, strong) NSString *ctime;
 @property (nonatomic, strong) NSString *cat_name;
+@property (nonatomic, strong) NSString *cat_id;
 @property (nonatomic, strong) NSString *click_count;
 @property (nonatomic, strong) NSString *jishu;
 @property (nonatomic, strong) NSString *descriptionString;

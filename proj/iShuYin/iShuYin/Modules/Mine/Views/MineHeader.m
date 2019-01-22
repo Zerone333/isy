@@ -134,11 +134,20 @@
 }
  */
 - (IBAction)bookingButtonClick:(id)sender {
+    if (self.clickCB) {
+        self.clickCB(1);
+    }
 }
 
 - (IBAction)downloadButtonClick:(id)sender {
+    if (self.clickCB) {
+        self.clickCB(2);
+    }
 }
 
 - (IBAction)histroyButtonClick:(id)sender {
+    if (self.clickCB) {
+        self.clickCB(3);
+    }
 }
 @end

@@ -15,5 +15,5 @@
  */
 @interface BookDetailSubDownLoadViewController : ZXBaseViewController
 @property (nonatomic, strong) BookDetailModel *detailModel;
-
+@property (nonatomic, assign) BOOL zhengxu; //排序方式，正序
 @end

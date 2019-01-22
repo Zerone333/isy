@@ -61,4 +61,9 @@
 @property (nonatomic, strong) NSArray *download_chapter_idArray;//本地下载的章节id数组 (数量可能不准确)
 @property (nonatomic, assign) NSInteger download_count;//本地下载的章节数量(比较准确)
 @property (nonatomic, strong) BookChapterModel *recent_chapter;//最近播放的章节id
+
+
+@property (nonatomic, assign) NSInteger downloadfinishCount;    ///< 数据库 当前下载完成数
+@property (nonatomic, assign) long long totaldownloadSize;    ///< 数据库 当前下载完成数
 @end
+

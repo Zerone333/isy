@@ -193,6 +193,9 @@
 		6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */; };
 		6DF039E321844DCF00EFDB38 /* ISYMoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */; };
 		99061EBE1D4FA48B0B9A12BA /* libPods-iShuYin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6777BA96BC9336E3F606CF0C /* libPods-iShuYin.a */; };
+		9B51BA4E21C4070900E4A183 /* ISYCategoryMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B51BA4D21C4070900E4A183 /* ISYCategoryMoreViewController.m */; };
+		9B51BA5121C4174300E4A183 /* ISYCategoryFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B51BA5021C4174300E4A183 /* ISYCategoryFilterView.m */; };
+		9B51BA5421C42B9400E4A183 /* ISYCategoryMoreHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B51BA5321C42B9400E4A183 /* ISYCategoryMoreHeadView.m */; };
 		9B5CDC5C2174DD6800EA5D60 /* CarMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5CDC5B2174DD6800EA5D60 /* CarMoreViewController.m */; };
 		9B5CDC632174DFF800EA5D60 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5CDC622174DFF800EA5D60 /* HistoryViewController.m */; };
 		9B72DF992174CC6F00DC99B5 /* HomeRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B72DF982174CC6F00DC99B5 /* HomeRecommendViewController.m */; };
@@ -203,7 +206,14 @@
 		9B9AAFB1217C1EF30080A662 /* BookSubDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB0217C1EF30080A662 /* BookSubDetailViewController.m */; };
 		9B9AAFB4217C1FE80080A662 /* BookDetailSubDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB3217C1FE80080A662 /* BookDetailSubDownLoadViewController.m */; };
 		9B9AAFB7217C24F80080A662 /* BookChapterIntervalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */; };
+		9BB340C121BBB40E00873339 /* ISYDownloadChaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB340C021BBB40E00873339 /* ISYDownloadChaperCell.m */; };
+		9BB340C421BBC3CB00873339 /* ISYDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB340C321BBC3CB00873339 /* ISYDownloadHelper.m */; };
+		9BB340C721BC183900873339 /* ISYDownloadFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB340C621BC183900873339 /* ISYDownloadFinishViewController.m */; };
+		9BB340CA21BC193800873339 /* ISYDownloadChaperStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB340C921BC193800873339 /* ISYDownloadChaperStatusCell.m */; };
+		9BB340CD21BE947200873339 /* ISYDownloadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB340CC21BE947200873339 /* ISYDownloadingViewController.m */; };
 		9BC17B0221A6E42E0056DB95 /* ISYRegister3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC17B0021A6E42E0056DB95 /* ISYRegister3ViewController.m */; };
+		9BDD258421C7DDB000B632CB /* ISYCategoryFilterCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDD258321C7DDB000B632CB /* ISYCategoryFilterCollectionCell.m */; };
+		9BF9A13B21EB3F7D00D998BA /* ISYChaperListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9A13A21EB3F7D00D998BA /* ISYChaperListView.m */; };
 		C3B2A9F32125DEBD006B9589 /* UpdateForceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3B2A9EE2125DEBD006B9589 /* UpdateForceView.xib */; };
 		C3B2A9F42125DEBD006B9589 /* UpdateRemindView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A9EF2125DEBD006B9589 /* UpdateRemindView.m */; };
 		C3B2A9F52125DEBD006B9589 /* UpdateRemindView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3B2A9F12125DEBD006B9589 /* UpdateRemindView.xib */; };
@@ -550,6 +560,12 @@
 		6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYMoreViewController.m; sourceTree = "<group>"; };
 		6DF039E121844DCF00EFDB38 /* ISYMoreListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYMoreListViewController.h; sourceTree = "<group>"; };
 		6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYMoreListViewController.m; sourceTree = "<group>"; };
+		9B51BA4C21C4070900E4A183 /* ISYCategoryMoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryMoreViewController.h; sourceTree = "<group>"; };
+		9B51BA4D21C4070900E4A183 /* ISYCategoryMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryMoreViewController.m; sourceTree = "<group>"; };
+		9B51BA4F21C4174300E4A183 /* ISYCategoryFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryFilterView.h; sourceTree = "<group>"; };
+		9B51BA5021C4174300E4A183 /* ISYCategoryFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryFilterView.m; sourceTree = "<group>"; };
+		9B51BA5221C42B9400E4A183 /* ISYCategoryMoreHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryMoreHeadView.h; sourceTree = "<group>"; };
+		9B51BA5321C42B9400E4A183 /* ISYCategoryMoreHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryMoreHeadView.m; sourceTree = "<group>"; };
 		9B5CDC5A2174DD6800EA5D60 /* CarMoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarMoreViewController.h; sourceTree = "<group>"; };
 		9B5CDC5B2174DD6800EA5D60 /* CarMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarMoreViewController.m; sourceTree = "<group>"; };
 		9B5CDC612174DFF800EA5D60 /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -570,8 +586,22 @@
 		9B9AAFB3217C1FE80080A662 /* BookDetailSubDownLoadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookDetailSubDownLoadViewController.m; sourceTree = "<group>"; };
 		9B9AAFB5217C24F80080A662 /* BookChapterIntervalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookChapterIntervalView.h; sourceTree = "<group>"; };
 		9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookChapterIntervalView.m; sourceTree = "<group>"; };
+		9BB340BF21BBB40E00873339 /* ISYDownloadChaperCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownloadChaperCell.h; sourceTree = "<group>"; };
+		9BB340C021BBB40E00873339 /* ISYDownloadChaperCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownloadChaperCell.m; sourceTree = "<group>"; };
+		9BB340C221BBC3CB00873339 /* ISYDownloadHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownloadHelper.h; sourceTree = "<group>"; };
+		9BB340C321BBC3CB00873339 /* ISYDownloadHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownloadHelper.m; sourceTree = "<group>"; };
+		9BB340C521BC183900873339 /* ISYDownloadFinishViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownloadFinishViewController.h; sourceTree = "<group>"; };
+		9BB340C621BC183900873339 /* ISYDownloadFinishViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownloadFinishViewController.m; sourceTree = "<group>"; };
+		9BB340C821BC193800873339 /* ISYDownloadChaperStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownloadChaperStatusCell.h; sourceTree = "<group>"; };
+		9BB340C921BC193800873339 /* ISYDownloadChaperStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownloadChaperStatusCell.m; sourceTree = "<group>"; };
+		9BB340CB21BE947200873339 /* ISYDownloadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYDownloadingViewController.h; sourceTree = "<group>"; };
+		9BB340CC21BE947200873339 /* ISYDownloadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYDownloadingViewController.m; sourceTree = "<group>"; };
 		9BC17AFF21A6E42E0056DB95 /* ISYRegister3ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYRegister3ViewController.h; sourceTree = "<group>"; };
 		9BC17B0021A6E42E0056DB95 /* ISYRegister3ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYRegister3ViewController.m; sourceTree = "<group>"; };
+		9BDD258221C7DDB000B632CB /* ISYCategoryFilterCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryFilterCollectionCell.h; sourceTree = "<group>"; };
+		9BDD258321C7DDB000B632CB /* ISYCategoryFilterCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryFilterCollectionCell.m; sourceTree = "<group>"; };
+		9BF9A13921EB3F7C00D998BA /* ISYChaperListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYChaperListView.h; sourceTree = "<group>"; };
+		9BF9A13A21EB3F7D00D998BA /* ISYChaperListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYChaperListView.m; sourceTree = "<group>"; };
 		C3B2A9ED2125DEBD006B9589 /* UpdateRemindView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateRemindView.h; sourceTree = "<group>"; };
 		C3B2A9EE2125DEBD006B9589 /* UpdateForceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateForceView.xib; sourceTree = "<group>"; };
 		C3B2A9EF2125DEBD006B9589 /* UpdateRemindView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateRemindView.m; sourceTree = "<group>"; };
@@ -790,6 +820,8 @@
 		184DAE2A1F2E25D900EAEA58 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				9BF9A13821EB3F6200D998BA /* Play */,
+				9B51BA4B21C406F800E4A183 /* CategoryMore */,
 				6D02EC8C21981F2F006F41E5 /* Search */,
 				6D3C8E5821858C2700DB3C15 /* Download */,
 				1880EFDF1F9D13A5006BADCB /* Comment */,
@@ -1301,6 +1333,8 @@
 				9B9AAFB6217C24F80080A662 /* BookChapterIntervalView.m */,
 				6D3D45E6219683EE004D13E6 /* ISYChaperDownloadTableViewCell.h */,
 				6D3D45E7219683EE004D13E6 /* ISYChaperDownloadTableViewCell.m */,
+				9BB340BF21BBB40E00873339 /* ISYDownloadChaperCell.h */,
+				9BB340C021BBB40E00873339 /* ISYDownloadChaperCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1331,6 +1365,8 @@
 				6D3C8B5F219AC0410023A0F0 /* Model */,
 				6DC41DF3219C098C001EEBCE /* ISYUserConfigManager.h */,
 				6DC41DF4219C098C001EEBCE /* ISYUserConfigManager.m */,
+				9BB340C221BBC3CB00873339 /* ISYDownloadHelper.h */,
+				9BB340C321BBC3CB00873339 /* ISYDownloadHelper.m */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -1354,6 +1390,10 @@
 				6D3C8E5A21858C3E00DB3C15 /* ISYDownLoadViewController.m */,
 				6D3C8E662185977C00DB3C15 /* ISYDownLoadListViewController.h */,
 				6D3C8E672185977C00DB3C15 /* ISYDownLoadListViewController.m */,
+				9BB340C521BC183900873339 /* ISYDownloadFinishViewController.h */,
+				9BB340C621BC183900873339 /* ISYDownloadFinishViewController.m */,
+				9BB340CB21BE947200873339 /* ISYDownloadingViewController.h */,
+				9BB340CC21BE947200873339 /* ISYDownloadingViewController.m */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -1363,6 +1403,8 @@
 			children = (
 				6D3C8E632185943A00DB3C15 /* ISYDownLoadTableViewCell.h */,
 				6D3C8E642185943A00DB3C15 /* ISYDownLoadTableViewCell.m */,
+				9BB340C821BC193800873339 /* ISYDownloadChaperStatusCell.h */,
+				9BB340C921BC193800873339 /* ISYDownloadChaperStatusCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1444,6 +1486,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9B51BA4B21C406F800E4A183 /* CategoryMore */ = {
+			isa = PBXGroup;
+			children = (
+				9B51BA4C21C4070900E4A183 /* ISYCategoryMoreViewController.h */,
+				9B51BA4D21C4070900E4A183 /* ISYCategoryMoreViewController.m */,
+				9B51BA4F21C4174300E4A183 /* ISYCategoryFilterView.h */,
+				9B51BA5021C4174300E4A183 /* ISYCategoryFilterView.m */,
+				9B51BA5221C42B9400E4A183 /* ISYCategoryMoreHeadView.h */,
+				9B51BA5321C42B9400E4A183 /* ISYCategoryMoreHeadView.m */,
+				9BDD258221C7DDB000B632CB /* ISYCategoryFilterCollectionCell.h */,
+				9BDD258321C7DDB000B632CB /* ISYCategoryFilterCollectionCell.m */,
+			);
+			path = CategoryMore;
+			sourceTree = "<group>";
+		};
 		9B5CDC5D2174DFE600EA5D60 /* History */ = {
 			isa = PBXGroup;
 			children = (
@@ -1510,6 +1567,15 @@
 				9B5CDC5B2174DD6800EA5D60 /* CarMoreViewController.m */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9BF9A13821EB3F6200D998BA /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				9BF9A13921EB3F7C00D998BA /* ISYChaperListView.h */,
+				9BF9A13A21EB3F7D00D998BA /* ISYChaperListView.m */,
+			);
+			path = Play;
 			sourceTree = "<group>";
 		};
 		CFD6D1A1170CCB9B0A72E903 /* Frameworks */ = {
@@ -1716,6 +1782,7 @@
 				6D3C8E682185977C00DB3C15 /* ISYDownLoadListViewController.m in Sources */,
 				9B738D61217344CA008D549E /* HomeFoundViewController.m in Sources */,
 				6DC41DF2219BD4F0001EEBCE /* ISYSettingTableViewCell.m in Sources */,
+				9BDD258421C7DDB000B632CB /* ISYCategoryFilterCollectionCell.m in Sources */,
 				184DAE6F1F2E324200EAEA58 /* ZXScrollView.m in Sources */,
 				184DAE571F2E2DC000EAEA58 /* ZXProgressHUD.m in Sources */,
 				1846234620283F9C00AE9A87 /* ZXEmptyView.m in Sources */,
@@ -1770,6 +1837,7 @@
 				184DAE601F2E2F0700EAEA58 /* NSString+ZXAdd.m in Sources */,
 				6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */,
 				18A4A7D31F40B7E000A02BE8 /* BookDetailViewController.m in Sources */,
+				9BB340C421BBC3CB00873339 /* ISYDownloadHelper.m in Sources */,
 				6DC41DF8219C0A26001EEBCE /* ISYSettingConfgModel.m in Sources */,
 				6D3C8B5A219A79A30023A0F0 /* ISYBookListTableCarViewCell.m in Sources */,
 				185638CE1F4B610500DD0184 /* BookChapterCell.m in Sources */,
@@ -1778,6 +1846,7 @@
 				18103F521F71EB7700E56116 /* FeedbackAddViewController.m in Sources */,
 				18A4A7B61F3B725300A02BE8 /* CategoryChildHeader.m in Sources */,
 				18103F4E1F717EA300E56116 /* FeedbackAdminCell.m in Sources */,
+				9B51BA5121C4174300E4A183 /* ISYCategoryFilterView.m in Sources */,
 				6DC41DEF219BD1D0001EEBCE /* ISYSettingModel.m in Sources */,
 				9B738D86217366F8008D549E /* HomeFoundItemModel.m in Sources */,
 				9B72DFA32174D9C600DC99B5 /* CarHomeViewController.m in Sources */,
@@ -1787,6 +1856,7 @@
 				18103F491F717CBC00E56116 /* FeedbackUserCell.m in Sources */,
 				6D3D45F42196C8FA004D13E6 /* ISYCommentListViewController.m in Sources */,
 				184DAE781F2E384500EAEA58 /* NSArray+ZXAdd.m in Sources */,
+				9BB340CD21BE947200873339 /* ISYDownloadingViewController.m in Sources */,
 				18103F451F717C6200E56116 /* FeedbackDetailViewController.m in Sources */,
 				184DAEC21F2E3EFF00EAEA58 /* SubscribeViewController.m in Sources */,
 				6D3C8E7A2185A6CB00DB3C15 /* FMResultSet.m in Sources */,
@@ -1803,9 +1873,12 @@
 				6D3D45EE21969CAC004D13E6 /* ISYBookRefreshFooterView.m in Sources */,
 				6DC41DFE219C1B3C001EEBCE /* ISYBookingTableViewCell.m in Sources */,
 				1880EFF01F9D3E48006BADCB /* CommentListHeader.m in Sources */,
+				9BB340C121BBB40E00873339 /* ISYDownloadChaperCell.m in Sources */,
 				18386CF31F374FD900CBF32B /* FinishManageViewController.m in Sources */,
 				184DAE991F2E3C4B00EAEA58 /* ZXMainViewController.m in Sources */,
+				9B51BA4E21C4070900E4A183 /* ISYCategoryMoreViewController.m in Sources */,
 				9B9AAFB4217C1FE80080A662 /* BookDetailSubDownLoadViewController.m in Sources */,
+				9BB340CA21BC193800873339 /* ISYDownloadChaperStatusCell.m in Sources */,
 				184DAE511F2E2D9600EAEA58 /* ZXNetworkManager.m in Sources */,
 				184DAE5D1F2E2EDC00EAEA58 /* UIButton+ZXAdd.m in Sources */,
 				6DC41DF5219C098C001EEBCE /* ISYUserConfigManager.m in Sources */,
@@ -1814,8 +1887,10 @@
 				18A4A7D91F40C5D800A02BE8 /* BookDetailInfoView.m in Sources */,
 				6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */,
 				184DAE891F2E39F000EAEA58 /* GuideCell.m in Sources */,
+				9BF9A13B21EB3F7D00D998BA /* ISYChaperListView.m in Sources */,
 				6D3C8B65219AC85E0023A0F0 /* ISYHisotyLisenBookListTableViewCell.m in Sources */,
 				184DAE481F2E29F500EAEA58 /* ZPTradeInputView.m in Sources */,
+				9BB340C721BC183900873339 /* ISYDownloadFinishViewController.m in Sources */,
 				6D3C8B5D219A7CF40023A0F0 /* ISYBookListSortingTableViewCell.m in Sources */,
 				1833968F1F4212D700491F22 /* BookDetailDescOneView.m in Sources */,
 				184841931F8BF97800AF809B /* RecentPlayViewController.m in Sources */,
@@ -1826,6 +1901,7 @@
 				6D3C8E782185A6CB00DB3C15 /* FMDatabasePool.m in Sources */,
 				1819F0A71F9679F80040CB58 /* SettingViewController.m in Sources */,
 				6D3C8B62219AC0600023A0F0 /* ISYHistoryListenModel.m in Sources */,
+				9B51BA5421C42B9400E4A183 /* ISYCategoryMoreHeadView.m in Sources */,
 				C3B2A9F92125DEFD006B9589 /* ZXInputView.m in Sources */,
 				18A4A7B21F3B725300A02BE8 /* CategoryCell.m in Sources */,
 				6DF039E321844DCF00EFDB38 /* ISYMoreListViewController.m in Sources */,
@@ -1980,7 +2056,7 @@
 			baseConfigurationReference = 6D699B56B1F74F164D3CB22B /* Pods-iShuYin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 774S7CUTG6;
@@ -1993,11 +2069,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/iShuYin/ThirdParty/ChangyanSDK",
 					"$(PROJECT_DIR)/iShuYin/ThirdParty/BaiduMTJ",
+					"$(PROJECT_DIR)/iShuYin/ThirdParty/WeChatSDK1.8.3_NoPay",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ishuyin.iShuYin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5cedc5ad-6f43-435a-a03b-92dfdf63349b";
-				PROVISIONING_PROFILE_SPECIFIER = lee_isy;
+				PROVISIONING_PROFILE_SPECIFIER = lee_isy_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2020,11 +2097,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/iShuYin/ThirdParty/ChangyanSDK",
 					"$(PROJECT_DIR)/iShuYin/ThirdParty/BaiduMTJ",
+					"$(PROJECT_DIR)/iShuYin/ThirdParty/WeChatSDK1.8.3_NoPay",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ishuyin.iShuYin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0bc1e87e-5270-4466-ae48-ac7f110d2374";
-				PROVISIONING_PROFILE_SPECIFIER = lee_isy;
+				PROVISIONING_PROFILE_SPECIFIER = "isy_ Distribution_pro";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

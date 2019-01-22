@@ -13,6 +13,7 @@
 #import "BookDownloadBottomView.h"
 #import "MCDownloader.h"
 #import "BookChapterIntervalView.h"
+#import "ISYDownloadHelper.h"
 
 @interface BookDetailSubDownLoadViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) NSMutableArray *selectArray;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) BookChapterIntervalView *chapterView;
+@property (nonatomic, weak) UIButton *listButton;
 @end
 
 @implementation BookDetailSubDownLoadViewController
@@ -33,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _zhengxu = YES;
     // Do any additional setup after loading the view.
     [MCDownloader sharedDownloader].downloadTimeout = 60;
     [MCDownloader sharedDownloader].maxConcurrentDownloads = 1;
@@ -117,7 +120,15 @@
         [strongSelf chooseBtnClick:chapterModel];
     };
     cell.detailModel = _detailModel;
-    BookChapterModel *chapterModel = _dataArray[indexPath.row];
+    
+    BookChapterModel *chapterModel;
+    if (self.zhengxu) {
+        chapterModel = _dataArray[indexPath.row];
+    } else {
+        NSInteger count = _dataArray.count - indexPath.row - 1;
+        chapterModel = _dataArray[count];
+    }
+    
     cell.chapterModel = chapterModel;
     cell.url = [chapterModel.l_url decodePlayURL];
     return cell;
@@ -129,17 +140,24 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return kScreenWidth*240.0/750.f;
+    return 50;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIImageView *imgView = [[UIImageView alloc]init];
+    imgView.userInteractionEnabled = YES;
     imgView.image = [UIImage imageNamed:@"download_ad"];
     return imgView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BookChapterModel *chapterModel = _dataArray[indexPath.row];
+    BookChapterModel *chapterModel;
+    if (self.zhengxu) {
+        chapterModel = _dataArray[indexPath.row];
+    } else {
+        NSInteger count = _dataArray.count - indexPath.row - 1;
+        chapterModel = _dataArray[count];
+    }
     [APPDELEGATE.playVC playWithBook:_detailModel index:chapterModel.l_id.integerValue-1];
     if ([self.navigationController.viewControllers containsObject:APPDELEGATE.playVC]) {
         [self.navigationController popToViewController:APPDELEGATE.playVC animated:YES];
@@ -196,11 +214,15 @@
             };
             
         }
-        [[MCDownloader sharedDownloader] downloadDataWithURL:[urlString url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-            
-        } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
-            
-        }];
+
+        
+        
+//        [[ISYDownloadHelper shareInstance] downloadDataWithURL:[urlString url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+//            
+//        } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+//            
+//        }];
+        
         NSInteger row = [_dataArray indexOfObject:m];
         NSIndexPath *ip = [NSIndexPath indexPathForRow:row inSection:0];
         [_tableView beginUpdates];
@@ -241,6 +263,7 @@
             make.top.equalTo(_bottomView).mas_offset((115/ 2- 44)/ 2);
             make.right.equalTo(_bottomView).mas_offset(-12);
         }];
+        _listButton = listButton;
         
     }
     return _bottomView;
@@ -275,9 +298,17 @@
         __weak __typeof(self)weakSelf = self;
         _chapterView.itemBlock = ^(NSInteger index) {
             [weakSelf getChapterWithIndex:index];
+            if (weakSelf.listButton.isSelected) {
+                [weakSelf listButtonClick:weakSelf.listButton];
+            }
         };
         
     }
     return _chapterView;
+}
+
+- (void)setZhengxu:(BOOL)zhengxu {
+    _zhengxu = zhengxu;
+    [self.tableView reloadData];
 }
 @end

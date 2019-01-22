@@ -10,11 +10,13 @@
 #import "HomeModel.h"
 #import "HomeFoundItemModel.h"
 #import "ISYBookListSortingTableViewCell.h"
+#import "BookDetailViewController.h"
 
-@interface CarMoreViewController ()
+@interface CarMoreViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) HomeModel *model;
-@property (nonatomic, copy) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, assign) NSInteger currentPage;
 @end
 
 @implementation CarMoreViewController
@@ -22,8 +24,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title= @"推荐";
+    self.currentPage = 1;
+    self.dataSource = [NSMutableArray array];
     [self setupUI];
-    [self requestData];
+    [self requestData:self.currentPage];
 }
 
 #pragma mark - private
@@ -34,23 +38,34 @@
     }];
 }
 
-- (void)requestData {
+- (void)requestData:(NSInteger)page {
     ZXNetworkManager *manager = [ZXNetworkManager shareManager];
-    NSString *url = [manager URLStringWithQuery2:Query2IndexHot];
+    NSString *url = [manager URLStringWithQuery2:Query2BookList];
+    NSDictionary *parameter = @{
+                                @"type" : @(self.type),
+                                @"p_category" : @(self.pCategory),
+                                @"pagesize" : @(10),
+                                @"page": @(page),
+                                @"jishu_show" : @(1)
+                                };
     __weak __typeof(self)weakSelf = self;
     [ZXProgressHUD showLoading:@""];
-    [manager POSTWithURLString:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        DLog(@"%@", responseObject);
+    [manager POSTWithURLString:url parameters:parameter progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        DLog(@"%@", responseObject);
+        [strongSelf.tableView.mj_header endRefreshing];
+        [strongSelf.tableView.mj_footer endRefreshing];
         if ([responseObject[@"statusCode"]integerValue] == 200) {
-            HomeModel *model = [HomeModel yy_modelWithJSON:responseObject[@"data"]];
-            strongSelf.model = model;
-            [self converDataSource];
+            NSArray *temp = [NSArray yy_modelArrayWithClass:[HomeBookModel class] json:responseObject[@"data"]];
+            weakSelf.currentPage = page + 1;
+            [strongSelf.dataSource addObjectsFromArray:temp];
             [strongSelf.tableView reloadData];
+            if (temp.count == 0) {
+                [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
         }
-        [strongSelf.tableView.mj_header endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         DLog(@"%@", error.localizedDescription);
         [SVProgressHUD showImage:nil status:error.localizedDescription];
@@ -72,21 +87,15 @@
 }
 
 #pragma mark - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dataSource.count;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    HomeFoundItemModel *model = self.dataSource[section];
-    return model.dataSource.count;
+   return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HomeFoundItemModel *model = self.dataSource[indexPath.section];
+    HomeBookModel *model = self.dataSource[indexPath.row];
     ISYBookListSortingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListSortingTableViewCell cellID]];
-//    cell.model = model.dataSource[indexPath.row];
-    [cell setModel:model.dataSource[indexPath.row] index:indexPath.row];
+    [cell setModel:model index:indexPath.row];
     return cell;
 }
 
@@ -109,6 +118,16 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return nil;
 }
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    HomeBookModel *book = self.dataSource[indexPath.row];
+    BookDetailViewController *vc = [[BookDetailViewController alloc]init];
+    vc.bookid = book.show_id;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - get/set method
 
 - (UITableView *)tableView {
@@ -129,7 +148,11 @@
         __weak __typeof(self) weakSelf = self;
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             __strong __typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf requestData];
+            [strongSelf requestData:1];
+        }];
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf requestData:self.currentPage + 1];
         }];
     }
     return _tableView;

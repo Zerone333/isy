@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *directorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *subscribButton;
 @end
 
 @implementation SubCollectCell
@@ -21,6 +22,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.subscribButton.backgroundColor = kMainTone;
+    self.subscribButton.layer.masksToBounds = YES;
+    self.subscribButton.layer.cornerRadius = 4;
+    [self.subscribButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,9 +42,9 @@
         [_imgView sd_setImageWithURL:[[kPrefixImageDefault stringByAppendingString:bookModel.thumb] url] placeholderImage:[UIImage imageNamed:@"ph_image"]];
     }
     _titleLabel.text = bookModel.title;
-    _directorLabel.text = [NSString stringWithFormat:@"播音：%@",bookModel.director];
+    _directorLabel.text = [NSString stringWithFormat:@"%@",bookModel.director];
     NSString *dateString = [NSString dateStringWithTimeIntervalSince1970:bookModel.ctime];
-    _timeLabel.text = [NSString stringWithFormat:@"最后更新时间：%@",dateString];
+    _timeLabel.text = [NSString stringWithFormat:@"%@ 更新",dateString];
 }
 
 - (IBAction)deleteBtnClick:(id)sender {

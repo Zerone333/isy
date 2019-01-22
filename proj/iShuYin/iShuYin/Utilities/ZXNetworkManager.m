@@ -204,6 +204,8 @@
             //发表评论
         case Query2AddComment:query = @"addComment";break;
         case Query2BookList:query = @"getBookList";break;//列表
+        case Query2AddBindInfo:query = @"addBindInfo";break;//列表
+        case Query2Car: query = @"index_car";break;//车载
         default:break;
     }
     return [APPDELEGATE.base_url_2 stringByAppendingString:query];

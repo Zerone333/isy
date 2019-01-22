@@ -7,6 +7,7 @@
 //
 
 #import "ISYDownLoadTableViewCell.h"
+#import "HomeModel.h"
 @interface ISYDownLoadTableViewCell ()
 @property (nonatomic, strong) UILabel *label1;      //已经下载
 @property (nonatomic, strong)UILabel *label2;   // 占用内存
@@ -31,6 +32,34 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setBookDetailModel:(BookDetailModel *)bookDetailModel {
+    _bookDetailModel = bookDetailModel;
+    HomeBookModel *model = [[HomeBookModel alloc] init];
+    model.thumb = bookDetailModel.thumb;
+    model.title = bookDetailModel.title;
+    self.model =  model;
+    
+    self.label1.text =[NSString stringWithFormat:@"已下载%ld集", (long)bookDetailModel.downloadfinishCount];
+    self.label2.text =[NSString stringWithFormat:@"已占用内存%lld", bookDetailModel.totaldownloadSize];
+}
+
+- (void)setType:(NSInteger)type {
+    _type = type;
+    if (type == 1) {
+        self.downLoadIcon.hidden = YES;
+        self.label3.hidden = YES;
+        self.label1.hidden = NO;
+        self.label2.hidden = NO;
+        [self.button setTitle:@"删除" forState:UIControlStateNormal];
+    } else {
+        self.downLoadIcon.hidden = NO;
+        self.label3.hidden = NO;
+        self.label1.hidden = YES;
+        self.label2.hidden = YES;
+        [self.button setTitle:@"暂停下载" forState:UIControlStateNormal];
+    }
 }
 
 + (NSString *)cellID {
@@ -66,7 +95,7 @@
     [self.button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.contentView);
         make.right.equalTo(self.contentView).mas_offset(-20);
-        make.size.mas_equalTo(CGSizeMake(80, 32));
+        make.size.mas_equalTo(CGSizeMake(80, 25));
     }];
     
 }
@@ -106,10 +135,21 @@
 - (UIButton *)button {
     if (!_button) {
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
-        _button.backgroundColor = kColorRGB(231, 32, 35);
+        _button.backgroundColor = kMainTone;
+        _button.titleLabel.font = [UIFont systemFontOfSize:12];
         [_button setTitle:@"继续下载" forState:UIControlStateNormal];
+        [_button addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+        _button.layer.masksToBounds = YES;
+        _button.layer.cornerRadius = 4;
     }
     return _button;
+}
+
+#pragma mark - event
+- (void)buttonClick {
+    if (self.editCb != nil) {
+        self.editCb(self.bookDetailModel);
+    }
 }
 
 @end

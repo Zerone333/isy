@@ -13,7 +13,9 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *desLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *zanLabel;
 @property (nonatomic, strong) UIButton *zanBtn;
+@property (nonatomic, strong) UIView *autoResizingView;
 
 
 @end
@@ -49,12 +51,12 @@
     NSString *create_time = [NSString stringWithFormat:@"%f",listModel.create_time.floatValue/1000];
     self.timeLabel.text = [NSString dateStringWithTimeIntervalSince1970:create_time];
     self.desLabel.text = listModel.content;
-    
+    self.nameLabel.text = listModel.user_name;
     [self.zanBtn setTitle:listModel.agree forState:UIControlStateNormal];
     [self.zanBtn setTitle:listModel.agree forState:UIControlStateSelected];
     self.zanBtn.selected = listModel.isLike;
+    self.zanLabel.text = listModel.agree;
 }
-
 #pragma mark - private
 - (void)setupUI {
     [self.contentView addSubview:self.iconImage];
@@ -62,6 +64,7 @@
     [self.contentView addSubview:self.desLabel];
     [self.contentView addSubview:self.timeLabel];
     [self.contentView addSubview:self.zanBtn];
+    [self.contentView addSubview:self.zanLabel];
     
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(self.contentView).mas_offset(12);
@@ -69,14 +72,14 @@
     }];
     
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iconImage);
-        make.left.equalTo(self.iconImage.mas_right);
+        make.top.equalTo(self.iconImage).mas_offset(12);
+        make.left.equalTo(self.iconImage.mas_right).mas_offset(4);
     }];
     
     [self.desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.nameLabel.mas_bottom);
         make.left.equalTo(self.nameLabel);
-        make.right.equalTo(self.contentView).mas_offset(12);
+        make.right.equalTo(self.contentView).mas_offset(-12);
     }];
     
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,12 +89,36 @@
     
     [self.zanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.timeLabel);
-        make.left.equalTo(self.contentView).mas_offset(50);
+        make.right.equalTo(self.contentView).mas_offset(-15);
     }];
     
+    [self.zanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.zanBtn.mas_left).mas_offset(-2);
+        make.centerY.equalTo(self.zanBtn);
+    }];
+    
+    [self.contentView addSubview:self.autoResizingView];
+    [self.autoResizingView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.timeLabel.mas_bottom);
+        make.left.right.equalTo(self.contentView);
+        make.bottom.equalTo(self.contentView).offset(-10.0f);
+    }];
+}
+
+- (void)zan {
+    if (self.zanCb) {
+        self.zanCb(self.model);
+    }
 }
 
 #pragma mark - getter
+- (UIView *)autoResizingView {
+    if (!_autoResizingView) {
+        _autoResizingView = [[UIView alloc] init];
+    }
+    return _autoResizingView;
+}
+
 - (UIImageView *)iconImage {
     if (!_iconImage) {
         _iconImage = [[UIImageView alloc] init];
@@ -109,6 +136,7 @@
 - (UILabel *)desLabel {
     if (!_desLabel) {
         _desLabel = [[UILabel alloc] init];
+        _desLabel.numberOfLines = 0;
     }
     return _desLabel;
 }
@@ -125,8 +153,15 @@
         _zanBtn = [[UIButton alloc] init];
         [_zanBtn setImage:[UIImage imageNamed:@"comment_like_nor"] forState:UIControlStateNormal];
         [_zanBtn setImage:[UIImage imageNamed:@"comment_like_sel"] forState:UIControlStateNormal];
+        [_zanBtn addTarget:self action:@selector(zan) forControlEvents:UIControlEventTouchUpInside];
     }
     return _zanBtn;
+}
+- (UILabel *)zanLabel {
+    if (!_zanLabel) {
+        _zanLabel = [[UILabel alloc] init];
+    }
+    return _zanLabel;
 }
 
 @end

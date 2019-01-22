@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>iShuYin.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>901103920CC5A90EA655DA753EBFF8F7C5268C0E</string>
+				<key>dateExpires</key>
+				<string>2019/11/4</string>
+				<key>type</key>
+				<string>iOS Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>774S7CUTG6.com.ishuyin.iShuYin</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>774S7CUTG6</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>774S7CUTG6.com.ishuyin.iShuYin</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>iShuYin.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>02a264be-6f2a-4a99-a8a9-8648b2cc6839</string>
+				<key>name</key>
+				<string>lee_isy_dev</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>774S7CUTG6</string>
+				<key>name</key>
+				<string>Fanshuai He</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

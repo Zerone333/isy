@@ -49,16 +49,20 @@
 #pragma mark keyboardNotification
 -(void)keyboardShow:(NSNotification *)note
 {
-    CGRect keyBoardRect=[note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat deltaY=keyBoardRect.size.height;
+    [self layoutIfNeeded];
+    NSDictionary *userInfo = [note userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+   
+    
+    [self.contentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self);
+        make.top.equalTo(self).mas_offset(kScreenHeight-keyboardRect.size.height- 230);
+        make.height.mas_equalTo(230);
+    }];
+    
     [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
-       
-        [self.contentView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self);
-            make.bottom.equalTo(self.mas_bottom).mas_offset(-deltaY);
-            make.height.mas_equalTo(180);
-            [self layoutIfNeeded];
-        }];
+        [self layoutIfNeeded];
     }];
 }
 
@@ -69,7 +73,7 @@
         [self.contentView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
             make.bottom.equalTo(self.mas_bottom);
-            make.height.mas_equalTo(180);
+            make.height.mas_equalTo(230);
             [self layoutIfNeeded];
         }];
     } completion:^(BOOL finished) {
@@ -83,7 +87,7 @@
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(window);
+        make.top.left.right.bottom.equalTo(window);
     }];
     [view.textView becomeFirstResponder];
     
@@ -127,7 +131,7 @@
     [self.contentView addSubview:button];
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_offset(CGSizeMake(160, 30));
-        make.bottom.equalTo(self.contentView).mas_offset(10);
+        make.bottom.equalTo(self.contentView).mas_offset(-10);
         make.centerX.equalTo(self.contentView);
     }];
     
@@ -142,7 +146,7 @@
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
         make.top.equalTo(self.mas_bottom);
-        make.height.mas_equalTo(180);
+        make.height.mas_equalTo(230);
     }];
 }
 
@@ -164,6 +168,8 @@
         _textView.layer.borderColor = [UIColor grayColor].CGColor;
         _textView.layer.borderWidth = 0.5;
         [_textView setInputAccessoryView:nil];
+        
+        _textView.inputView = nil;
     }
     return _textView;
 }

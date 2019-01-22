@@ -107,11 +107,17 @@
 //支付宝支付结果
 #define kAliPay_Result_Notification @"alipay_result_notification"
 
+//播放变化
+#define kNotiNamePlayChange @"kNotiNamePlayChange"
+
+//定时开始
+#define kNotiTimerChange @"kNotiTimerChange"
 
 //分享key
 #define kUMengKey @"59e62554c62dca32ce0000c5"
 #define kWXAppkey @"wx1f1f821a0fdced03"
-#define kWXSecret @"c3b8693e3f8bc704d5de27e5aedbcc86"
+#define kWXSecret @"368d55225d8540ad53a3bb55f110af0a"
+//#define kWXSecret @"c3b8693e3f8bc704d5de27e5aedbcc86"
 #define kQQAppID @"1105026508"
 #define kQQAppKey @"O51DyMDctIQ36brV"
 #define kChangYanAppID @"cyrAl7Qso"

@@ -9,5 +9,6 @@
 #import "ZXBaseViewController.h"
 
 @interface ISYMoreViewController : ZXBaseViewController
-
+@property (nonatomic, copy) NSString *actor;
+@property (nonatomic, copy) NSString *director;
 @end

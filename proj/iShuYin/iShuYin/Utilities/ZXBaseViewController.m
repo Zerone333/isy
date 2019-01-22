@@ -20,6 +20,9 @@
     self.edgesForExtendedLayout =UIRectEdgeNone;  //tabar遮挡问题
     [self initialize];
     [self baseNavBar];
+    self.navigationController.navigationBar.titleTextAttributes=
+  @{NSForegroundColorAttributeName:[UIColor whiteColor],
+    NSFontAttributeName:[UIFont systemFontOfSize:16]};
 }
 
 - (void)initialize {

@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ISYRegister3ViewController : ZXBaseViewController
-
+@property (nonatomic, assign) UMSocialPlatformType platformType;
+@property (nonatomic, copy) NSString *unique_id;
 @end
 
 NS_ASSUME_NONNULL_END

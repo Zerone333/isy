@@ -21,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"全部评论";
     [self.view addSubview:self.tableView];
     self.page = 1;
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -80,6 +81,8 @@
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        _tableView.estimatedRowHeight = 120;
+        _tableView.rowHeight = UITableViewAutomaticDimension;//iOS8之后默认就是这个值，可以省略
         __weak __typeof(self) weakSelf = self;
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -105,6 +108,9 @@
     if (cell == nil) {
         cell = [[ISYCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"ISYCommentTableViewCellID"];
     }
+    cell.zanCb = ^(CommentListModel *model) {
+        //TODO: 赞
+    };
     cell.model = model;
     return cell;
 }

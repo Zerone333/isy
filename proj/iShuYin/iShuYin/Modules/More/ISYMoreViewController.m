@@ -85,7 +85,7 @@
         __weak __typeof(self)weakSelf = self;
         _seg.indexChangeBlock = ^(NSInteger index) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-//            [self.contentScrollView scrollRectToVisible:CGRectMake(index *kScreenWidth, 0, CGRectGetWidth(self.contentScrollView.frame), CGRectGetHeight(self.contentScrollView.frame)) animated:YES];
+            [strongSelf.contentScrollView scrollRectToVisible:CGRectMake(index *kScreenWidth, 0, CGRectGetWidth(self.contentScrollView.frame), CGRectGetHeight(self.contentScrollView.frame)) animated:YES];
         };
     }
     return _seg;
@@ -105,6 +105,9 @@
 - (ISYMoreListViewController *)vc1 {
     if (!_vc1) {
         _vc1 = [[ISYMoreListViewController alloc] init];
+        _vc1.actor = self.actor;
+        _vc1.director = self.director;
+        _vc1.type = 2;
     }
     return _vc1;
 }
@@ -113,6 +116,9 @@
 - (ISYMoreListViewController *)vc2 {
     if (!_vc2) {
         _vc2 = [[ISYMoreListViewController alloc] init];
+        _vc2.actor = self.actor;
+        _vc2.director = self.director;
+        _vc1.type = 3;
     }
     return _vc2;
 }

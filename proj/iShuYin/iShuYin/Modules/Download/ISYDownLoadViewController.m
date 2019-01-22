@@ -82,6 +82,8 @@
         make.top.equalTo(self.contentScrollView);
         make.right.equalTo(self.vc2.view);
     }];
+    
+    self.navigationItem.leftBarButtonItem = nil;
 }
 
 #pragma mark - getter
@@ -137,6 +139,7 @@
 - (ISYDownLoadListViewController *)vc1 {
     if (!_vc1) {
         _vc1 = [[ISYDownLoadListViewController alloc] init];
+        _vc1.dowmloadType = 1;
     }
     return _vc1;
 }
@@ -145,6 +148,7 @@
 - (ISYDownLoadListViewController *)vc2 {
     if (!_vc2) {
         _vc2 = [[ISYDownLoadListViewController alloc] init];
+        _vc2.dowmloadType = 2;
     }
     return _vc2;
 }

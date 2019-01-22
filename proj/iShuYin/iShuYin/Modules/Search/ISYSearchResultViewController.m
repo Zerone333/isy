@@ -78,7 +78,8 @@
     [ZXProgressHUD showLoading:@""];
     NSDictionary *parameter = @{
                       @"page" : @(page),
-                      @"sort" : keyWord
+                      @"sort" : keyWord,
+                      @"jishu_show" : @(1)
                       };
     
     [manager GETWithURLString:url parameters:parameter progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {

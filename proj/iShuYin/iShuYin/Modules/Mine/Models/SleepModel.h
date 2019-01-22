@@ -10,10 +10,12 @@
 
 typedef NS_ENUM(NSInteger,SleepType) {
     SleepType0 = -1,
+    SleepType15 = 15,
     SleepType20 = 20,
     SleepType30 = 30,
     SleepType45 = 45,
     SleepType60 = 60,
+    SleepType90 = 90
 };
 
 @interface SleepModel : NSObject

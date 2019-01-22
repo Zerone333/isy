@@ -201,6 +201,104 @@
         [SVProgressHUD showImage:nil status:error.localizedDescription];
     }];
 }
+- (IBAction)qqlogin:(id)sender {
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_QQ currentViewController:self completion:^(id result, NSError *error) {
+        
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+            
+            // 授权信息
+            NSLog(@"Wechat uid: %@", resp.uid);
+            NSLog(@"Wechat openid: %@", resp.openid);
+            NSLog(@"Wechat unionid: %@", resp.unionId);
+            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+            NSLog(@"Wechat expiration: %@", resp.expiration);
+            
+            // 用户信息
+            NSLog(@"Wechat name: %@", resp.name);
+            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+            NSLog(@"Wechat gender: %@", resp.unionGender);
+            
+            // 第三方平台SDK源数据
+            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+        }
+        
+    }];
+}
+- (IBAction)wechatLogin:(id)sender {
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
+        
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+//
+//            // 授权信息
+//            NSLog(@"Wechat uid: %@", resp.uid);
+//            NSLog(@"Wechat openid: %@", resp.openid);
+//            NSLog(@"Wechat unionid: %@", resp.unionId);
+//            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+//            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+//            NSLog(@"Wechat expiration: %@", resp.expiration);
+//
+//            // 用户信息
+//            NSLog(@"Wechat name: %@", resp.name);
+//            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+//            NSLog(@"Wechat gender: %@", resp.unionGender);
+//
+//            // 第三方平台SDK源数据
+//            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+            ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+            NSString *url = [manager URLStringWithQuery2:Query2AddBindInfo];
+            NSDictionary *params = @{@"type":@(1),
+                                     @"unique_id":resp.unionId
+                                     };
+            __weak __typeof(self)weakSelf = self;
+            [ZXProgressHUD showLoading:@""];
+            [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+                DLog(@"%@", responseObject);
+                if ([responseObject[@"statusCode"]integerValue] == 200) {
+                    __strong __typeof(weakSelf)strongSelf = weakSelf;
+                    //登录信息
+                    LoginModel *model = [LoginModel yy_modelWithJSON:responseObject[@"data"]];
+                    APPDELEGATE.loginModel = model;
+                    [APPDELEGATE.keyWrapper setObject:strongSelf.accountTextField.text forKey:(__bridge id)kSecAttrAccount];
+                    [APPDELEGATE.keyWrapper setObject:strongSelf.pswdTextField.text forKey:(__bridge id)kSecValueData];
+                    
+                    //记住密码 自动登录
+                    if (YES) {
+                        [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];
+                        [USERDEFAULTS setObject:kAutoLogin forKey:kAutoLogin];
+                    }else {
+                        [USERDEFAULTS removeObjectForKey:kAutoLogin];
+                        if (strongSelf.rememberPswdBtn.isSelected) {
+                            [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];
+                        }else {
+                            [USERDEFAULTS removeObjectForKey:kRememberPswd];
+                        }
+                    }
+                    //登录畅言
+                    [ChangyanSDK loginSSO:model.user_id userName:[NSString isEmpty:model.user_name]?@"游客":model.user_name profileUrl:nil imgUrl:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
+                        DLog(@"%@", responseStr);
+                    }];
+                    
+                    [strongSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+                    
+                    [SVProgressHUD showImage:nil status:@"登陆成功"];
+                }else {
+                    [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+                }
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                DLog(@"%@", error.localizedDescription);
+                [SVProgressHUD showImage:nil status:error.localizedDescription];
+            }];
+        }
+        
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

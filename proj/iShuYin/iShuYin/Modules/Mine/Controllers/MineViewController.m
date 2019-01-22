@@ -10,6 +10,8 @@
 #import "MineCell.h"
 #import "MineHeader.h"
 #import "MineFooter.h"
+#import "ZXMainViewController.h"
+#import "HistoryViewController.h"
 
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) MineHeader *header;
@@ -142,7 +144,7 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [UIView new];
@@ -162,6 +164,21 @@
 - (MineHeader *)header {
     if (!_header) {
         _header = [MineHeader loadFromNib];
+        
+        __weak typeof(self) weakSelf = self;
+        _header.clickCB = ^(NSInteger index) {
+            if (index == 1) {
+                ZXMainViewController *mian = [UIApplication sharedApplication].keyWindow.rootViewController;
+                mian.selectedIndex = 1;
+            } else if (index == 2) {
+                ZXMainViewController *mian = [UIApplication sharedApplication].keyWindow.rootViewController;
+                mian.selectedIndex = 2;
+            } else {
+                HistoryViewController *vc = [[HistoryViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            }
+        };
     }
     return _header;
 }

@@ -51,7 +51,7 @@
 - (void)continuPlay:(ISYHistoryListenModel *)model {
     
 //    BookChapterModel *chapterModel = model.bookModel.chapters[model.chaperNumber];
-    [APPDELEGATE.playVC playWithBook:model.bookModel index:model.chaperNumber];
+    [APPDELEGATE.playVC playWithBook:model.bookModel index:model.chaperNumber duration:model.time];
     if ([self.navigationController.viewControllers containsObject:APPDELEGATE.playVC]) {
         [self.navigationController popToViewController:APPDELEGATE.playVC animated:YES];
     }else {

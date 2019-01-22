@@ -59,7 +59,7 @@
 #pragma mark - UITabBarControllerDelegate
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     NSInteger index = [tabBarController.viewControllers indexOfObject:viewController];
-    if (index == 0 || index == 1) {
+    if (index == 0 ) {
         return YES;
     }
     if (APPDELEGATE.loginModel) {

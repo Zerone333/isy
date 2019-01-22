@@ -213,8 +213,15 @@
     if (!_orderButton) {
         _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_orderButton setImage:[UIImage imageNamed:@"订阅btn"] forState:UIControlStateNormal];
+        [_orderButton addTarget:self action:@selector(orderBook) forControlEvents:UIControlEventTouchUpInside];
     }
     return _orderButton;
 }
 
+- (void)orderBook {
+    if (self.collectionBlock != nil) {
+        self.collectionBlock();
+    }
+}
 @end
+

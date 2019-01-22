@@ -91,6 +91,12 @@
     view.moreBlock = ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         ISYMoreViewController *moreVc = [[ISYMoreViewController alloc] init];
+        if (section == 0) {
+            moreVc.director = strongSelf.detailModel.director;
+        }
+        if (section == 1) {
+            moreVc.actor = strongSelf.detailModel.actor;
+        }
         [strongSelf.navigationController pushViewController:moreVc animated:YES];
     };
     return view;

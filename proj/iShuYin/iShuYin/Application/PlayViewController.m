@@ -16,6 +16,9 @@
 #import "ISYCommentListViewController.h"
 #import "ISYPutCommentView.h"
 #import "ISYDBManager.h"
+#import "ISYDownloadHelper.h"
+#import "Const.h"
+#import "ISYChaperListView.h"
 
 #import <FSAudioStream.h>
 #import <AVFoundation/AVFoundation.h>
@@ -42,9 +45,11 @@
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UIImageView *adImageView;
 @property (nonatomic, strong) UIView *putCommentView;
+@property (nonatomic, weak) UIButton *timeButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *playTimeLabel;//播放时间
-@property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;//总时长
+@property (strong, nonatomic) UILabel *playTimeLabel;//播放时间
+@property (strong, nonatomic) UILabel *totalTimeLabel;//总时长
+@property (strong, nonatomic) UILabel *currentPlayTimeLabel;
 
 
 @property (weak, nonatomic) IBOutlet UIView *collectionView;//收藏
@@ -58,10 +63,15 @@
 @property (nonatomic, strong) BookDetailModel *detailModel;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) NSTimer *sleepTimer;
+
 @property (nonatomic, strong) FSAudioStream *audioStream;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 
 @property (nonatomic, copy) NSArray *commentDataSource; //评论
+@property (nonatomic, assign) NSInteger duration;
+@property (nonatomic, assign) CGFloat PlayRate;// 播放速度1。0 - 2.0
+@property (nonatomic, assign) ISYPalySort playSortType;
 @end
 
 @implementation PlayViewController
@@ -102,18 +112,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.PlayRate = 1.0;
+    self.playSortType = ISYPalySortshunxu;
     [self configUI];
     [self configEvent];
     //添加通知，拔出耳机后暂停播放
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timerSleepChange:) name:kNotiTimerChange object:nil];
+    
+}
+
+//定时变化
+- (void)timerSleepChange:(NSNotification *)notif {
+//    (m.sleepType*60
+    SleepModel *model = notif.object;
+    if (model.sleepType == SleepType0) {
+        UIImage *image = [UIImage imageNamed:@"定时"];
+        [_timeButton setImage:image forState:UIControlStateNormal];
+        [_timeButton setTitle:@"定时" forState:UIControlStateNormal];
+        [_timeButton setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
+        _timeButton.titleLabel.font = [UIFont systemFontOfSize:11];
+        _timeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        _timeButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+        CGSize size = [@"定时" sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:11]}];
+        [_timeButton setImageEdgeInsets:UIEdgeInsetsMake(12, size.width /2, 0, 0)];
+        [_timeButton setTitleEdgeInsets:UIEdgeInsetsMake(image.size.height + 12, -image.size.width/2, 0, -image.size.width/2 )];
+        
+        [self.sleepTimer invalidate];
+        _sleepTimer = nil;
+    } else {
+        [self startSleepTimer];
+    }
 }
 
 - (void)configUI {
     //导航
     [self addNavBtnsWithImages:@[@"play_error",@"play_urge"] target:self actions:@[@"errorBtnClick",@"cuiGenBtnClick"] isLeft:NO];
-  
-    
     
     //内容
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -127,6 +162,8 @@
     [self.contentView addSubview:self.chaperListButton];
     [self.contentView addSubview:self.speedButton];
     [self.contentView addSubview:self.slider];
+    [self.contentView addSubview:self.playTimeLabel];
+    [self.contentView addSubview:self.totalTimeLabel];
     [self.contentView addSubview:self.playBtn];
     [self.contentView addSubview:self.previousBtn];
     [self.contentView addSubview:self.nextBtn];
@@ -199,6 +236,17 @@
         make.right.equalTo(self.contentView).mas_offset(-60);
         make.top.equalTo(self.chapterLabel.mas_bottom).mas_offset(25);
         make.height.mas_equalTo(15);
+    }];
+    
+    [self.playTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.slider);
+        make.right.equalTo(self.slider.mas_left).mas_offset(-4);
+    }];
+    
+    [self.totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.slider);
+        make.left.equalTo(self.slider.mas_right).mas_offset(4);
+        
     }];
     
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -280,7 +328,7 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineView2.mas_bottom);
         make.right.left.equalTo(self.contentView);
-        make.height.mas_equalTo(200);
+        make.height.mas_equalTo(60);
     }];
     
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -331,6 +379,11 @@
             NSArray *commentDataSource = [NSArray yy_modelArrayWithClass:[CommentListModel class] json:responseObject[@"data"]];
             strongSelf.commentDataSource = commentDataSource;
             [strongSelf.tableView reloadData];
+            [strongSelf.tableView layoutIfNeeded];
+            [strongSelf.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(strongSelf.tableView.contentSize.height);
+            }];
+            
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
         }
@@ -344,7 +397,7 @@
     
 }
 
-- (void)addcommentListWithBookId:(NSString *)bookId content:(NSString *)des{
+- (void)addcommentListWithBookId:(NSString *)bookId content:(NSString *)des {
     ZXNetworkManager *manager = [ZXNetworkManager shareManager];
     NSString *url = [manager URLStringWithQuery2:Query2AddComment];
     __weak __typeof(self)weakSelf = self;
@@ -361,6 +414,7 @@
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
         }
         [strongSelf.tableView.mj_header endRefreshing];
+        [strongSelf getcommentListWithBookId:self.detailModel.show_id];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         DLog(@"%@", error.localizedDescription);
         [SVProgressHUD showImage:nil status:error.localizedDescription];
@@ -371,6 +425,11 @@
 }
 
 #pragma mark - Timer
+
+- (void)startSleepTimer {
+    _sleepTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(sleepTimerAction) userInfo:nil repeats:YES];
+}
+
 - (void)startTimer {
     [self stopTimer];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
@@ -383,30 +442,55 @@
     }
 }
 
+- (void)sleepTimerAction {
+    
+    NSInteger minute = APPDELEGATE.sleepInterval / 60;
+    NSInteger second = APPDELEGATE.sleepInterval % 60;
+    NSString *text = [NSString stringWithFormat:@"%02li:%02li",minute,second];
+    
+    UIImage *image = [UIImage imageNamed:@"定时"];
+    [_timeButton setImage:image forState:UIControlStateNormal];
+    [_timeButton setTitle:text forState:UIControlStateNormal];
+    [_timeButton setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
+    _timeButton.titleLabel.font = [UIFont systemFontOfSize:11];
+    _timeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _timeButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:11]}];
+    [_timeButton setImageEdgeInsets:UIEdgeInsetsMake(12, size.width /2, 0, 0)];
+    [_timeButton setTitleEdgeInsets:UIEdgeInsetsMake(image.size.height + 12, -image.size.width/2, 0, -image.size.width/2 )];
+}
+
 - (void)timerAction {
+    NSInteger progress;
     if (self.audioStream) {
         //获取当前播放音频的总时间时间
+        [_audioStream setPlayRate:self.PlayRate];
         int duration = self.audioStream.duration.minute*60+self.audioStream.duration.second;
         _totalTimeLabel.text = [NSString stringWithFormat:@"%02i:%02i",duration/60,duration%60];
         //当前播放的时间
-        int progress = self.audioStream.currentTimePlayed.minute*60+self.audioStream.currentTimePlayed.second;
+        progress = self.audioStream.currentTimePlayed.minute*60+self.audioStream.currentTimePlayed.second;
         _playTimeLabel.text = [NSString stringWithFormat:@"%02i:%02i",progress/60,progress%60];
         //进度条
         self.slider.value = 1.0*progress/duration;
         //锁屏进度条
         [self showCurrentProgress:progress];
     }else if (self.audioPlayer) {
+        self.audioPlayer.rate = self.PlayRate;
         //获取当前播放音频的总时间时间
         int duration = self.audioPlayer.duration;
         _totalTimeLabel.text = [NSString stringWithFormat:@"%02i:%02i",duration/60,duration%60];
         //当前播放的时间
-        int progress = self.audioPlayer.currentTime;
+        progress = self.audioPlayer.currentTime;
         _playTimeLabel.text = [NSString stringWithFormat:@"%02i:%02i",progress/60,progress%60];
         //进度条
         self.slider.value = 1.0*progress/duration;
         //锁屏进度条
         [self showCurrentProgress:progress];
     }
+    
+    // 插入播放记录
+    [self insertHistoryListenBook:_detailModel chaperNumber:_currentIndex time:progress listentime:[[NSDate date] timeIntervalSince1970]];
+    
 }
 
 #pragma mark - Control
@@ -626,14 +710,40 @@
 }
 
 - (void)speedButtonClick:(UIButton *)button {
-    button.selected = !button.selected;
-    if (button.selected) {
-        [self.audioStream setPlayRate:2.0];
-        self.audioPlayer.rate = 2.0;
-    } else {
-        [self.audioStream setPlayRate:1.0];
-        self.audioPlayer.rate = 1.0;
+    if (self.PlayRate == 1.0) {
+        self.PlayRate = 1.2;
+    } else if (self.PlayRate == 1.2) {
+        self.PlayRate = 1.5;
+    } else if (self.PlayRate == 1.5) {
+        self.PlayRate = 2.0;
+    } else if (self.PlayRate == 2.0) {
+        self.PlayRate = 1.0;
     }
+    [SVProgressHUD showImage:nil status:[NSString stringWithFormat:@"切换为%.1f倍速播放", self.PlayRate]];
+    
+    [self.audioStream setPlayRate:self.PlayRate];
+    self.audioPlayer.rate = self.PlayRate;
+}
+
+- (void)downloadChaper {
+    [SVProgressHUD showImage:nil status:@"添加到下载列表成功～"];
+    BookChapterModel *chapterModel = _detailModel.chapters[_currentIndex];
+    [[ISYDownloadHelper shareInstance] downloadChaper:chapterModel bookId:self.detailModel.show_id progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+        
+    } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+    
+    }];
+    
+}
+
+//播放列表
+- (void)chaperListButtonClick {
+    ISYChaperListView *view = [ISYChaperListView showWithBook:self.detailModel];
+    view.playSort = self.playSortType;
+    __weak typeof(self) weakSelf = self;
+    view.sortCallBack = ^(ISYPalySort sort) {
+        weakSelf.playSortType = sort;
+    };
 }
 
 #pragma mark - Methods
@@ -693,6 +803,9 @@
     }
     //展示控制中心
     [self showPlayingInfo];
+    
+    // 播放变化通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotiNamePlayChange object:nil];
 }
 
 //播放网络音频
@@ -713,13 +826,27 @@
     _audioStream.onCompletion = ^{
         DLog(@"网络播放完成!");
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf playChapterAtIndex:strongSelf->_currentIndex+1];
+        [strongSelf playNext];
+//        [strongSelf playChapterAtIndex:strongSelf->_currentIndex+1];
     };
+    
     _audioStream.onStateChange = ^(FSAudioStreamState state) {
-        
+        if (self.duration != 0 && state == kFsAudioStreamPlaying) {
+            int duration = weakSelf.audioStream.duration.minute*60+weakSelf.audioStream.duration.second;
+            int seconds = weakSelf.duration;
+            weakSelf.playTimeLabel.text = [NSString stringWithFormat:@"%02i:%02i",seconds/60,seconds%60];
+            FSStreamPosition p;
+            p.minute = seconds/60;
+            p.second = seconds%60;
+            p.playbackTimeInSeconds = seconds;
+            p.position = seconds * 1.0 / duration;
+            [weakSelf.audioStream seekToPosition:p];
+            weakSelf.duration = 0;
+        }
     };
     [_audioStream setVolume:0.5];//设置声音
     [_audioStream play];
+    [_audioStream setPlayRate:self.PlayRate];
     [self startTimer];
     [self saveRecentChapter:chapterModel];
 }
@@ -738,6 +865,7 @@
         return;
     }
     [_audioPlayer play];
+    _audioPlayer.rate = self.PlayRate;
     [self startTimer];
     [self saveRecentChapter:chapterModel];
 }
@@ -812,9 +940,14 @@
 }
 
 #pragma mark - AVAudioPlayerDelegate
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
+    self.audioPlayer.currentTime =  self.duration;
+}
+
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     DLog(@"本地播放完成!");
-    [self playChapterAtIndex:_currentIndex+1];
+    [self playNext];
+//    [self playChapterAtIndex:_currentIndex+1];
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError * __nullable)error {
@@ -946,9 +1079,12 @@
     //播放
     [self playChapterAtIndex:idx];
     [[NSNotificationCenter defaultCenter]postNotificationName:kNotiNameAnimationAdd object:nil];
-    
-    // 插入播放记录
-    [self insertHistoryListenBook:detailModel chaperNumber:idx time:0 listentime:[[NSDate date] timeIntervalSince1970]];
+    self.duration = 0;
+}
+
+- (void)playWithBook:(BookDetailModel *)detailModel index:(NSInteger)idx duration:(NSInteger)duration {
+    [self playWithBook:detailModel index:idx];
+    self.duration = duration;
 }
 
 - (void)pauseOrPlay {
@@ -957,7 +1093,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:kNotiNameAnimationAdd object:nil];
         //播放
         if (self.audioStream) {
-            [self.audioStream pause];
+            [self.audioStream play];
         }
         if (self.audioPlayer) {
             [self.audioPlayer play];
@@ -993,19 +1129,65 @@
 }
 
 - (void)playPrevious {
-    if (_currentIndex == 0) {
-        [SVProgressHUD showImage:nil status:@"已经是第一章了"];
-        return;
+    switch (self.playSortType) {
+        case ISYPalySortshunxu:
+        {
+            if (_currentIndex == 0) {
+                [SVProgressHUD showImage:nil status:@"已经是第一章了"];
+                return;
+            }
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:_currentIndex-1];
+        }
+            break;
+        case ISYPalySortSingle:
+        {
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:_currentIndex];
+        }
+            break;
+        case ISYPalySortRandam:
+        {
+            NSInteger randam = arc4random_uniform(self.detailModel.chapters.count);
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:randam];
+        }
+            break;
+            
+        default:
+            break;
     }
-    [self playChapterAtIndex:_currentIndex-1];
 }
 
 - (void)playNext {
-    if (_currentIndex == _detailModel.chapters.count - 1) {
-        [SVProgressHUD showImage:nil status:@"已经是最后一章了"];
-        return;
+    switch (self.playSortType) {
+        case ISYPalySortshunxu:
+            {
+                if (_currentIndex == _detailModel.chapters.count - 1) {
+                    [SVProgressHUD showImage:nil status:@"已经是最后一章了"];
+                    return;
+                }
+                self.playBtn.selected = NO;
+                [self playChapterAtIndex:_currentIndex+1];
+            }
+            break;
+        case ISYPalySortSingle:
+        {
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:_currentIndex];
+        }
+            break;
+        case ISYPalySortRandam:
+        {
+            NSInteger randam = arc4random_uniform(self.detailModel.chapters.count);
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:randam];
+        }
+            break;
+            
+        default:
+            break;
     }
-    [self playChapterAtIndex:_currentIndex+1];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -1073,6 +1255,7 @@
         _chaperListButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         _chaperListButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
         CGSize size = [@"播放列表" sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:11]}];
+        [_chaperListButton addTarget:self action:@selector(chaperListButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [_chaperListButton setImageEdgeInsets:UIEdgeInsetsMake(0, size.width /2, 0, 0)];
         [_chaperListButton setTitleEdgeInsets:UIEdgeInsetsMake(image.size.height, -image.size.width/2, 0, -image.size.width/2 )];
     }
@@ -1165,6 +1348,7 @@
         [_downloadBtn setImage:[UIImage imageNamed:@"play_download1"] forState:UIControlStateNormal];
         [_downloadBtn setTitle:@" 下载" forState:UIControlStateNormal];
         [_downloadBtn setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
+        [_downloadBtn addTarget:self action:@selector(downloadChaper) forControlEvents:UIControlEventTouchUpInside];
         _downloadBtn.titleLabel.font = [UIFont systemFontOfSize:11];
     }
     return _downloadBtn;
@@ -1177,6 +1361,7 @@
         [_orderBtn setTitle:@" 订阅" forState:UIControlStateNormal];
         [_orderBtn setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
         _orderBtn.titleLabel.font = [UIFont systemFontOfSize:11];
+        [_orderBtn addTarget:self action:@selector(collectionViewTap) forControlEvents:UIControlEventTouchUpInside];
     }
     return _orderBtn;
 }
@@ -1188,6 +1373,7 @@
         [_shareBtn setTitle:@" 分享" forState:UIControlStateNormal];
         [_shareBtn setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
         _shareBtn.titleLabel.font = [UIFont systemFontOfSize:11];
+        [_shareBtn addTarget:self action:@selector(shareViewTap) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shareBtn;
 }
@@ -1197,6 +1383,7 @@
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        _tableView.scrollEnabled = NO;
     }
     return _tableView;
 }
@@ -1212,9 +1399,30 @@
 - (UIImageView *)adImageView {
     if (!_adImageView) {
         _adImageView = [[UIImageView alloc] init];
-        _adImageView.backgroundColor = [UIColor yellowColor];
+        _adImageView.image = [UIImage imageNamed:@"download_ad"];
     }
     return _adImageView;
+}
+
+
+- (UILabel *)playTimeLabel {
+    if (!_playTimeLabel) {
+        _playTimeLabel = [[UILabel alloc] init];
+        _playTimeLabel.font = [UIFont systemFontOfSize:12];
+        _playTimeLabel.textColor = kMainTone;
+        _playTimeLabel.text = @"00:00";
+    }
+    return _playTimeLabel;
+}
+
+- (UILabel *)totalTimeLabel {
+    if (!_totalTimeLabel) {
+        _totalTimeLabel = [[UILabel alloc] init];
+        _totalTimeLabel.font = [UIFont systemFontOfSize:12];
+        _totalTimeLabel.textColor = kMainTone;
+        _totalTimeLabel.text = @"00:00";
+    }
+    return _totalTimeLabel;
 }
 
 - (UIView *)putCommentView {
@@ -1233,7 +1441,7 @@
         CGSize size = [@"定时" sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:11]}];
         [timeBtn setImageEdgeInsets:UIEdgeInsetsMake(12, size.width /2, 0, 0)];
         [timeBtn setTitleEdgeInsets:UIEdgeInsetsMake(image.size.height + 12, -image.size.width/2, 0, -image.size.width/2 )];
-
+        _timeButton = timeBtn;
         UIButton *dowmladBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [dowmladBtn addTarget:self action:@selector(listViewTap) forControlEvents:UIControlEventTouchUpInside];
         [dowmladBtn setImage:[UIImage imageNamed:@"下载章节"] forState:UIControlStateNormal];
@@ -1301,8 +1509,7 @@
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-    return self.commentDataSource.count;
+    return MIN(self.commentDataSource.count, 5);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1324,7 +1531,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 60)];
-    footerView.backgroundColor = [UIColor greenColor];
+    footerView.backgroundColor = [UIColor whiteColor];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"查看所有评论" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(moreCommentBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -1338,7 +1545,6 @@
     return footerView;
     
 }
-
 @end
 
 

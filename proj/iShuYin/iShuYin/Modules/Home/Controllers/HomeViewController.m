@@ -24,6 +24,8 @@
 #import "HistoryViewController.h"
 #import "ISYDownLoadViewController.h"
 #import "ISYSearchViewController.h"
+#import "ISYHistoryListenModel.h"
+#import "ISYDBManager.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -39,6 +41,8 @@
 @property (nonatomic, strong) HomeHotViewController *vc4;
 @property (nonatomic, strong) UIScrollView *contentScrollView;
 @property (nonatomic, strong) UIView *continueView;
+@property (nonatomic, strong) UILabel *continueLabel;
+@property (nonatomic, strong) ISYHistoryListenModel *continueChaper;
 @end
 
 @implementation HomeViewController
@@ -109,7 +113,7 @@
     
     //
     [self.view addSubview:self.seg];
-    [self.view addSubview:self.cycleView];
+//    [self.view addSubview:self.cycleView];
     [self.view addSubview:self.contentScrollView];
     
     [self.seg mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -119,15 +123,15 @@
         make.height.equalTo(@44);
     }];
     
-    [self.cycleView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.seg.mas_bottom);
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.height.mas_equalTo(kScreenWidth*162/375);
-    }];
+//    [self.cycleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self.seg.mas_bottom);
+//        make.left.mas_equalTo(self.view.mas_left);
+//        make.right.mas_equalTo(self.view.mas_right);
+//        make.height.mas_equalTo(kScreenWidth*162/375);
+//    }];
     
     [self.contentScrollView  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.cycleView.mas_bottom);
+        make.top.equalTo(self.seg.mas_bottom);
         make.left.right.bottom.equalTo(self.view);
     }];
     
@@ -177,18 +181,21 @@
 
 //查询历史播放记录
 - (void)qureyHisoryRead {
-    NSTimer *timer  = [NSTimer timerWithTimeInterval:3.0 target:self selector:@selector(timerMethod1) userInfo:nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    
-    [self.view addSubview:self.continueView];
-    [self.continueView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(20);
-        make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view).mas_offset(-30);
-    }];
-    
-   
+    NSArray *list = [[ISYDBManager shareInstance] queryBookHistoryListen];
+    ISYHistoryListenModel *model = [list firstObject];
+    self.continueChaper = model;
+    if (model) {
+        NSTimer *timer  = [NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(timerMethod1) userInfo:nil repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        self.continueLabel.text = [NSString stringWithFormat:@"继续播放上次 第%d集", model.chaperNumber];
+        [self.view addSubview:self.continueView];
+        [self.continueView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(200);
+            make.height.mas_equalTo(34);
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(self.view).mas_offset(-30);
+        }];
+    }
 }
 - (void)timerMethod1 {
     [self.continueView removeFromSuperview];
@@ -245,17 +252,21 @@
         if ([responseObject[@"statusCode"]integerValue] == 200) {
             HomeModel *model = [HomeModel yy_modelWithJSON:responseObject[@"data"]];
             strongSelf.model = model;
-            
+            strongSelf.vc1.slide = model.slide;
+            strongSelf.vc3.slide = model.slide;
+            strongSelf.vc4.slide = model.slide;
+            strongSelf.vc3.adString = model.public_content;
+            strongSelf.vc4.adString = model.public_content;
             NSMutableArray *slideUrls = [NSMutableArray array];
-            for (HomeSlideModel *slide in model.slide) {
-                if ([slide.img containsString:kPrefixImageSlide]) {
-                    [slideUrls addObject:slide.img];
-                }else {
-                    [slideUrls addObject:[kPrefixImageSlide stringByAppendingString:slide.img]];
-                }
-            }
-            strongSelf.cycleView.imageURLs = slideUrls;
-            [strongSelf.tableView reloadData];
+//            for (HomeSlideModel *slide in model.slide) {
+//                if ([slide.img containsString:kPrefixImageSlide]) {
+//                    [slideUrls addObject:slide.img];
+//                }else {
+//                    [slideUrls addObject:[kPrefixImageSlide stringByAppendingString:slide.img]];
+//                }
+//            }
+//            strongSelf.cycleView.imageURLs = slideUrls;
+//            [strongSelf.tableView reloadData];
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
         }
@@ -397,6 +408,7 @@
 - (void)rightButtonClick {
     //车载
     CarHomeViewController *vc = [[CarHomeViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -609,8 +621,42 @@
 - (UIView *)continueView {
     if (!_continueView) {
         _continueView = [[UIView alloc] init];
-        _continueView.backgroundColor = [UIColor redColor];
+        _continueView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent: 0.5];
+        _continueView.layer.masksToBounds = YES;
+        _continueView.layer.cornerRadius = 17;
+        _continueView.layer.borderColor = kMainTone.CGColor;
+        _continueView.layer.borderWidth = 2;
+        [_continueView addSubview:self.continueLabel];
+        [self.continueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.continueView);
+        }];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_continueView addSubview:button];
+        [button addTarget:self action:@selector(continuePlay) forControlEvents:UIControlEventTouchUpInside];
+        [_continueView addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.continueView);
+        }];
+        
     }
     return _continueView;
+}
+
+- (UILabel *)continueLabel {
+    if (!_continueLabel) {
+        _continueLabel = [[UILabel alloc] init];
+        _continueLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _continueLabel;
+}
+
+- (void)continuePlay {
+    [APPDELEGATE.playVC playWithBook:self.continueChaper.bookModel index:self.continueChaper.chaperNumber duration:self.continueChaper.time];
+    if ([self.navigationController.viewControllers containsObject:APPDELEGATE.playVC]) {
+        [self.navigationController popToViewController:APPDELEGATE.playVC animated:YES];
+    }else {
+        [self.navigationController pushViewController:APPDELEGATE.playVC animated:YES];
+    }
 }
 @end

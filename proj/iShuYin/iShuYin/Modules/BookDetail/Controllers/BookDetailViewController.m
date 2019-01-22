@@ -19,6 +19,7 @@
 #import "BookSubDetailViewController.h"
 #import "BookDetailSubDownLoadViewController.h"
 #import "ISYDBManager.h"
+#import "AppDelegate.h"
 
 @interface BookDetailViewController ()
 @property (nonatomic, strong) BookDetailInfoView *infoView;//书本信息
@@ -48,6 +49,28 @@
     
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"详情"];
     [self requestData];
+   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playChange) name:kNotiNamePlayChange object:nil];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)playChange {
+    
+    if (APPDELEGATE.playVC.detailModel) {
+        BookChapterModel *chaper = self.detailModel.chapters[APPDELEGATE.playVC.currentIndex];
+        self.currentChaperlabel.text = [NSString stringWithFormat:@"正在播放：%@-%@", self.detailModel.title, chaper.l_title];
+    } else {
+        self.currentChaperlabel.text = @"正在播放：无播放";
+    }
 }
 
 - (void)requestData {
@@ -68,6 +91,8 @@
             
             //本地缓存
             [[ISYDBManager shareInstance] insertBook:detailModel];
+            [strongSelf playChange];
+            
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
             [strongSelf.navigationController popViewControllerAnimated:YES];
@@ -296,9 +321,9 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)sortingButtonClick:(UIButton *)button {
+    button.selected = !button.selected;
+    self.vc1.zhengxu = button.selected;
 }
 
 #pragma mark - get/set method
@@ -389,7 +414,7 @@
 - (UILabel *)currentChaperlabel {
     if (!_currentChaperlabel) {
         _currentChaperlabel = [[ UILabel alloc] init];
-        _currentChaperlabel.text = @"正在播放呢：";
+        _currentChaperlabel.text = @"正在播放：无";
         _currentChaperlabel.font = [UIFont systemFontOfSize:14];
         _currentChaperlabel.textColor = kColorValue(0x282828);
     }
@@ -399,8 +424,10 @@
 - (UIButton *)sortingButton {
     if (!_sortingButton) {
         _sortingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_sortingButton setImage:[UIImage imageNamed:@"正序"] forState:UIControlStateNormal];
-        [_sortingButton setImage:[UIImage imageNamed:@"倒序"] forState:UIControlStateSelected];
+        [_sortingButton setSelected:YES];
+        [_sortingButton setImage:[UIImage imageNamed:@"正序"] forState:UIControlStateSelected];
+        [_sortingButton setImage:[UIImage imageNamed:@"倒序"] forState:UIControlStateNormal];
+        [_sortingButton addTarget:self action:@selector(sortingButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sortingButton;
 }

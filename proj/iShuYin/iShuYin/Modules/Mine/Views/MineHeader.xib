@@ -99,7 +99,6 @@
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="voX-si-IAL">
                                     <rect key="frame" x="0.0" y="0.0" width="129" height="105"/>
-                                    <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="bookingButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="c3Q-1d-mea"/>
                                     </connections>
@@ -125,7 +124,6 @@
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QpF-hE-ok2">
                                     <rect key="frame" x="0.0" y="0.0" width="129" height="105"/>
-                                    <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="downloadButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="eeH-5x-5BL"/>
                                     </connections>
@@ -157,7 +155,6 @@
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E5Q-dp-KAh">
                                     <rect key="frame" x="0.0" y="0.0" width="129" height="105"/>
-                                    <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="histroyButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ipv-EI-mRj"/>
                                     </connections>

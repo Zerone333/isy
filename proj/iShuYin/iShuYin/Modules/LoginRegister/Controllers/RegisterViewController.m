@@ -123,8 +123,36 @@
 }
 - (IBAction)wechatRegister:(id)sender {
     
-    ISYRegister3ViewController *vc = [[ISYRegister3ViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
+        
+        if (error) {
+            NSLog(@"%@",error);
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+            
+            // 授权信息
+            NSLog(@"Wechat uid: %@", resp.uid);
+            NSLog(@"Wechat openid: %@", resp.openid);
+            NSLog(@"Wechat unionid: %@", resp.unionId);
+            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+            NSLog(@"Wechat expiration: %@", resp.expiration);
+            
+            // 用户信息
+            NSLog(@"Wechat name: %@", resp.name);
+            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+            NSLog(@"Wechat gender: %@", resp.unionGender);
+            
+            // 第三方平台SDK源数据
+            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+            
+            ISYRegister3ViewController *vc = [[ISYRegister3ViewController alloc] init];
+            vc.platformType = UMSocialPlatformType_WechatSession;
+            vc.unique_id = resp.unionId;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+    }];
 }
 
 @end

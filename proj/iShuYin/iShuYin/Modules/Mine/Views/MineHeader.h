@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MineHeaderCB)(NSInteger index);
+
 @interface MineHeader : UIView
 
 @property (nonatomic, strong) NSString *name;//昵称
@@ -21,5 +23,5 @@
 @property (nonatomic, strong) NSString *balance;//余额
 
 @property (nonatomic, strong) LoginModel *loginModel;
-
+@property (nonatomic, copy) MineHeaderCB clickCB;
 @end

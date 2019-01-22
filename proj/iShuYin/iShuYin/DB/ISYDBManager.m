@@ -13,29 +13,50 @@
 
 
 // 数据库表名称表
-const struct ISYTable_Book {
+struct ISYTable_Book {
     __unsafe_unretained NSString *tableName;
     __unsafe_unretained NSString *bookId;
     __unsafe_unretained NSString *bookDesJson;
-} TFSDKTableName;
-const struct ISYTable_ReadHistory {
+};
+
+struct ISYTable_ReadHistory {
     __unsafe_unretained NSString *tableName;
     __unsafe_unretained NSString *bookId;
     __unsafe_unretained NSString *readtime;
-} ISYTable_ReadHistory;
-const struct ISYTable_Search_Keyword {
+};
+
+struct ISYTable_Search_Keyword {
     __unsafe_unretained NSString *tableName;
     __unsafe_unretained NSString *keyWord;
-} ISYTable_ReadSearch_Keyword;
+};
 
-const struct ISYTable_History_Listen {
+struct ISYTable_History_Listen {
     __unsafe_unretained NSString *tableName;
     __unsafe_unretained NSString *bookId;
     __unsafe_unretained NSString *time;     ///< 收听的进度
     __unsafe_unretained NSString *listenTime;     ///< 收听时间
     __unsafe_unretained NSString *chaperNumber;  ///< 收听的集数
-} ISYTable_ReadHistory_Listen;
+};
 
+struct ISYTable_Download {
+    __unsafe_unretained NSString *tableName;
+    __unsafe_unretained NSString *bookId;
+    __unsafe_unretained NSString *chaperId;
+    __unsafe_unretained NSString *status;
+    __unsafe_unretained NSString *chaperTitle;
+    __unsafe_unretained NSString *chaperUrl;
+    __unsafe_unretained NSString *size;
+};
+
+const struct ISYTable_Download ISYTable_DownloadTable = {
+    .tableName = @"ISYTable_DownloadTable",
+    .bookId = @"bookId",
+    .chaperId = @"chaperId",
+    .status = @"status",
+    .chaperTitle = @"chaperTitle",
+    .chaperUrl = @"chaperUrl",
+    .size = @"size",
+};
 
 const struct ISYTable_History_Listen ISYTable_HistoryListenTable = {
     .tableName = @"ISYTable_HistoryListenTable",
@@ -85,11 +106,13 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     return self;
 }
 
+#pragma mark - private
 - (void)setupDB {
     [self createBookTable];
     [self createHistoryTable];
     [self createHistorySearchTable];
     [self createHistoryListenTable];
+    [self createDownloadTable];
 }
 
 
@@ -164,7 +187,6 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     }
 }
 
-
 //收听记录
 - (void)createHistoryListenTable {
     __block BOOL result = YES;
@@ -191,13 +213,217 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     }
 }
 
+//下载记录表
+- (void)createDownloadTable {
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        // Book_Table
+        NSString *sql = [NSString stringWithFormat:@"create table if not exists %@\
+                         ('ID' INTEGER PRIMARY KEY AUTOINCREMENT,\
+                         '%@' TEXT NOT NULL,\
+                         '%@' TEXT NOT NULL,\
+                         '%@' INTERGE NOT NULL,\
+                         '%@' TEXT,\
+                         '%@' TEXT,\
+                         '%@' INTERGE)",
+                         ISYTable_DownloadTable.tableName,
+                         ISYTable_DownloadTable.bookId,
+                         ISYTable_DownloadTable.chaperId,
+                         ISYTable_DownloadTable.status,
+                         ISYTable_DownloadTable.chaperUrl,
+                         ISYTable_DownloadTable.chaperTitle,
+                         ISYTable_DownloadTable.size];
+        result = [db executeUpdate:sql];
+        [db commit];
+    }];
+    
+    if (result) {
+        NSLog(@"create table success");
+    }
+    
+}
+
+#pragma mark - public
+
+/**
+ 更新书本章节下载情况
+
+ @param status status
+ @param urlString urlString
+ @param bookId bookId
+ @param chaperNumber chaperNumber
+ @return BOOL
+ */
+- (BOOL)updateDownLoadStatus:(NSInteger)status bookId:(NSString *)bookId chaperModel:(BookChapterModel *)chaperModel expectedSize:(long long)expectedSize{
+    NSString *deleteSqlString = [NSString stringWithFormat:@"delete from %@ where %@ = ? and %@ = ?",
+                                 ISYTable_DownloadTable.tableName,
+                                 ISYTable_DownloadTable.bookId,
+                                 ISYTable_DownloadTable.chaperId];
+    
+    NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@) VALUES ( ?, ?, ?, ?, ?, ?)",
+                                 ISYTable_DownloadTable.tableName,
+                                 ISYTable_DownloadTable.bookId,
+                                 ISYTable_DownloadTable.status,
+                                 ISYTable_DownloadTable.chaperTitle,
+                                 ISYTable_DownloadTable.chaperId,
+                                 ISYTable_DownloadTable.chaperUrl,
+                                 ISYTable_DownloadTable.size];
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        result = [db executeUpdate:deleteSqlString,
+                  bookId,
+                  chaperModel.l_id];
+        result = result & [db executeUpdate:insertSqlString,
+                           bookId,
+                           @(status),
+                           chaperModel.l_title,
+                           chaperModel.l_id,
+                           chaperModel.l_url,
+                           @(expectedSize)];
+        [db commit];
+    }];
+    return result;
+}
+
+//删除下载的书
+- (BOOL)deleteDownloadBookId:(NSString *)bookId chaperModel:(BookChapterModel *)chaperModel {
+    NSString *deleteSqlString = [NSString stringWithFormat:@"delete from %@ where %@ = ? and %@ = ?",
+                                 ISYTable_DownloadTable.tableName,
+                                 ISYTable_DownloadTable.bookId,
+                                 ISYTable_DownloadTable.chaperId];
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        result = [db executeUpdate:deleteSqlString,
+                  bookId,
+                  chaperModel.l_id];
+        [db commit];
+    }];
+    return result;
+}
+
+- (NSArray *)queryDownloadBooks:(NSInteger)status {
+//    NSString *sqlString = [NSString stringWithFormat:@"SELECT *, sum(%@) / 4 as total,sum(%@) as totalSize FROM %@, %@ WHERE %@ = %@ GROUP by %@.%@",
+    NSString *sqlString = @"SELECT * , sum(status) / 4 as total,sum(size) as totalSize FROM ISYTable_DownloadTable join ISY_BookTable WHERE status = 4 and ISYTable_DownloadTable.bookId = ISY_BookTable.bookId GROUP by ISYTable_DownloadTable.bookId";
+//                           ISYTable_DownloadTable.status,
+//                           ISYTable_DownloadTable.size,
+//                           ISYTable_DownloadTable.tableName,
+//                           ISY_BookTable.tableName,
+//                           ISYTable_DownloadTable.status,
+//                           status == 4 ? @(4) : @(2),
+//                           ISYTable_DownloadTable.tableName,
+//                           ISYTable_DownloadTable.status];
+    __block NSMutableArray  *list = [ NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        while ([rs next]) {
+//            NSString *bookId =  [rs stringForColumn:ISYTable_DownloadTable.bookId];
+            NSInteger total =  [rs intForColumn:@"total"];
+            NSString *jsonString =  [rs stringForColumn:ISY_BookTable.bookDesJson];
+            long long totalSize =  [rs intForColumn:@"totalSize"];
+            
+            BookDetailModel *model = [BookDetailModel yy_modelWithJSON:jsonString];
+            model.downloadfinishCount = total;
+            model.totaldownloadSize = totalSize;
+            [list addObject:model];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    return [list copy];
+}
+
+- (NSArray *)queryDownloadingBooks {
+//    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM %@, %@ WHERE %@ != %@ GROUP by %@.%@",
+//                           ISYTable_DownloadTable.tableName,
+//                           ISY_BookTable.tableName,
+//                           ISYTable_DownloadTable.status,
+//                           @(4),
+//                           ISYTable_DownloadTable.tableName,
+//                           ISYTable_DownloadTable.bookId];
+    NSString *sqlString = @"SELECT * FROM ISYTable_DownloadTable join ISY_BookTable WHERE status != 4 and ISYTable_DownloadTable.bookId = ISY_BookTable.bookId GROUP by ISYTable_DownloadTable.bookId";
+    __block NSMutableArray  *list = [ NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        while ([rs next]) {
+            NSString *bookid =  [rs stringForColumn:ISYTable_DownloadTable.bookId];
+            NSLog(@"%@", bookid);
+            NSString *jsonString =  [rs stringForColumn:ISY_BookTable.bookDesJson];
+            
+            BookDetailModel *model = [BookDetailModel yy_modelWithJSON:jsonString];
+            [list addObject:model];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    return [list copy];
+}
+
+- (NSArray *)queryDownloadChapers:(NSInteger)status bookId:(NSString *)bookId {
+    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM  %@ WHERE %@ = %@ AND %@ = %@",
+                           ISYTable_DownloadTable.tableName,
+                           ISYTable_DownloadTable.status,
+                           @(status),
+                           ISY_BookTable.bookId,
+                           bookId];
+    __block NSMutableArray  *list = [ NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        while ([rs next]) {
+            NSString *chaperId =  [rs stringForColumn:ISYTable_DownloadTable.chaperId];
+            NSString *chaperUrl =  [rs stringForColumn:ISYTable_DownloadTable.chaperUrl];
+            NSString *chaperTitle =  [rs stringForColumn:ISYTable_DownloadTable.chaperTitle];
+            BookChapterModel *model = [[BookChapterModel alloc] init];
+            model.l_id = chaperId;
+            model.l_url = chaperUrl;
+            model.l_title = chaperTitle;
+            [list addObject:model];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    return [list copy];
+}
+
+- (NSArray *)queryDownloadingChapersBookId:(NSString *)bookId {
+    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM  %@ WHERE %@ != %@ AND %@ = %@",
+                           ISYTable_DownloadTable.tableName,
+                           ISYTable_DownloadTable.status,
+                           @(4),
+                           ISY_BookTable.bookId,
+                           bookId];
+    __block NSMutableArray  *list = [ NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        while ([rs next]) {
+            NSString *chaperId =  [rs stringForColumn:ISYTable_DownloadTable.chaperId];
+            NSString *chaperUrl =  [rs stringForColumn:ISYTable_DownloadTable.chaperUrl];
+            NSString *chaperTitle =  [rs stringForColumn:ISYTable_DownloadTable.chaperTitle];
+            BookChapterModel *model = [[BookChapterModel alloc] init];
+            model.l_id = chaperId;
+            model.l_url = chaperUrl;
+            model.l_title = chaperTitle;
+            [list addObject:model];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    return [list copy];
+}
+
 /**
  历史收听
  
  @param book BookDetailModel
  @return 插入结果
  */
-- (BOOL)insertHistoryListenBook:(BookDetailModel *)book chaperNumber:(NSInteger)chaperNumber time:(NSInteger)time listentime:(NSInteger)listentime{
+- (BOOL)insertHistoryListenBook:(BookDetailModel *)book chaperNumber:(NSInteger)chaperNumber time:(NSInteger)time listentime:(NSInteger)listentime {
     NSString *bookId = book.show_id;
     
     NSString *deleteSqlString = [NSString stringWithFormat:@"delete from %@ where %@ = ?",
@@ -224,6 +450,11 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     return result;
 }
 
+/**
+ 查询历史收听记录b
+
+ @return NSArray
+ */
 - (NSArray  *)queryBookHistoryListen {
     NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM %@, %@ WHERE %@.%@ = %@.%@ order by %@ desc LIMIT 50",
                            ISYTable_HistoryListenTable.tableName,
@@ -292,8 +523,13 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     return result;
 }
 
-- (BOOL)insertSearchKeyword:(NSString *)keyworkd {
+/**
+ 本地搜索记录
 
+ @param keyworkd keywordstring
+ @return bool
+ */
+- (BOOL)insertSearchKeyword:(NSString *)keyworkd {
     NSString *deleteSqlString = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = ?)",
                                  ISYTable_ReadSearchKeywordTable.tableName,
                                  ISYTable_ReadSearchKeywordTable.keyWord];
@@ -313,6 +549,11 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     return result;
 }
 
+/**
+ 查询历史搜索记录
+
+ @return NSArray
+ */
 - (NSArray *)querySearchKewords {
     NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM %@",
                            ISYTable_ReadSearchKeywordTable.tableName];
@@ -357,6 +598,13 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     return model;
 }
 
+/**
+ 插入读书记录
+
+ @param bookId bookid
+ @param timeString 收听时间
+ @return bool
+ */
 - (BOOL)insertReadBook:(NSString *)bookId readTime:(NSString *)timeString{
     // 执行插入数据库
     NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ( ?, ?)",

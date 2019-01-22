@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "CommentListModel.h"
 
-
+typedef void(^ISYCommentTableViewCellZanCB)(CommentListModel *model);
 @interface ISYCommentTableViewCell : UITableViewCell
+@property (nonatomic, copy) ISYCommentTableViewCellZanCB zanCb;
 @property (nonatomic, weak) CommentListModel *model;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "ZXPlayButton.h"
 #import "BookDetailModel.h"
+#import "ISYDBManager.h"
+#import "ISYHistoryListenModel.h"
 
 @implementation ZXPlayButton
 
@@ -40,19 +42,23 @@
                 [btn setBackgroundImage:image forState:UIControlStateNormal];
                 [btn setBackgroundImage:image forState:UIControlStateHighlighted];
             }else {
-                UIImage *placeholder = [UIImage imageNamed:@"tabbar_play"];
+                UIImage *placeholder = [UIImage imageNamed:@"AppIcon"];
                 [btn setBackgroundImage:placeholder forState:UIControlStateNormal];
                 [btn setBackgroundImage:placeholder forState:UIControlStateHighlighted];
             }
         }];
         [bgImageView.layer addAnimation:rotateAnimation forKey:@"rotateAnimation"];
     }
+    
+    [self setImage:nil forState:UIControlStateNormal];
 }
 
 - (void)delAnimation {
     UIButton *btn = [ZXPlayButton plusButton];
     UIImageView *bgImageView = [btn valueForKey:@"_backgroundView"];
     [bgImageView.layer removeAllAnimations];
+    
+    [self setImage:[UIImage imageNamed:@"tabbar_btn"] forState:UIControlStateNormal];
 }
 
 + (id)plusButton {
@@ -60,8 +66,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (!btn) {
-            UIImage *buttonImage = [UIImage imageNamed:@"tabbar_play"];
-            UIImage *highlightImage = [UIImage imageNamed:@"tabbar_play"];
+            UIImage *buttonImage = [UIImage imageNamed:@"AppIcon"];
+            UIImage *highlightImage = [UIImage imageNamed:@"AppIcon"];
             btn = [ZXPlayButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectMake(0, 0, 52,52);
             btn.layer.cornerRadius = 26;
@@ -94,16 +100,10 @@
 
 - (void)clickPublish {
     if ([APPDELEGATE.playVC hasBook] == NO) {
-        NSString *lastBook = [USERDEFAULTS objectForKey:kLastBook];
-        if ([NSString isEmpty:lastBook]) {
-            return;
-        }
-        BookDetailModel *m = [BookDetailModel yy_modelWithJSON:lastBook];
-        NSNumber *index = [USERDEFAULTS objectForKey:kLastIndex];
-        if (index.integerValue >= m.chapters.count) {
-            return;
-        }
-        [APPDELEGATE.playVC playWithBook:m index:index.integerValue];
+        NSArray *list = [[ISYDBManager shareInstance] queryBookHistoryListen];
+        ISYHistoryListenModel *model = [list firstObject];
+        
+        [APPDELEGATE.playVC playWithBook:model.bookModel index:model.chaperNumber duration:model.time];
         UITabBarController *tab = (UITabBarController *)APPDELEGATE.window.rootViewController;
         UINavigationController *nav = (UINavigationController *)tab.selectedViewController;
         APPDELEGATE.playVC.hidesBottomBarWhenPushed = YES;
@@ -112,6 +112,24 @@
         }else {
             [nav pushViewController:APPDELEGATE.playVC animated:YES];
         }
+//        NSString *lastBook = [USERDEFAULTS objectForKey:kLastBook];
+//        if ([NSString isEmpty:lastBook]) {
+//            return;
+//        }
+//        BookDetailModel *m = [BookDetailModel yy_modelWithJSON:lastBook];
+//        NSNumber *index = [USERDEFAULTS objectForKey:kLastIndex];
+//        if (index.integerValue >= m.chapters.count) {
+//            return;
+//        }
+//        [APPDELEGATE.playVC playWithBook:m index:index.integerValue];
+//        UITabBarController *tab = (UITabBarController *)APPDELEGATE.window.rootViewController;
+//        UINavigationController *nav = (UINavigationController *)tab.selectedViewController;
+//        APPDELEGATE.playVC.hidesBottomBarWhenPushed = YES;
+//        if ([nav.viewControllers containsObject:APPDELEGATE.playVC]) {
+//            [nav popToViewController:APPDELEGATE.playVC animated:YES];
+//        }else {
+//            [nav pushViewController:APPDELEGATE.playVC animated:YES];
+//        }
     }else {
         UITabBarController *tab = (UITabBarController *)APPDELEGATE.window.rootViewController;
         UINavigationController *nav = (UINavigationController *)tab.selectedViewController;

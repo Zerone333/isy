@@ -9,6 +9,7 @@
 #import "BookChapterCell.h"
 #import "BookDetailModel.h"
 #import "MCDownloader.h"
+#import "ISYDownloadHelper.h"
 
 @interface BookChapterCell ()
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
@@ -23,7 +24,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    [self.chooseBtn setImage:[UIImage imageNamed:@"download_choose_nor"] forState:UIControlStateNormal];
+    [self.chooseBtn setImage:[UIImage imageNamed:@"download_choose_sel"] forState:UIControlStateSelected];
     
 }
 
@@ -128,11 +130,11 @@
 
 #pragma mark - Methods
 - (void)download {
-    [[MCDownloader sharedDownloader] downloadDataWithURL:[NSURL URLWithString:self.url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-        
-    } completed:^(MCDownloadReceipt *receipt, NSError * _Nullable error, BOOL finished) {
-
-    }];
+//     [[ISYDownloadHelper shareInstance] downloadDataWithURL:[NSURL URLWithString:self.url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+//        
+//    } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+//        
+//    }];
 }
 
 - (void)delete {

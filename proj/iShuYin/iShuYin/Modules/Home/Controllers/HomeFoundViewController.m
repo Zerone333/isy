@@ -14,8 +14,12 @@
 #import "ISYBookListHotTableViewCell.h"
 #import "ISYBookHeaderFooterView.h"
 #import "ISYBookRefreshFooterView.h"
+#import "ISYCategoryMoreViewController.h"
+#import "ZXCycleView.h"
+#import "HomeSlideModel.h"
 
 @interface HomeFoundViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic, strong) ZXCycleView *cycleView;
 @property (nonatomic, strong) UIView *headContentView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UILabel *announcementLabel;
@@ -33,16 +37,11 @@
 
 #pragma mark - private
 - (void)setupUI {
-    [self.view addSubview:self.headContentView];
     [self.view addSubview:self.tableView];
-    
-    [self.headContentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.left.top.equalTo(self.view);
-        make.height.mas_equalTo(24);
-    }];
+    self.tableView.tableHeaderView = self.headContentView;
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headContentView.mas_bottom);
+        make.top.equalTo(self.view);
         make.left.bottom.right.equalTo(self.view);
     }];
 }
@@ -61,6 +60,13 @@
             [self converDataSource];
             strongSelf.announcementLabel.text = model.public_content;
             [strongSelf.tableView reloadData];
+            [strongSelf.announcementLabel sizeToFit];
+            CGFloat width = CGRectGetMinX(self.announcementLabel.frame) -  CGRectGetWidth(self.announcementLabel.frame) - 40;
+            
+            [UIView animateWithDuration: - width / kScreenWidth * 4.0 delay:0 options:UIViewAnimationOptionRepeat animations:^{
+                strongSelf.announcementLabel.transform = CGAffineTransformMakeTranslation(width, 0);
+            } completion:nil];
+            
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
         }
@@ -195,6 +201,15 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (section == 0 || section == 1) {
             strongSelf.moreBlock(section);
+        } else {
+            HomeBookModel *book = item.randarDataSource.firstObject;
+            ISYCategoryMoreViewController *vc = [[ISYCategoryMoreViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            CategoryModel *category = [[CategoryModel alloc] init];
+            category.cat_id = book.cat_id;
+            category.cat_name = item.keyType;
+            vc.category = category;
+            [strongSelf.navigationController pushViewController:vc animated:YES];
         }
 //        ISYMoreViewController *moreVc = [[ISYMoreViewController alloc] init];
 //        [strongSelf.navigationController pushViewController:moreVc animated:YES];
@@ -228,6 +243,79 @@
 }
 
 #pragma mark - get/set method
+- (void)setSlide:(NSArray *)slide {
+    _slide = slide;
+    NSMutableArray *slideUrls = [NSMutableArray array];
+    for (HomeSlideModel *moel in slide) {
+        if ([moel.img containsString:kPrefixImageSlide]) {
+            [slideUrls addObject:moel.img];
+        }else {
+            [slideUrls addObject:[kPrefixImageSlide stringByAppendingString:moel.img]];
+        }
+    }
+    self.cycleView.imageURLs = slideUrls;
+}
+
+- (UIView *)headContentView {
+    if (!_headContentView) {
+        _headContentView = [[UIView alloc] init];
+        _headContentView.backgroundColor = kColorValue(0xf3f5f7);
+        _headContentView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth*162/375  + 24);
+        
+        [_headContentView addSubview:self.cycleView];
+        
+        UIView *bottomContentView = [[UIView alloc] init];
+        [_headContentView addSubview:bottomContentView];
+        
+        [bottomContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.left.bottom.equalTo(_headContentView);
+            make.height.mas_equalTo(24);
+        }];
+        
+        UIImageView *announcementImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_announcement"]];
+        
+        UIView *bgView = [[UIView alloc] init];
+        bgView.backgroundColor = kColorValue(0xf3f5f7);
+        
+        [bottomContentView addSubview:self.announcementLabel];
+        [bottomContentView addSubview:bgView];
+        [bottomContentView addSubview:announcementImage];
+        
+        [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.bottom.equalTo(bottomContentView);
+            make.right.equalTo(announcementImage).mas_offset(8);
+        }];
+        
+        [self.announcementLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(announcementImage.mas_right).mas_offset(8);
+            make.centerY.equalTo(bottomContentView);
+        }];
+        
+        [announcementImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(bottomContentView);
+            make.size.mas_equalTo(CGSizeMake(13, 13));
+            make.left.equalTo(bottomContentView).mas_offset(12);
+        }];
+    }
+    return _headContentView;
+}
+
+- (ZXCycleView *)cycleView {
+    if (!_cycleView) {
+        _cycleView = [[ZXCycleView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth*162/375) pageCtrlStyle:ZXPageCtrlStyleDefault timeInterval:5.0];
+        _cycleView.placeholder = @"ph_image";
+        __weak __typeof(self)weakSelf = self;
+        _cycleView.selectBlock = ^(ZXCycleView *cycleView, NSInteger index) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            if (strongSelf.model.slide.count == 0) {
+                return;
+            }
+            HomeSlideModel *slide = strongSelf.model.slide[index];
+            [strongSelf.parentVC pushToBookDetailWithIdentity:slide.show_id];
+        };
+    }
+    return _cycleView;
+}
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -252,29 +340,6 @@
         }];
     }
     return _tableView;
-}
-
-- (UIView *)headContentView {
-    if (!_headContentView) {
-        _headContentView = [[UIView alloc] init];
-        
-        UIImageView *announcementImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_announcement"]];
-        [_headContentView addSubview:announcementImage];
-        [_headContentView addSubview:self.announcementLabel];
-        [announcementImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(_headContentView);
-            make.size.mas_equalTo(CGSizeMake(13, 13));
-            make.left.equalTo(_headContentView).mas_offset(12);
-        }];
-        
-        [self.announcementLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(announcementImage.mas_right).mas_offset(8);
-            make.centerY.equalTo(_headContentView);
-        }];
-        
-        
-    }
-    return _headContentView;
 }
 
 - (UILabel *)announcementLabel {

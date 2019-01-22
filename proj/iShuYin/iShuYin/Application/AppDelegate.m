@@ -14,6 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "ISYDBManager.h"
 #import "PlayViewController.h"
+#import "WXApi.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) NSTimer *sleepTimer;
@@ -52,7 +53,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
     [ZXPlayButton registerPlusButton];
     _playVC = [[PlayViewController alloc] init];
 //    SBVC(@"PlayVC");
@@ -71,11 +71,11 @@
 
     //接口前缀
 #if DEBUG
-    self.base_url = @"http://47.52.110.104/service.php?action=";
+    self.base_url = @"http://app.aikeu.com/service.php?action=";
     self.base_url_2 = @"http://app.aikeu.com/service.php?action=";
 #else
-    self.base_url = @"http://caiji.ishuyin.com/service.php?action=";
-    self.base_url_2 = @"http://app.aikeu.com/service.php?action=";
+    self.base_url = @"http://47.52.110.104/service.php?action=";
+    self.base_url_2 = @"http://47.52.110.104/service.php?action=";
 #endif
     
     //窗口处理
@@ -124,9 +124,9 @@
 }
 
 - (void)autoLogin {
-    if (![USERDEFAULTS objectForKey:kAutoLogin]) {
-        return;
-    }
+//    if (![USERDEFAULTS objectForKey:kAutoLogin]) {
+//        return;
+//    }
     [USERDEFAULTS setObject:[[NSBundle mainBundle]infoDictionary][@"CFBundleShortVersionString"] forKey:kVersion];
     [USERDEFAULTS synchronize];
     
@@ -184,7 +184,7 @@
 - (void)handleKeyboard {
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;
-    manager.enableAutoToolbar = YES;
+    manager.enableAutoToolbar = NO;
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
 }
@@ -193,7 +193,7 @@
 - (void)configUMSocial{
     //获取友盟social版本号
     DLog(@"umSocialSDKVersion %@", [UMSocialGlobal umSocialSDKVersion]);
-    
+    [UMSocialGlobal shareInstance].isUsingHttpsWhenShareContent = false;
     //设置友盟appkey
     [[UMSocialManager defaultManager] setUmSocialAppkey:kUMengKey];
     
@@ -328,5 +328,4 @@
     }
     return YES;
 }
-
 @end

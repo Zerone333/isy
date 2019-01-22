@@ -22,6 +22,13 @@
 @property (nonatomic, strong) NSArray *week;//
 @property (nonatomic, strong) NSArray *month;//
 @property (nonatomic, strong) NSArray *search_keywords;//
+@property (nonatomic, strong) NSArray *playlet;//
+@property (nonatomic, strong) NSArray *music;//
+@property (nonatomic, strong) NSArray *funny;//
+@property (nonatomic, strong) NSArray *news;//
+@property (nonatomic, strong) NSArray *car;//
+@property (nonatomic, strong) NSArray *essay;//
+
 
 
 @property (nonatomic, copy) NSString *public_content;//公告

@@ -150,10 +150,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogl-1a-R3L">
                                 <rect key="frame" x="102.5" y="539.5" width="50" height="50"/>
                                 <state key="normal" image="qq"/>
+                                <connections>
+                                    <action selector="qqlogin:" destination="bqV-Eb-SLc" eventType="touchUpInside" id="vUf-el-S1B"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30e-pf-8lB">
                                 <rect key="frame" x="218" y="533" width="50" height="50"/>
                                 <state key="normal" image="wechat"/>
+                                <connections>
+                                    <action selector="wechatLogin:" destination="bqV-Eb-SLc" eventType="touchUpInside" id="SgL-ot-vyc"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-V9-F6j">
                                 <rect key="frame" x="118" y="597.5" width="19" height="14.5"/>

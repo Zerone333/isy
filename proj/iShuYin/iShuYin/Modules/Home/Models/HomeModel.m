@@ -29,8 +29,13 @@
              @"today":[HomeBookModel class],
              @"week":[HomeBookModel class],
              @"month":[HomeBookModel class],
-             @"search_keywords":[NSString class]
+             @"search_keywords":[NSString class],
+             @"playlet":[HomeBookModel class],
+             @"music":[HomeBookModel class],
+             @"funny":[HomeBookModel class],
+             @"news":[HomeBookModel class],
+             @"car":[HomeBookModel class],
+             @"essay":[HomeBookModel class]
              };
 }
 @end
-

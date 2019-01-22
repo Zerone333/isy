@@ -17,10 +17,13 @@
 #import "ISYBookRefreshFooterView.h"
 #import "ISYDBManager.h"
 #import "ISYBookingTableViewCell.h"
+#import "ISYNOSubscribeView.h"
+#import "SubCollectCell.h"
 
 @interface ISYSubscribeViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, copy) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) ISYNOSubscribeView *emptyView;
 @end
 
 @implementation ISYSubscribeViewController
@@ -29,6 +32,7 @@
     [super viewDidLoad];
     self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:@"订阅"];
     [self setupUI];
+    self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -47,11 +51,40 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+    [self.view addSubview:self.emptyView];
+    [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    self.emptyView.hidden = YES;
 }
 
 - (void)queryData {
-    self.dataSource =  [[ISYDBManager shareInstance] queryBookHistoryListen];
-    [self.tableView reloadData];
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery:QueryCollectionList];
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    [manager GETWithURLString:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            NSArray *temp = [NSArray yy_modelArrayWithClass:[HomeBookModel class] json:responseObject[@"data"]];
+            strongSelf.dataSource = [NSMutableArray arrayWithArray:temp];
+            [strongSelf.tableView reloadData];
+            if (temp.count == 0) {
+                strongSelf.emptyView.hidden = NO;
+            } else {
+                strongSelf.emptyView.hidden = YES;
+            }
+        }else {
+            [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+        }
+        [strongSelf.tableView.mj_header endRefreshing];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.tableView.mj_header endRefreshing];
+    }];
 }
 - (void)continuPlay:(ISYHistoryListenModel *)model {
     
@@ -64,26 +97,55 @@
     }
 }
 
+#pragma mark - Event
+//收藏
+- (void)collectCancelWithModel:(HomeBookModel *)model {
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery:QueryCollectionOperate];
+    NSDictionary *params = @{@"book_id":model.show_id,
+                             @"operate":@"2",//1 收藏 2取消收藏
+                             };
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            NSInteger idx = [strongSelf.dataSource indexOfObject:model];
+            [strongSelf.dataSource removeObject:model];
+            [strongSelf.tableView beginUpdates];
+            [strongSelf.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+            [strongSelf.tableView endUpdates];
+        }
+        [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+    }];
+}
+
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ISYHistoryListenModel *model = self.dataSource[indexPath.row];
-    ISYBookingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookingTableViewCell cellID]];
-    cell.historyListenModel = model;
-    
-    __weak typeof(self) weakSelf = self;
-    cell.playBlock = ^(ISYHistoryListenModel *model) {
-        [weakSelf continuPlay: model];
-    };
-    return cell;
+        static NSString *reuseId = @"SubCollectCell";
+        SubCollectCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+        __weak __typeof(self)weakSelf = self;
+        cell.collectCancelBlock = ^(HomeBookModel *model) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf collectCancelWithModel:model];
+        };
+        cell.bookModel = self.dataSource[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return  [ISYBookListTableViewCell cellHeight];
+    return 120;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -124,9 +186,16 @@
             _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
         [_tableView registerClass:[ISYBookingTableViewCell class] forCellReuseIdentifier:[ISYBookingTableViewCell cellID]];
-        [_tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"HistoryViewControllerHeadID"];
+        [_tableView registerNib:[UINib nibWithNibName:@"SubCollectCell" bundle:nil] forCellReuseIdentifier:@"SubCollectCell"];
     }
     return _tableView;
 }
 
+- (ISYNOSubscribeView *)emptyView {
+    if (!_emptyView) {
+        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"ISYNOSubscribeView" owner:nil options:nil];
+        _emptyView = views[0];
+    }
+    return _emptyView;
+}
 @end

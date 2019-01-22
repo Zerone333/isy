@@ -8,10 +8,11 @@
 
 #import "ISYRegister3ViewController.h"
 
-@interface ISYRegister3ViewController ()
+@interface ISYRegister3ViewController ()<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *textField1;
 @property (nonatomic, strong) UITextField *textField2;
 @property (nonatomic, strong) UITextField *textField3;
+@property (nonatomic, strong) UIButton *registerButton;
 @end
 
 @implementation ISYRegister3ViewController
@@ -23,8 +24,18 @@
     [self setupUI];
 }
 
-
 #pragma mark - private
+
+- (void)textFieldChanged:(UITextField*)textField {
+    if (self.textField1.text.length != 0 && self.textField2.text.length != 0 && self.textField3.text.length != 0) {
+        self.registerButton.enabled = YES;
+        self.registerButton.backgroundColor = kMainTone;
+    } else {
+        self.registerButton.enabled = NO;
+        self.registerButton.backgroundColor = kColorRGB(222, 222, 222);
+    }
+}
+
 - (void) setupUI {
     UIView *lineView1 = [[UIView alloc] init];
     lineView1.backgroundColor = [UIColor grayColor];
@@ -101,11 +112,14 @@
     }];
 
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    registerBtn.backgroundColor = [UIColor grayColor];
+    registerBtn.backgroundColor = kColorRGB(222, 222, 222);
+    registerBtn.backgroundColor = kMainTone;
     registerBtn.layer.masksToBounds = YES;
     registerBtn.layer.cornerRadius = 22;
+    [registerBtn addTarget: self action:@selector(registerUser) forControlEvents:UIControlEventTouchUpInside];
     [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     [self.view addSubview:registerBtn];
+    self.registerButton = registerBtn;
     [registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).mas_offset(44);
         make.right.equalTo(self.view).mas_offset(-44);
@@ -128,10 +142,61 @@
     loginBtn.titleLabel.font = [UIFont systemFontOfSize:12];
 }
 
+- (void)registerUser {
+    [_textField1 resignFirstResponder];
+    [_textField2 resignFirstResponder];
+    [_textField3 resignFirstResponder];
+    if ([NSString isEmpty:_textField1.text]) {
+        [SVProgressHUD showImage:nil status:@"请输入账号"];
+        return;
+    }
+    if ([NSString isEmpty:_textField2.text]) {
+        [SVProgressHUD showImage:nil status:@"请输入密码"];
+        return;
+    }
+    if ([NSString isEmpty:_textField2.text]) {
+        [SVProgressHUD showImage:nil status:@"请输入密码"];
+        return;
+    }
+    if ([NSString isEmpty:_textField3.text]) {
+        [SVProgressHUD showImage:nil status:@"请输入确认密码"];
+        return;
+    }
+    if (![_textField3.text isEqualToString:_textField2.text]) {
+        [SVProgressHUD showImage:nil status:@"密码不一致"];
+        return;
+    }
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery:QueryRegister];
+    NSDictionary *params = @{@"username":_textField1.text,
+                             @"password":_textField2.text,
+                             @"third_type":self.platformType == UMSocialPlatformType_QQ ? @(2) : @(1), //1 微信 2qq 3微博
+                             @"unique_id":self.unique_id
+                             };
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf.navigationController popViewControllerAnimated:YES];
+            [SVProgressHUD showImage:nil status:@"注册成功，请登录。"];
+        }else {
+            [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+    }];
+}
+
+#pragma mark  get/set method
 - (UITextField *)textField1 {
     if (!_textField1) {
         _textField1 = [[UITextField alloc] init];
         _textField1.placeholder = @"第三方授权登陆名";
+        _textField1.delegate = self;//添加方法
+        [_textField1 addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     }
     return _textField1;
 }
@@ -140,6 +205,7 @@
     if (!_textField2) {
         _textField2 = [[UITextField alloc] init];
         _textField2.placeholder = @"请输入密码";
+        [_textField2 addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     }
     return _textField2;
 }
@@ -148,6 +214,8 @@
     if (!_textField3) {
         _textField3 = [[UITextField alloc] init];
         _textField3.placeholder = @"请再次输入密码";
+        _textField3.delegate = self;
+        [_textField3 addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     }
     return _textField3;
 }

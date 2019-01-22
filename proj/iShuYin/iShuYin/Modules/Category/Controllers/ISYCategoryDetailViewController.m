@@ -109,12 +109,14 @@
     NSDictionary *parameter;
     if (!typeNumber) {
         parameter = @{@"category" : category,
-                      @"page" : @(page)
+                      @"page" : @(page),
+                      @"jishu_show" : @(1)
                       };
     } else {
         parameter = @{@"type" : typeNumber,
                       @"category" : category,
-                      @"page" : @(page)
+                      @"page" : @(page),
+                      @"jishu_show" : @(1)
                       };
     }
     

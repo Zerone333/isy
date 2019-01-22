@@ -69,9 +69,14 @@
     self.model = bookModel;
     
     self.chaperLabel.text = [NSString stringWithFormat:@"第%ld集", (long)historyListenModel.chaperNumber + 1];
-    self.currentTimeLabe.text = [NSString stringWithFormat:@"场次播放至%ld", (long)historyListenModel.time];
+    self.currentTimeLabe.text = [NSString stringWithFormat:@"场次播放至%@", [self timeConvert:historyListenModel.time]];
 }
-
+- (NSString *)timeConvert:(NSInteger)time {
+    NSInteger s = time % 60;
+    NSInteger m = (time - s) / 60;
+    NSInteger h = (time - s - m * 60)/ 3600;
+    return  [NSString stringWithFormat:@"%ld:%ld", (long)m, s, time];
+}
 #pragma mark - Event
 - (void)continueButtonClick {
     if (self.playBlock != nil) {

@@ -10,5 +10,5 @@
 
 typedef void (^HomeViewControllerBookBlock)(NSString *bookId);
 @interface HomeViewController : ZXBaseViewController
-
+- (void)pushToBookDetailWithIdentity:(NSString *)bookid;
 @end

@@ -7,8 +7,11 @@
 //
 
 #import "ZXBaseViewController.h"
-
 #import "HomeViewController.h"
+
 @interface HomeHotViewController : ZXBaseViewController
 @property (nonatomic, copy) HomeViewControllerBookBlock bookBlock;
+@property (nonatomic, strong) NSArray *slide;//轮播图
+@property (nonatomic, copy) NSString *adString ;
+@property (nonatomic, weak) HomeViewController *parentVC;
 @end
