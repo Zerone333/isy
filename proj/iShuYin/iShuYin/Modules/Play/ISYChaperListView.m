@@ -41,8 +41,13 @@
         [self addSubview:self.headView];
         
         [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self);
+            make.left.right.equalTo(self);
             make.height.mas_equalTo(44);
+            if (@available(iOS 11.0, *)) {
+                make.bottom.equalTo(self.mas_safeAreaLayoutGuideBottom);
+            } else {
+                make.bottom.equalTo(self);
+            }
         }];
         
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -178,6 +183,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   
+    if (self.selectChaperCB != nil) {
+        NSInteger chaperIndxe = 0;
+        if (self.sortNormal) {
+            chaperIndxe = indexPath.row;
+        } else {
+            NSInteger total = self.book.chapters.count - 1 ;
+            chaperIndxe = total - indexPath.row;
+        }
+        self.selectChaperCB(chaperIndxe);
+    }
+    [self closeButtonClick];
 }
 
 #pragma mark getter

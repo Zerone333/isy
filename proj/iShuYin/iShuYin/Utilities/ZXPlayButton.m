@@ -101,6 +101,10 @@
 - (void)clickPublish {
     if ([APPDELEGATE.playVC hasBook] == NO) {
         NSArray *list = [[ISYDBManager shareInstance] queryBookHistoryListen];
+        if (list.count == 0 ) {
+            [SVProgressHUD showImage:nil status:@"当前没有播放的书籍哦~"];
+            return;
+        }
         ISYHistoryListenModel *model = [list firstObject];
         
         [APPDELEGATE.playVC playWithBook:model.bookModel index:model.chaperNumber duration:model.time];
