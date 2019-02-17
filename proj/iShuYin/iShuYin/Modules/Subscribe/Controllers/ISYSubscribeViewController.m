@@ -116,6 +116,9 @@
             [strongSelf.tableView beginUpdates];
             [strongSelf.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
             [strongSelf.tableView endUpdates];
+            if (strongSelf.dataSource.count == 0) {
+                strongSelf.emptyView.hidden = NO;
+            }
         }
         [SVProgressHUD showImage:nil status:responseObject[@"message"]];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
