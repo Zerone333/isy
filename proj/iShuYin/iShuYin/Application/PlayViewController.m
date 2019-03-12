@@ -19,6 +19,7 @@
 #import "ISYDownloadHelper.h"
 #import "Const.h"
 #import "ISYChaperListView.h"
+#import "ZXStarRatingView.h"
 
 #import <FSAudioStream.h>
 #import <AVFoundation/AVFoundation.h>
@@ -46,6 +47,8 @@
 @property (nonatomic, strong) UIImageView *adImageView;
 @property (nonatomic, strong) UIView *putCommentView;
 @property (nonatomic, weak) UIButton *timeButton;
+@property (nonatomic, strong) UILabel *scoreLabel;
+@property (nonatomic, strong) ZXStarRatingView *starRatingView;
 
 @property (strong, nonatomic) UILabel *playTimeLabel;//播放时间
 @property (strong, nonatomic) UILabel *totalTimeLabel;//总时长
@@ -290,7 +293,7 @@
     }];
     
     UIView *lineView = [[UIView alloc] init];
-    lineView.backgroundColor = [UIColor redColor];
+    lineView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:lineView];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.downloadBtn.mas_bottom).mas_offset(23);
@@ -743,6 +746,9 @@
     __weak typeof(self) weakSelf = self;
     view.sortCallBack = ^(ISYPalySort sort) {
         weakSelf.playSortType = sort;
+    };
+    view.selectChaperCB = ^(NSInteger charpetIndex) {
+        [weakSelf playWithBook:self.detailModel index:charpetIndex];
     };
 }
 
@@ -1239,9 +1245,40 @@
 - (UIView *)startview {
     if (!_startview) {
         _startview = [[UIView alloc] init];
-        _startview.backgroundColor = [UIColor redColor];
+        _startview.backgroundColor = [UIColor whiteColor];
+        
+        [_startview addSubview:self.starRatingView];
+        [_startview addSubview:self.scoreLabel];
+        
+        [self.starRatingView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_startview).mas_offset(-20);
+            make.centerY.equalTo(_startview);
+            make.size.mas_equalTo(CGSizeMake(91, 15));
+        }];
+        [self.scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.starRatingView.mas_right).mas_offset(8);
+            make.centerY.equalTo(_startview);
+        }];
     }
     return _startview;
+}
+
+- (ZXStarRatingView *)starRatingView {
+    if (!_starRatingView) {
+        //TODO: 替换图片
+        _starRatingView = [[ZXStarRatingView alloc] initWithFrame:CGRectMake(0, 0, 91, 15)
+                                                         backStar:@"play_star_nor" foreStar:@"play_star_sel" number:5 width:15 height:15 space:4];
+        [_starRatingView setScore:0.8 withAnimation:NO];
+    }
+    return _starRatingView;
+}
+
+- (UILabel *)scoreLabel {
+    if (!_scoreLabel) {
+        _scoreLabel = [[UILabel alloc] init];
+        _scoreLabel.text = @"4分";
+    }
+    return _scoreLabel;
 }
 
 - (UIButton *)chaperListButton {
@@ -1409,7 +1446,7 @@
     if (!_playTimeLabel) {
         _playTimeLabel = [[UILabel alloc] init];
         _playTimeLabel.font = [UIFont systemFontOfSize:12];
-        _playTimeLabel.textColor = kMainTone;
+        _playTimeLabel.textColor = kColorValue(0x666666);
         _playTimeLabel.text = @"00:00";
     }
     return _playTimeLabel;
@@ -1419,7 +1456,7 @@
     if (!_totalTimeLabel) {
         _totalTimeLabel = [[UILabel alloc] init];
         _totalTimeLabel.font = [UIFont systemFontOfSize:12];
-        _totalTimeLabel.textColor = kMainTone;
+        _totalTimeLabel.textColor = kColorValue(0x666666);
         _totalTimeLabel.text = @"00:00";
     }
     return _totalTimeLabel;

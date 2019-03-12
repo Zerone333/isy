@@ -147,6 +147,20 @@
 }
 
 #pragma mark - Actions
+- (void)cancleBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)deleteBtnClick {
+    if (_selectArray.count == 0) {
+        [SVProgressHUD showImage:nil status:@"请选择要删除的章节"];
+        return;
+    }
+    for (BookChapterModel *m in _selectArray) {
+        [[ISYDownloadHelper shareInstance] deleteDownloadBookId:self.detailModel.show_id chaper:m];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)downLoadButtonClick:(UIButton *)button {
     if (_selectArray.count == 0) {
@@ -237,21 +251,55 @@
             make.centerY.equalTo(_bottomView);
         }];
         
-        UIButton *downLoadButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [downLoadButton setTitle:@"立即下载" forState:UIControlStateNormal];
-        [downLoadButton addTarget:self action:@selector(downLoadButtonClick:)
-                 forControlEvents:UIControlEventTouchUpInside];
-        downLoadButton.backgroundColor = [UIColor redColor];
-        downLoadButton.titleLabel.textColor = [UIColor whiteColor];
-        downLoadButton.layer.masksToBounds = YES;
-        downLoadButton.layer.cornerRadius = 4.0;
-        
-        [_bottomView addSubview:downLoadButton];
-        [downLoadButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_bottomView).mas_offset(-12);
-            make.centerY.equalTo(_bottomView);
-            make.size.mas_equalTo(CGSizeMake(90, 40));
-        }];
+        if (self.isDelete) {
+            UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+            [cancelBtn addTarget:self action:@selector(cancleBtnClick)
+                forControlEvents:UIControlEventTouchUpInside];
+            cancelBtn.backgroundColor = [UIColor redColor];
+            cancelBtn.titleLabel.textColor = [UIColor whiteColor];
+            cancelBtn.layer.masksToBounds = YES;
+            cancelBtn.layer.cornerRadius = 4.0;
+            
+            [_bottomView addSubview:cancelBtn];
+            [cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(_bottomView).mas_offset(-12);
+                make.centerY.equalTo(_bottomView);
+                make.size.mas_equalTo(CGSizeMake(90, 33));
+            }];
+            UIButton *deletebtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [deletebtn setTitle:@"删除" forState:UIControlStateNormal];
+            [deletebtn addTarget:self action:@selector(deleteBtnClick)
+                     forControlEvents:UIControlEventTouchUpInside];
+            deletebtn.backgroundColor = [UIColor redColor];
+            deletebtn.titleLabel.textColor = [UIColor whiteColor];
+            deletebtn.layer.masksToBounds = YES;
+            deletebtn.layer.cornerRadius = 4.0;
+            
+            [_bottomView addSubview:deletebtn];
+            [deletebtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(cancelBtn.mas_left).mas_offset(-12);
+                make.centerY.equalTo(_bottomView);
+                make.size.mas_equalTo(CGSizeMake(90, 33));
+            }];
+           
+        } else {
+            UIButton *downLoadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [downLoadButton setTitle:@"立即下载" forState:UIControlStateNormal];
+            [downLoadButton addTarget:self action:@selector(downLoadButtonClick:)
+                     forControlEvents:UIControlEventTouchUpInside];
+            downLoadButton.backgroundColor = [UIColor redColor];
+            downLoadButton.titleLabel.textColor = [UIColor whiteColor];
+            downLoadButton.layer.masksToBounds = YES;
+            downLoadButton.layer.cornerRadius = 4.0;
+            
+            [_bottomView addSubview:downLoadButton];
+            [downLoadButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(_bottomView).mas_offset(-12);
+                make.centerY.equalTo(_bottomView);
+                make.size.mas_equalTo(CGSizeMake(90, 33));
+            }];
+        }
     }
     return _bottomView;
 }

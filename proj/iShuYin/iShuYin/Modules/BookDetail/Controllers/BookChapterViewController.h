@@ -15,7 +15,7 @@
  批量下载
  */
 @interface BookChapterViewController : ZXBaseViewController
-
+@property (nonatomic, assign) bool isDelete;    // default NO
 @property (nonatomic, strong) BookDetailModel *detailModel;
 
 @end

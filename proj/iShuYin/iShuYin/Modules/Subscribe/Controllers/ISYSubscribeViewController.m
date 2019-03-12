@@ -198,6 +198,7 @@
     if (!_emptyView) {
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"ISYNOSubscribeView" owner:nil options:nil];
         _emptyView = views[0];
+        _emptyView.nav = self.navigationController;
     }
     return _emptyView;
 }

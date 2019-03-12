@@ -7,11 +7,10 @@
 //
 
 #import "ZXBaseViewController.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import "BookDetailModel.h"
 
 @interface ISYDownloadFinishViewController : ZXBaseViewController
 @property (nonatomic, copy) NSString *bookId;
-@end
+@property (nonatomic, strong) BookDetailModel *book;
 
-NS_ASSUME_NONNULL_END
+@end

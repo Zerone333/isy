@@ -119,6 +119,7 @@
         ISYDownloadFinishViewController *vc = [[ISYDownloadFinishViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         vc.bookId = book.show_id;
+        vc.book = book;
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         ISYDownloadingViewController *vc = [[ISYDownloadingViewController alloc] init];
