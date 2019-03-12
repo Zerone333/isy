@@ -20,6 +20,7 @@ typedef void(^ISYDownloadChaperStatusCellDeleteCB)(BookChapterModel *chaper);
 @property (nonatomic, strong) BookChapterModel *chaper;
 @property (nonatomic, copy) NSString *bookId;
 @property (nonatomic, assign) NSInteger status;
+@property (nonatomic, assign) BOOL isLoading; //default no 下载中的数据
 @end
 
 NS_ASSUME_NONNULL_END

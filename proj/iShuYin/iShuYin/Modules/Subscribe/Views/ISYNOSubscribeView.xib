@@ -37,27 +37,35 @@
                         <constraint firstItem="FTn-4b-1JY" firstAttribute="centerX" secondItem="Ij5-Mh-9yr" secondAttribute="centerX" id="wmb-M5-c7S"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inv-AQ-HGi">
-                    <rect key="frame" x="136.5" y="153" width="150" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inv-AQ-HGi">
+                    <rect key="frame" x="126.5" y="153" width="170" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="4U6-Ng-Ycu"/>
-                        <constraint firstAttribute="width" constant="150" id="RJh-Uk-ZjF"/>
+                        <constraint firstAttribute="width" constant="170" id="RJh-Uk-ZjF"/>
                     </constraints>
-                    <state key="normal" title="去看看其他人正在听"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="去看看其他人正在听">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="或者搜索关键字试试" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Sf-V5-R9K">
                     <rect key="frame" x="133.5" y="227" width="156" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1B-24-KZe">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1B-24-KZe">
                     <rect key="frame" x="151.5" y="270" width="120" height="30"/>
+                    <color key="backgroundColor" red="0.90980392160000001" green="0.12941176469999999" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="16D-49-jWe"/>
                         <constraint firstAttribute="width" constant="120" id="4W7-4k-BuZ"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="搜索词"/>
+                    <connections>
+                        <action selector="searchClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="xmh-kJ-d8P"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -75,6 +83,10 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="searchBtn" destination="P1B-24-KZe" id="mi7-vo-dwa"/>
+                <outlet property="topBtn" destination="inv-AQ-HGi" id="yAz-Wg-3PV"/>
+            </connections>
             <point key="canvasLocation" x="-52" y="-1.7991004497751126"/>
         </view>
     </objects>

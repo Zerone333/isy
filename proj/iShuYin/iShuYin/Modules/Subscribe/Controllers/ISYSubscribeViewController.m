@@ -117,6 +117,9 @@
             [strongSelf.tableView beginUpdates];
             [strongSelf.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
             [strongSelf.tableView endUpdates];
+            if (strongSelf.dataSource.count == 0) {
+                strongSelf.emptyView.hidden = NO;
+            }
         }
         [SVProgressHUD showImage:nil status:responseObject[@"message"]];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -210,6 +213,7 @@
     if (!_emptyView) {
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"ISYNOSubscribeView" owner:nil options:nil];
         _emptyView = views[0];
+        _emptyView.nav = self.navigationController;
     }
     return _emptyView;
 }

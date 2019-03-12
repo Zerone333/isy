@@ -92,6 +92,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf queryData];
     };
+    cell.isLoading = YES;
     cell.chaper = model;
     return cell;
 }

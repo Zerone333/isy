@@ -11,6 +11,7 @@
 #import "BookDetailModel.h"
 #import "ISYDBManager.h"
 #import "ISYDownloadHelper.h"
+#import "BookChapterViewController.h"
 
 @interface ISYDownloadFinishViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIView *headView;
@@ -72,6 +73,25 @@
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 
+#pragma mark - action
+
+- (void)dinyueBtnClick {
+    //TODO: 订阅
+}
+
+- (void)deleteBtnClick {
+    BookChapterViewController *vc = [[BookChapterViewController alloc]init];
+    vc.detailModel = self.book;
+    vc.isDelete = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)downloadBtnClick {
+    BookChapterViewController *vc = [[BookChapterViewController alloc]init];
+    vc.detailModel = self.book;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
@@ -89,6 +109,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf deleteChaper:chaper];
     };
+    cell.isLoading = NO;
     cell.chaper = model;
     return cell;
 }
@@ -123,11 +144,13 @@
         [self.deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.thumImageView);
             make.left.equalTo(self.titleLabel);
+            make.size.mas_equalTo(CGSizeMake(94, 26));
         }];
         
         [self.downloadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.thumImageView);
             make.right.equalTo(_headView).mas_offset(-12);
+            make.size.mas_equalTo(CGSizeMake(94, 26));
         }];
     }
     return _headView;
@@ -168,8 +191,9 @@
 - (UIButton *)dinyueBtn {
     if (!_dinyueBtn) {
         _dinyueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_dinyueBtn setTitle:@"订阅" forState:UIControlStateNormal];
+        [_dinyueBtn setImage:[UIImage imageNamed:@"订阅btn"] forState:UIControlStateNormal];
         [_dinyueBtn setTitleColor:kMainTone forState:UIControlStateNormal];
+        [_dinyueBtn addTarget:self action:@selector(dinyueBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _dinyueBtn;
 }
@@ -178,7 +202,13 @@
     if (!_deleteBtn) {
         _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_deleteBtn setTitle:@"批量删除" forState:UIControlStateNormal];
-        [_deleteBtn setTitleColor:kMainTone forState:UIControlStateNormal];
+        [_deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_deleteBtn setImage:[UIImage imageNamed:@"删除"] forState:UIControlStateNormal];
+        _deleteBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        _deleteBtn.backgroundColor = [UIColor grayColor];
+        [_deleteBtn addTarget:self action:@selector(deleteBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _deleteBtn.layer.masksToBounds = YES;
+        _deleteBtn.layer.cornerRadius = 4;
     }
     return _deleteBtn;
 }
@@ -187,7 +217,13 @@
     if (!_downloadBtn) {
         _downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_downloadBtn setTitle:@"下载更多" forState:UIControlStateNormal];
-        [_downloadBtn setTitleColor:kMainTone forState:UIControlStateNormal];
+        [_downloadBtn setImage:[UIImage imageNamed:@"download_btn"] forState:UIControlStateNormal];
+        _downloadBtn.backgroundColor = kMainTone;
+        _downloadBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_downloadBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_downloadBtn addTarget:self action:@selector(downloadBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _downloadBtn.layer.masksToBounds = YES;
+        _downloadBtn.layer.cornerRadius = 4;
     }
     return _downloadBtn;
 }

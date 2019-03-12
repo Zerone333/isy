@@ -104,20 +104,38 @@
         self.timeIcon.hidden = NO;
         self.waitLabel.hidden = NO;
         self.downloadingText.hidden = YES;
-    } else if (receipt.state == MCDownloadStateFailed || receipt.state == MCDownloadStateNone) {
+        
+    } else if (receipt.state == MCDownloadStateFailed) {
         self.timeIcon.hidden = YES;
         self.waitLabel.hidden = YES;
         self.downloadingText.hidden = NO;
         self.downloadingText.text = @"下载失败";
+        
+        
+        if (self.isLoading) {
+            self.downloadingText.hidden = NO;
+            self.downloadingText.text = @"重新下载";
+        }
+    } else if (receipt.state == MCDownloadStateNone) {
+        self.timeIcon.hidden = YES;
+        self.waitLabel.hidden = YES;
+        self.downloadingText.hidden = YES;
+        
+        
+        if (self.isLoading) {
+            self.downloadingText.hidden = NO;
+            self.downloadingText.text = @"开始下载";
+        }
     }
-    
-
 }
 
 - (UIButton *)deleteButton {
     if (!_deleteButton) {
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_deleteButton setImage:[UIImage imageNamed:@"播报icon"] forState:UIControlStateNormal];
+        [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+        [_deleteButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        _deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
+//        [_deleteButton setImage:[UIImage imageNamed:@"播报icon"] forState:UIControlStateNormal];
         [_deleteButton addTarget:self action:@selector(deleteButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _deleteButton;
