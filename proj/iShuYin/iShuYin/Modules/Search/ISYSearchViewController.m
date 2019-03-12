@@ -15,6 +15,7 @@
 #import "HomeBookModel.h"
 #import "ISYHeadModel.h"
 #import "ISYHeadCollectionReusableView.h"
+#import "BookDetailViewController.h"
 
 @interface ISYSearchViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -233,13 +234,27 @@
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    CategoryModel *model = _dataArray[indexPath.section];
-//    CategoryModel *child = model.son_cats[indexPath.item];
-//    ISYCategoryDetailViewController *vc = [[ISYCategoryDetailViewController alloc]init];
-//    vc.category = child;
-//    vc.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.section <=1) {
+    } else {
+        HomeBookModel *bookModel = self.hotBooks[indexPath.item];
+        [self pushBookVC:bookModel.show_id];
+    }
 }
+
+- (void)pushBookVC:(NSString *)bookID {
+    if (self.navigationController) {
+        if ([NSString isEmpty:bookID]) {
+            [SVProgressHUD showImage:nil status:@"书本数据有误"];
+            return;
+        }
+        BookDetailViewController *vc = [[BookDetailViewController alloc]init];
+        vc.bookid = bookID;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+}
+
 #pragma mark - UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     if (!searchBar.text.length) {

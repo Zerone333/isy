@@ -380,6 +380,7 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
+    [self.searchBar resignFirstResponder];
     ISYSearchViewController *vc = [[ISYSearchViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
