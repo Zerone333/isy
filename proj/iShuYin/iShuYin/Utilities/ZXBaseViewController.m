@@ -113,6 +113,7 @@
     [manager GETWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         DLog(@"%@", responseObject);
         if ([responseObject[@"statusCode"]integerValue] == 200) {
+            return;
             NSDictionary *data = responseObject[@"data"];
             NSString *version_name = data[@"version_name"];
             NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
