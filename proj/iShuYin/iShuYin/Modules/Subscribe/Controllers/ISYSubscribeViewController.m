@@ -19,6 +19,7 @@
 #import "ISYBookingTableViewCell.h"
 #import "ISYNOSubscribeView.h"
 #import "SubCollectCell.h"
+#import "BookDetailViewController.h"
 
 @interface ISYSubscribeViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -127,6 +128,19 @@
     }];
 }
 
+- (void)pushBookVC:(NSString *)bookID {
+    if (self.navigationController) {
+        if ([NSString isEmpty:bookID]) {
+            [SVProgressHUD showImage:nil status:@"书本数据有误"];
+            return;
+        }
+        BookDetailViewController *vc = [[BookDetailViewController alloc]init];
+        vc.bookid = bookID;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -169,8 +183,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    HomeBookModel *bookModel = self.dataSource[indexPath.row];
+    [self pushBookVC:bookModel.show_id];
 }
-
 
 #pragma mark - get/set method
 

@@ -10,6 +10,8 @@
 #import "ISYBookTableViewCell.h"
 #import "ISYBookHeaderFooterView.h"
 #import "ISYMoreViewController.h"
+#import "BookDetailViewController.h"
+#import "HomeBookModel.h"
 
 @interface BookSubDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIView *headView;
@@ -48,6 +50,22 @@
     }];
 }
 
+#pragma mark - Event
+
+- (void)pushBookVC:(NSString *)bookID {
+    if (self.navigationController) {
+        if ([NSString isEmpty:bookID]) {
+            [SVProgressHUD showImage:nil status:@"书本数据有误"];
+            return;
+        }
+        BookDetailViewController *vc = [[BookDetailViewController alloc]init];
+        vc.bookid = bookID;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+}
+
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -62,8 +80,10 @@
     ISYBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookTableViewCell cellID]];
     NSDictionary *item = self.dataSouce[indexPath.section];
     [cell updateDataSource:item[@"dataSource"]];
+    
+    __weak __typeof(self)weakSelf = self;
     cell.itemClickBlock = ^(HomeBookModel *book) {
-        //TODO:进入详情
+        [weakSelf pushBookVC:book.show_id];
     };
     return cell;
 }

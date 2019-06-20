@@ -10,6 +10,7 @@
 #import "HomeModel.h"
 #import "HomeFoundItemModel.h"
 #import "ISYBookListHotTableViewCell.h"
+#import "BookDetailViewController.h"
 
 @interface ISYMoreListViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -124,6 +125,27 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    HomeBookModel *model = self.dataSource[indexPath.row];
+    [self pushBookVC:model.show_id];
+}
+
+#pragma mark - Event
+
+- (void)pushBookVC:(NSString *)bookID {
+    if (self.navigationController) {
+        if ([NSString isEmpty:bookID]) {
+            [SVProgressHUD showImage:nil status:@"书本数据有误"];
+            return;
+        }
+        BookDetailViewController *vc = [[BookDetailViewController alloc]init];
+        vc.bookid = bookID;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
 }
 #pragma mark - get/set method
 
