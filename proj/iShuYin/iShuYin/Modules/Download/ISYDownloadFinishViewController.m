@@ -12,6 +12,7 @@
 #import "ISYDBManager.h"
 #import "ISYDownloadHelper.h"
 #import "BookChapterViewController.h"
+#import "LoginViewController.h"
 
 @interface ISYDownloadFinishViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIView *headView;
@@ -22,6 +23,9 @@
 @property (nonatomic, strong) UIButton *dinyueBtn;
 @property (nonatomic, strong) UIButton *deleteBtn;
 @property (nonatomic, strong) UIButton *downloadBtn;
+@property (nonatomic, strong) UIView *orderView;
+@property (nonatomic, strong) UILabel *countNum;
+@property (nonatomic, strong) UIButton *sortingButton;
 @end
 
 @implementation ISYDownloadFinishViewController
@@ -43,19 +47,28 @@
 #pragma mark - private
 - (void)queryData {
     self.dataSource = [NSMutableArray arrayWithArray:[[ISYDBManager shareInstance] queryDownloadChapers:4 bookId:self.bookId]];
+    self.countNum.text = [NSString stringWithFormat:@"已下载%d集",(int)self.dataSource.count];
     [self.tableView reloadData];
 }
 
 - (void)setupUI {
     [self.view addSubview:self.headView];
+    [self.view addSubview:self.orderView];
     [self.view addSubview:self.tableView];
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.view);
         make.height.mas_equalTo(100 + 24);
     }];
     
+    [self.orderView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.headView.mas_bottom).offset(10);
+        make.left.equalTo(self.headView);
+        make.width.equalTo(self.view);
+        make.height.equalTo(@40);
+    }];
+    
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headView.mas_bottom).mas_offset(10);
+        make.top.equalTo(self.orderView.mas_bottom);
         make.left.right.equalTo(self.view);
         if (@available(iOS 11.0, *)) {
             make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
@@ -77,6 +90,35 @@
 
 - (void)dinyueBtnClick {
     //TODO: 订阅
+    if (!APPDELEGATE.loginModel) {
+        LoginViewController *vc = SBVC(@"LoginVC");
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
+        return;
+    }
+    NSString *operate = _book.is_collected.boolValue ? @"2" : @"1";
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery:QueryCollectionOperate];
+    NSDictionary *params = @{@"book_id":_book.show_id,
+                             @"operate":operate,//1 收藏 2取消收藏
+                             };
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            if ([operate isEqualToString:@"1"]) {
+                strongSelf.book.is_collected = @"1";
+            }else {
+                strongSelf.book.is_collected = @"0";
+            }
+        }
+        [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+    }];
 }
 
 - (void)deleteBtnClick {
@@ -90,6 +132,12 @@
     BookChapterViewController *vc = [[BookChapterViewController alloc]init];
     vc.detailModel = self.book;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)sortingButtonClick:(UIButton *)button {
+    button.selected = !button.selected;
+    self.dataSource = [[[self.dataSource reverseObjectEnumerator] allObjects] mutableCopy];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -226,5 +274,65 @@
         _downloadBtn.layer.cornerRadius = 4;
     }
     return _downloadBtn;
+}
+- (UIView *)orderView {
+    if (!_orderView) {
+        _orderView = [[UIView alloc] init];
+        _orderView.backgroundColor = [UIColor whiteColor];
+        
+        UILabel *label = [[ UILabel alloc] init];
+        label.text = @"排序";
+        label.font = [UIFont systemFontOfSize:14];
+        label.textColor = kColorValue(0x282828);
+        
+        [_orderView addSubview:self.countNum];
+        [_orderView addSubview:label];
+        [_orderView addSubview:self.sortingButton];
+        
+        [self.countNum mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_orderView).offset(15);
+            make.centerY.equalTo(_orderView);
+        }];
+        
+        [self.sortingButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_orderView);
+            make.right.equalTo(_orderView).mas_offset(-15);
+        }];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.centerY.equalTo(_orderView);
+            make.right.equalTo(self.sortingButton.mas_left).mas_offset(-15);
+        }];
+        
+        UIView *lineView  = [[UIView alloc] init];
+        lineView.backgroundColor = kColorValue(0x999999);
+        [_orderView addSubview:lineView];
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0.5);
+            make.right.bottom.equalTo(_orderView);
+            make.left.equalTo(_orderView);
+        }];
+    }
+    return _orderView;
+}
+
+- (UIButton *)sortingButton {
+    if (!_sortingButton) {
+        _sortingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_sortingButton setSelected:YES];
+        [_sortingButton setImage:[UIImage imageNamed:@"正序"] forState:UIControlStateNormal];
+        [_sortingButton setImage:[UIImage imageNamed:@"倒序"] forState:UIControlStateSelected];
+        [_sortingButton addTarget:self action:@selector(sortingButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _sortingButton;
+}
+
+- (UILabel *)countNum {
+    if (!_countNum) {
+        _countNum = [[UILabel alloc] init];
+        _countNum.font = [UIFont systemFontOfSize:14];
+        _countNum.textColor = kColorValue(0x282828);
+    }
+    return _countNum;
 }
 @end
