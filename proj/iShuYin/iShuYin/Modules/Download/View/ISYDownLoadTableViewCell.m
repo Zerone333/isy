@@ -60,8 +60,10 @@
         self.label2.hidden = YES;
         if (_bookDetailModel.isSuspended) {
             [_button setTitle:@"继续下载" forState:UIControlStateNormal];
+            self.label3.text = @"已暂停";
         }else{
             [_button setTitle:@"暂停下载" forState:UIControlStateNormal];
+            self.label3.text = @"正在下载";
         }
     }
 }
