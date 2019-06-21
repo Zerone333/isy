@@ -8,10 +8,13 @@
 
 #import "ZXBaseViewController.h"
 
+typedef void(^DownloadedSizeChangeBlock)(long long size);
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ISYDownLoadListViewController : ZXBaseViewController
 @property (nonatomic, assign) NSInteger dowmloadType;   ///< 1 已下载/ 2 下载中
+@property (nonatomic, copy) DownloadedSizeChangeBlock sizeChangeBlock;
 @end
 
 NS_ASSUME_NONNULL_END

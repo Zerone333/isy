@@ -98,7 +98,7 @@
 - (UILabel *)label {
     if (!_label) {
         _label = [[UILabel alloc] init];
-        _label.text = @"xxx";
+        _label.text = @"";
     }
     return _label;
 }
@@ -140,6 +140,12 @@
     if (!_vc1) {
         _vc1 = [[ISYDownLoadListViewController alloc] init];
         _vc1.dowmloadType = 1;
+        __weak typeof(self) weakSelf = self;
+        _vc1.sizeChangeBlock = ^(long long size) {
+            ISYDownLoadViewController *strongSelf = weakSelf;
+            double system = [ZXTools shareTools].systemAvailableMemory;
+            strongSelf.label.text = [NSString stringWithFormat:@"已占用%lldM/可用%.2fG", size/1024/1024, system/1024.0];
+        };
     }
     return _vc1;
 }

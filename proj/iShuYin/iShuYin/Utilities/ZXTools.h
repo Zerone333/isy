@@ -26,4 +26,7 @@
 
 - (BOOL)iphoneX;
 
+//系统可用存储空间，单位MB，0为错误
+- (double)systemAvailableMemory;
+
 @end

@@ -75,4 +75,16 @@
     return [UIScreen mainScreen].bounds.size.width == 375 && [UIScreen mainScreen].bounds.size.height == 812;
 }
 
+- (double)systemAvailableMemory{
+    double totalFreeSpace=0.f;
+    NSError *error = nil;
+    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+    if (dictionary) {
+        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
+        totalFreeSpace = [freeFileSystemSizeInBytes doubleValue] / 1024.0 / 1024.0;
+    }
+    return totalFreeSpace;
+}
+
 @end
