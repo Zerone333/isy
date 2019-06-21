@@ -42,7 +42,7 @@
     self.model =  model;
     
     self.label1.text =[NSString stringWithFormat:@"已下载%ld集", (long)bookDetailModel.downloadfinishCount];
-    self.label2.text =[NSString stringWithFormat:@"已占用内存%lld", bookDetailModel.totaldownloadSize];
+    self.label2.text =[NSString stringWithFormat:@"已占用内存%lldM", bookDetailModel.totaldownloadSize / 1024 / 1024];
 }
 
 - (void)setType:(NSInteger)type {
