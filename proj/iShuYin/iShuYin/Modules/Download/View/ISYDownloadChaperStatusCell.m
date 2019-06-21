@@ -91,7 +91,7 @@
         self.waitLabel.hidden = YES;
         self.downloadingText.hidden = NO;
         [[ISYDownloadHelper shareInstance] downloadChaper:chaper bookId:self.bookId progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-            self.downloadingText.text = [NSString stringWithFormat:@"%.0f%", receivedSize * 1.0/ expectedSize * 100];
+            self.downloadingText.text = [NSString stringWithFormat:@"%.0f%%", receivedSize * 1.0/ expectedSize * 100];
         } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
             if (self.downLoadFinishCb) {
                 self.downLoadFinishCb(chaper);
