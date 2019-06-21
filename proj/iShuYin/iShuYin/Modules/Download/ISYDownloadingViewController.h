@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ISYDownloadingViewController : ZXBaseViewController
 @property (nonatomic, copy) NSString *bookName;
 @property (nonatomic, copy) NSString *bookId;
+@property (nonatomic, assign) BOOL isSuspended;
 @end
 
 NS_ASSUME_NONNULL_END

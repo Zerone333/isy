@@ -356,7 +356,7 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
             
             BookDetailModel *model = [BookDetailModel yy_modelWithJSON:jsonString];
             //状态为3时，为暂停态
-            model.suspend = [rs intForColumn:@"status"] == 3;
+            model.suspend = [rs intForColumn:@"status"] != 2;
             [list addObject:model];
         }
         [rs close];

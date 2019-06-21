@@ -141,6 +141,7 @@
         vc.hidesBottomBarWhenPushed = YES;
         vc.bookId = book.show_id;
         vc.bookName = book.title;
+        vc.isSuspended = book.isSuspended;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

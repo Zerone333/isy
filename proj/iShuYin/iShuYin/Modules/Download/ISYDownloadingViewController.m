@@ -29,10 +29,24 @@
 
 #pragma mark - Action
 
-- (void)stopDownloadButtonClick {
+- (void)stopDownloadButtonClick:(UIButton *)btn {
     for (BookChapterModel *model in self.dataSource) {
-        [[ISYDownloadHelper shareInstance] stopDownloadBookId:self.bookId chaper:model];
+        if (self.isSuspended) {
+            //暂停状态，即将执行 下载功能
+            [[ISYDownloadHelper shareInstance] downloadChaper:model bookId:self.bookId progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+                
+            } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+                
+            }];
+            [btn setTitle:@"暂停下载" forState:UIControlStateNormal];
+        }else{
+            //下载状态，即将执行 暂停功能
+            [[ISYDownloadHelper shareInstance] stopDownloadBookId:self.bookId chaper:model];
+            [btn setTitle:@"继续下载" forState:UIControlStateNormal];
+        }
     }
+
+    self.isSuspended = !self.isSuspended;
     [self queryData];
 }
 
@@ -120,13 +134,13 @@
         _headView.backgroundColor = [UIColor whiteColor];
         
         UIButton *stopDownloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [stopDownloadButton setTitle:@"暂停下载" forState:UIControlStateNormal];
+        [stopDownloadButton setTitle:self.isSuspended?@"继续下载":@"暂停下载" forState:UIControlStateNormal];
         [stopDownloadButton setTitleColor:kMainTone forState:UIControlStateNormal];
         stopDownloadButton.layer.masksToBounds = YES;
         stopDownloadButton.layer.borderColor = kMainTone.CGColor;
         stopDownloadButton.layer.cornerRadius = 4;
         stopDownloadButton.layer.borderWidth = 1;
-        [stopDownloadButton addTarget:self action:@selector(stopDownloadButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [stopDownloadButton addTarget:self action:@selector(stopDownloadButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [_headView addSubview:stopDownloadButton];
         [stopDownloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_headView);
