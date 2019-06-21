@@ -25,8 +25,8 @@
     [self setupUI];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self queryData];
 }
 
@@ -35,6 +35,11 @@
 - (void)queryData {
     if (self.dowmloadType == 1) {
         self.dataSource = [[ISYDBManager shareInstance] queryDownloadBooks:4];
+        __block long long totalSize = 0;
+        [self.dataSource enumerateObjectsUsingBlock:^(BookDetailModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            totalSize += obj.totaldownloadSize;
+        }];
+        self.sizeChangeBlock ? self.sizeChangeBlock(totalSize): nil;
     } else if (self.dowmloadType == 2) {
         self.dataSource = [[ISYDBManager shareInstance] queryDownloadingBooks];
     }
@@ -63,7 +68,17 @@
     [ZXProgressHUD showLoading:@""];
     NSMutableArray *dataSource = [NSMutableArray arrayWithArray:[[ISYDBManager shareInstance] queryDownloadingChapersBookId:book.show_id]];
     for (BookChapterModel *model in dataSource) {
-        [[ISYDownloadHelper shareInstance] stopDownloadBookId:book.show_id chaper:model];
+        if (book.isSuspended) {
+            //暂停状态，即将执行 下载功能
+            [[ISYDownloadHelper shareInstance] downloadChaper:model bookId:book.show_id progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+                
+            } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+                
+            }];
+        }else{
+            //下载状态，即将执行 暂停功能
+            [[ISYDownloadHelper shareInstance] stopDownloadBookId:book.show_id chaper:model];
+        }
     }
     [ZXProgressHUD hide];
     [self queryData];

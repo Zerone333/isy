@@ -714,7 +714,6 @@
 				184DAE291F2E25CC00EAEA58 /* Utilities */,
 				6DF039D5218436D000EFDB38 /* Base */,
 				184DAE2A1F2E25D900EAEA58 /* Modules */,
-				184DAE2B1F2E260F00EAEA58 /* Resource */,
 				184DAE0C1F2E24F600EAEA58 /* Supporting Files */,
 			);
 			path = iShuYin;
@@ -837,13 +836,6 @@
 				6DF039DD21844B5A00EFDB38 /* More */,
 			);
 			path = Modules;
-			sourceTree = "<group>";
-		};
-		184DAE2B1F2E260F00EAEA58 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resource;
 			sourceTree = "<group>";
 		};
 		184DAE2C1F2E29CD00EAEA58 /* SVProgressHUD */ = {

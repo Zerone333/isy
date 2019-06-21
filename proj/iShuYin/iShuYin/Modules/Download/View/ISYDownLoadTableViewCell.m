@@ -58,7 +58,11 @@
         self.label3.hidden = NO;
         self.label1.hidden = YES;
         self.label2.hidden = YES;
-        [self.button setTitle:@"暂停下载" forState:UIControlStateNormal];
+        if (_bookDetailModel.isSuspended) {
+            [_button setTitle:@"继续下载" forState:UIControlStateNormal];
+        }else{
+            [_button setTitle:@"暂停下载" forState:UIControlStateNormal];
+        }
     }
 }
 

@@ -42,4 +42,8 @@
              };
 }
 
+- (BOOL)isSuspended {
+    return _suspend;
+}
+
 @end

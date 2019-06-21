@@ -65,5 +65,7 @@
 
 @property (nonatomic, assign) NSInteger downloadfinishCount;    ///< 数据库 当前下载完成数
 @property (nonatomic, assign) long long totaldownloadSize;    ///< 数据库 当前下载完成数
+
+@property (nonatomic, assign, getter=isSuspended) BOOL suspend;
 @end
 
