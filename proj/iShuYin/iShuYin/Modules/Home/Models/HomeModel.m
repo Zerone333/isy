@@ -13,7 +13,7 @@
 @implementation HomeModel
 
 + (NSDictionary *)modelCustomPropertyMapper {
-    return @{@"newest":@"new"};
+    return @{@"newest":@"new_z"};
 }
 
 + (NSDictionary *)modelContainerPropertyGenericClass {
