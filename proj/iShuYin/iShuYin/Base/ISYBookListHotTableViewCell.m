@@ -99,7 +99,7 @@
 
 - (void)setModel:(HomeBookModel *)model {
     [super setModel:model];
-    self.chaperCountLabel.text = [NSString stringWithFormat:@"%@章节", model.jishu];
+    self.chaperCountLabel.text = [NSString stringWithFormat:@"%@章节", model.jishu?:@"0"];
     if ([model.status isEqualToString:@"完结"]) {
         self.statuImage.hidden = NO;
         self.statuLabel.hidden = YES;
@@ -108,8 +108,13 @@
         self.statuLabel.hidden = NO;
     }
     
-    self.timesLabel.text = [NSString stringWithFormat:@"%@次", model.click_count];
-    self.categryLabel.text = model.cat_name;
+    self.timesLabel.text = [NSString stringWithFormat:@"%@次", model.click_count?:@"0"];
+    if (model.cat_name) {
+        self.categryLabel.text = model.cat_name;
+        self.categryBgView.hidden = NO;
+    } else {
+        self.categryBgView.hidden = YES;
+    }
     self.desLabel.text = model.descriptionString;
 }
 
