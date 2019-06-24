@@ -68,9 +68,9 @@
         }];
         
         [self.desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.nameLabel).mas_offset(4);
+            make.top.equalTo(self.nameLabel.mas_bottom).mas_offset(4);
             make.left.equalTo(self.nameLabel);
-            make.right.equalTo(self.contentView).mas_offset(12);
+            make.right.equalTo(self.contentView).mas_offset(-12);
         }];
         
         [self.timesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -96,7 +96,7 @@
         self.statuImage.hidden = YES;
         self.statuLabel.hidden = NO;
     }
-    
+    self.desLabel.text = model.descriptionString;
     self.timesLabel.text = [NSString stringWithFormat:@"%@次", model.click_count];
 }
 
