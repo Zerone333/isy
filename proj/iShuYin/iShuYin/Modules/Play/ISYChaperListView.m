@@ -35,7 +35,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.sortNormal = YES;
+
         [self addSubview:self.bottomView];
         [self addSubview:self.tableView];
         [self addSubview:self.headView];
@@ -77,9 +77,18 @@
     _playSort = playSort;
     switch (_playSort) {
         case ISYPalySortshunxu:
+        case ISYPalySortReverse:
             {
                 self.playSortImage.image = [UIImage imageNamed:@"顺序播放"];
                 self.playSortLabel.text = @"顺序播放";
+                
+                if (_playSort != ISYPalySortReverse) {
+                    self.listSortImage.image = [UIImage imageNamed:@"sort_z"];
+                    self.listSortLabel.text = @"正序";
+                } else {
+                    self.listSortImage.image = [UIImage imageNamed:@"sort_n"];
+                    self.listSortLabel.text = @"逆序";
+                }
             }
             break;
         case ISYPalySortSingle:
@@ -111,6 +120,7 @@
 - (void)playSortButtonClick {
     switch (self.playSort) {
         case ISYPalySortshunxu:
+        case ISYPalySortReverse:
         {
             self.playSort = ISYPalySortSingle;
         }
@@ -136,15 +146,19 @@
 }
 
 - (void)listSortButtonClick {
-    self.sortNormal = !self.sortNormal;
-    if (self.sortNormal) {
+    if (self.playSort == ISYPalySortshunxu) {
+        self.playSort = ISYPalySortReverse;
+    } else {
+        self.playSort = ISYPalySortshunxu;
+    }
+    if (self.playSort != ISYPalySortReverse) {
         self.listSortImage.image = [UIImage imageNamed:@"sort_z"];
         self.listSortLabel.text = @"正序";
     } else {
         self.listSortImage.image = [UIImage imageNamed:@"sort_n"];
         self.listSortLabel.text = @"逆序";
     }
-    [self.tableView reloadData];
+    self.sortCallBack(self.playSort);
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
@@ -157,26 +171,16 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fdfsfsd"];
     }
-    if (self.sortNormal) {
-        BookChapterModel *chaper = self.book.chapters[indexPath.row];
-        cell.textLabel.text = chaper.l_title;
-        
-        if (APPDELEGATE.playVC.currentIndex == indexPath.row) {
-            cell.imageView.image = [UIImage imageNamed:@"播放状态"];
-        } else {
-            cell.imageView.image = nil;
-        }
+    BookChapterModel *chaper = self.book.chapters[indexPath.row];
+    cell.textLabel.text = chaper.l_title;
+    
+    if (APPDELEGATE.playVC.currentIndex == indexPath.row) {
+        cell.imageView.image = [UIImage imageNamed:@"播放状态"];
     } else {
-        NSInteger total = self.book.chapters.count - 1 ;
-        BookChapterModel *chaper = self.book.chapters[total - indexPath.row];
-        cell.textLabel.text = chaper.l_title;
-        
-        if (APPDELEGATE.playVC.currentIndex == total - indexPath.row) {
-            cell.imageView.image = [UIImage imageNamed:@"播放状态"];
-        } else {
-            cell.imageView.image = nil;
-        }
+        cell.imageView.image = nil;
     }
+    
+    
 
     return cell;
 }
@@ -186,12 +190,8 @@
    
     if (self.selectChaperCB != nil) {
         NSInteger chaperIndxe = 0;
-        if (self.sortNormal) {
-            chaperIndxe = indexPath.row;
-        } else {
-            NSInteger total = self.book.chapters.count - 1 ;
-            chaperIndxe = total - indexPath.row;
-        }
+        chaperIndxe = indexPath.row;
+        
         self.selectChaperCB(chaperIndxe);
     }
     [self closeButtonClick];

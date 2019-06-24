@@ -719,8 +719,10 @@
         self.PlayRate = 1.5;
     } else if (self.PlayRate == 1.5) {
         self.PlayRate = 2.0;
+        button.selected = YES;
     } else if (self.PlayRate == 2.0) {
         self.PlayRate = 1.0;
+        button.selected = NO;
     }
     [SVProgressHUD showImage:nil status:[NSString stringWithFormat:@"切换为%.1f倍速播放", self.PlayRate]];
     
@@ -1146,6 +1148,17 @@
             [self playChapterAtIndex:_currentIndex-1];
         }
             break;
+        case ISYPalySortReverse:
+        {
+            if (_currentIndex == self.detailModel.chapters.count - 1) {
+                //已经是最后一章了
+                [SVProgressHUD showImage:nil status:@"已经是最后一章了"];
+                return;
+            }
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:_currentIndex + 1];
+        }
+            break;
         case ISYPalySortSingle:
         {
             self.playBtn.selected = NO;
@@ -1176,6 +1189,16 @@
                 self.playBtn.selected = NO;
                 [self playChapterAtIndex:_currentIndex+1];
             }
+            break;
+        case ISYPalySortReverse:
+        {
+            if (_currentIndex == 0) {
+                [SVProgressHUD showImage:nil status:@"已经是第一章了"];
+                return;
+            }
+            self.playBtn.selected = NO;
+            [self playChapterAtIndex:_currentIndex - 1];
+        }
             break;
         case ISYPalySortSingle:
         {

@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, ISYPalySort) {
     ISYPalySortshunxu,
     ISYPalySortSingle,
     ISYPalySortRandam,
+    ISYPalySortReverse
 };
 
 typedef void(^ISYChaperListViewPlaySortCallBack)(ISYPalySort sort);
@@ -21,7 +22,6 @@ typedef void(^ISYChaperListViewSelectChaper)(NSInteger charpetIndex);
 @interface ISYChaperListView : UIView
 + (instancetype)showWithBook:(BookDetailModel *)book;
 @property (nonatomic, assign) ISYPalySort playSort;
-@property (nonatomic, assign) BOOL sortNormal;   //正序显示
 @property (nonatomic, copy) ISYChaperListViewPlaySortCallBack sortCallBack;
 @property (nonatomic, copy) ISYChaperListViewSelectChaper selectChaperCB;
 @end
