@@ -65,11 +65,29 @@
 
 - (void)playChange {
     
-    if (APPDELEGATE.playVC.detailModel) {
-        BookChapterModel *chaper = self.detailModel.chapters[APPDELEGATE.playVC.currentIndex];
-        self.currentChaperlabel.text = [NSString stringWithFormat:@"正在播放：%@-%@", self.detailModel.title, chaper.l_title];
+    //如果出于当前正在播放的详情页，则显示当前内容，否则，显示历史内容
+    if ([APPDELEGATE.playVC.detailModel.show_id isEqualToString:self.detailModel.show_id]) {
+        
+        BookDetailModel *book = self.detailModel;
+        BookChapterModel *chapter = self.detailModel.chapters[APPDELEGATE.playVC.currentIndex];
+        self.currentChaperlabel.text = [NSString stringWithFormat:@"正在播放：%@-%@", book.title, chapter.l_title];
     } else {
-        self.currentChaperlabel.text = @"正在播放：无播放";
+        NSArray <ISYHistoryListenModel *> *historyArr = [[ISYDBManager shareInstance] queryBookHistoryListen];
+        __block ISYHistoryListenModel *selfHistory = nil;
+        [historyArr enumerateObjectsUsingBlock:^(ISYHistoryListenModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.bookModel.show_id isEqualToString: self.detailModel.show_id]) {
+                selfHistory = obj;
+                *stop = YES;
+            }
+        }];
+        if (selfHistory) {
+            
+            BookDetailModel *book = selfHistory.bookModel;
+            BookChapterModel *chapter = book.chapters[selfHistory.chaperNumber];
+            self.currentChaperlabel.text = [NSString stringWithFormat:@"上次播放：%@-%@", book.title, chapter.l_title];
+        } else {
+            self.currentChaperlabel.text = @"正在播放：无播放";
+        }
     }
 }
 
@@ -326,6 +344,28 @@
     self.vc1.zhengxu = button.selected;
 }
 
+- (void)playLastChapter {
+    NSArray <ISYHistoryListenModel *> *historyArr = [[ISYDBManager shareInstance] queryBookHistoryListen];
+    __block ISYHistoryListenModel *selfHistory = nil;
+    [historyArr enumerateObjectsUsingBlock:^(ISYHistoryListenModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.bookModel.show_id isEqualToString: self.detailModel.show_id]) {
+            selfHistory = obj;
+            *stop = YES;
+        }
+    }];
+    if (selfHistory) {
+        
+        BookDetailModel *book = selfHistory.bookModel;
+        [APPDELEGATE.playVC playWithBook:book index:selfHistory.chaperNumber];
+        if ([self.navigationController.viewControllers containsObject:APPDELEGATE.playVC]) {
+            [self.navigationController popToViewController:APPDELEGATE.playVC animated:YES];
+        }else {
+            [self.navigationController pushViewController:APPDELEGATE.playVC animated:YES];
+        }
+    }
+    
+}
+
 #pragma mark - get/set method
 
 - (UIScrollView *)scrollView {
@@ -407,6 +447,7 @@
     if (!_playStatuButton) {
         _playStatuButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_playStatuButton setImage:[UIImage imageNamed:@"正在播放icon"] forState:UIControlStateNormal];
+        [_playStatuButton addTarget:self action:@selector(playLastChapter) forControlEvents:UIControlEventTouchUpInside];
     }
     return _playStatuButton;
 }
