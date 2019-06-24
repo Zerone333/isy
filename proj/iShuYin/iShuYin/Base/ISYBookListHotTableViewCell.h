@@ -10,4 +10,7 @@
 
 // 热播
 @interface ISYBookListHotTableViewCell : ISYBookListTableViewCell
+- (void)setModel:(HomeBookModel *)model type:(NSString *)type;
+//作者作品更多
+- (void)setModel:(HomeBookModel *)model isAuthorMore:(BOOL)isAuthorMore;
 @end

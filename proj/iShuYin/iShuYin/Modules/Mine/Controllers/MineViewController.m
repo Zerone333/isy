@@ -132,9 +132,9 @@
 #pragma mark - Getter
 - (NSArray *)dataArray {
     return @[
-             @{@"title":@"vip",@"image":@"mine_vip",@"ctrl":@""},
+//             @{@"title":@"vip",@"image":@"mine_vip",@"ctrl":@""},
              @{@"title":@"留言",@"image":@"mine_liuyan",@"ctrl":@"FeedbackManageViewController"},
-             @{@"title":@"修改密码",@"image":@"mine_password",@"ctrl":@""},
+             @{@"title":@"修改密码",@"image":@"mine_password",@"ctrl":@"ModifyPswdViewController"},
              @{@"title":@"检测更新",@"image":@"mine_version",@"ctrl":@""},
 //             @{@"title":@"点播记录",@"image":@"mine_broadcast",@"ctrl":@"RecentPlayViewController"},
              @{@"title":@"设置",@"image":@"mine_setting",@"ctrl":@"SettingViewController"},

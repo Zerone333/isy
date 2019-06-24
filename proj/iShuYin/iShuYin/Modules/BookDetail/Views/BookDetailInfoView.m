@@ -48,6 +48,24 @@
     self.authorLabel.text = model.status;
     self.statusLabel.text = model.add_time;
     self.timeLabel.text = model.runtime;
+    
+    NSString *timeString;
+    NSInteger value = model.runtime.integerValue;
+    if (value >= 10000) {
+        timeString = [NSString stringWithFormat:@"%ld万 次", value/ 10000];
+    } else {
+        timeString = [NSString stringWithFormat:@"%ld次", (long)value];
+    }
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.add_time.integerValue];
+    NSString *updateTime = [formatter stringFromDate:date];
+    
+    self.statusLabel.text = [NSString stringWithFormat:@"更新 %@", updateTime ];
+    self.timeLabel.text = timeString;
 }
 
 #pragma mark - private

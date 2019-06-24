@@ -103,7 +103,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HomeBookModel *model = self.dataSource[indexPath.row];
     ISYBookListHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListHotTableViewCell cellID]];
-    [cell setModel:model];
+    [cell setModel:model isAuthorMore:YES];
     return cell;
 }
 

@@ -165,7 +165,14 @@
         return cell;
     } else {
         ISYBookListHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListHotTableViewCell cellID]];
-        cell.model = model.randarDataSource[indexPath.row];
+        HomeFoundItemModel *item = self.dataSource[indexPath.section];
+        if ([item.keyType isEqualToString:@"小说"]) {
+            [cell setModel:model.randarDataSource[indexPath.row] type:@"小说"];
+        } else if ([item.keyType isEqualToString:@"娱乐"]) {
+            [cell setModel:model.randarDataSource[indexPath.row] type:@"娱乐"];
+        } else {
+            [cell setModel:model.randarDataSource[indexPath.row] type:nil];
+        }
         return cell;
     }
 }

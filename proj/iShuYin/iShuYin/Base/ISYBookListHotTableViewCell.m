@@ -2,7 +2,7 @@
 //  ISYBookListHotTableViewCell.m
 //  iShuYin
 //
-//  Created by ND on 2018/11/10.
+//  Created by ND on 2018/13/10.
 //  Copyright © 2018年 ishuyin. All rights reserved.
 //
 
@@ -97,6 +97,70 @@
 
 }
 
+//作者作品更多
+- (void)setModel:(HomeBookModel *)model isAuthorMore:(BOOL)isAuthorMore {
+    [super setModel:model];
+    self.model = model;
+    if (isAuthorMore) {
+        self.categryBgView.hidden = YES;
+        self.categryLabel.hidden = YES;
+        self.chaperCountLabel.text = [NSString stringWithFormat:@"%@ | %@", model.director, model.actor];
+        self.chaperImage.image = [UIImage imageNamed:@"播报icon"];
+        
+        NSString *timeString;
+        NSInteger value = model.click_count.integerValue;
+        if (value >= 10000) {
+            timeString = [NSString stringWithFormat:@"%ld万 次", value/ 10000];
+        } else {
+            timeString = [NSString stringWithFormat:@"%ld次", (long)value];
+        }
+        self.timesLabel.text = timeString;
+    } else {
+       
+    }
+}
+
+- (void)setModel:(HomeBookModel *)model type:(NSString *)type {
+    self.model = model;
+    if ([type isEqualToString:@"小说"]) {
+        self.timesLabel.hidden = YES;
+        self.timesIcon.hidden = YES;
+        self.chaperCountLabel.text = [NSString stringWithFormat:@"%@ | %@", model.director, model.actor];
+        self.chaperImage.image = [UIImage imageNamed:@"播报icon"];
+        
+        self.statuImage.hidden = YES;
+        self.statuLabel.hidden = YES;
+    } else if ([type isEqualToString:@"娱乐"]) {
+        self.timesLabel.hidden = YES;
+        self.timesIcon.hidden = YES;
+        
+        NSString *timeString;
+        NSInteger value = model.click_count.integerValue;
+        if (value >= 10000) {
+            timeString = [NSString stringWithFormat:@"%ld万 次", value/ 10000];
+        } else {
+            timeString = [NSString stringWithFormat:@"%ld次", (long)value];
+        }
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDateFormat:@"YYYY-MM-dd"];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.add_time.integerValue];
+        NSString *updateTime = [formatter stringFromDate:date];
+        
+        self.desLabel.text = [NSString stringWithFormat:@"更新 %@", updateTime ];
+        self.chaperCountLabel.text = timeString;
+        self.chaperImage.image = [UIImage imageNamed:@"播放次数"];
+        self.statuImage.hidden = YES;
+        self.statuLabel.hidden = YES;
+    } else {
+        self.timesLabel.hidden = NO;
+        self.timesIcon.hidden = NO;
+        self.chaperImage.image = [UIImage imageNamed:@"home_chaper"];
+    }
+}
+
 - (void)setModel:(HomeBookModel *)model {
     [super setModel:model];
     self.chaperCountLabel.text = [NSString stringWithFormat:@"%@章节", model.jishu?:@"0"];
@@ -131,6 +195,8 @@
     if (!_statuLabel) {
         _statuLabel = [[UILabel alloc] init];
         _statuLabel.text = @"连载中...";
+        _statuLabel.font =[UIFont systemFontOfSize:13];
+        _statuLabel.textColor = kColorValue(0x666666);
     }
     return _statuLabel;
 }
@@ -138,6 +204,8 @@
 - (UILabel *)chaperCountLabel {
     if (!_chaperCountLabel) {
         _chaperCountLabel = [[UILabel alloc] init];
+        _chaperCountLabel.font =[UIFont systemFontOfSize:13];
+        _chaperCountLabel.textColor = kColorValue(0x666666);
     }
     return _chaperCountLabel;
 }
@@ -154,6 +222,8 @@
     if (!_desLabel) {
         _desLabel = [[UILabel alloc] init];
         _desLabel.numberOfLines = 2;
+        _desLabel.font =[UIFont systemFontOfSize:13];
+        _desLabel.textColor = kColorValue(0x666666);
     }
     return _desLabel;
 }
@@ -161,6 +231,8 @@
 - (UILabel *)timesLabel {
     if (!_timesLabel) {
         _timesLabel = [[UILabel alloc] init];
+        _timesLabel.font =[UIFont systemFontOfSize:13];
+        _timesLabel.textColor = kColorValue(0x666666);
     }
     return _timesLabel;
 }
@@ -177,7 +249,7 @@
     if (!_categryLabel) {
         _categryLabel = [[UILabel alloc] init];
         _categryLabel.textColor = [UIColor whiteColor];
-        _categryLabel.font = [UIFont systemFontOfSize:11];
+        _categryLabel.font = [UIFont systemFontOfSize:13];
     }
     return _categryLabel;
 }

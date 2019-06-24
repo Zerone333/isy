@@ -22,5 +22,7 @@
 @property (nonatomic, strong) NSString *click_count;
 @property (nonatomic, strong) NSString *jishu;
 @property (nonatomic, strong) NSString *descriptionString;
+@property (nonatomic, strong) NSString *add_time; ///< 更新时间
+
 @end
 

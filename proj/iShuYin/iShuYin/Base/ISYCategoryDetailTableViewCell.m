@@ -97,7 +97,15 @@
         self.statuLabel.hidden = NO;
     }
     self.desLabel.text = model.descriptionString;
-    self.timesLabel.text = [NSString stringWithFormat:@"%@次", model.click_count];
+    
+    NSString *timeString;
+    NSInteger value = model.click_count.integerValue;
+    if (value >= 10000) {
+        timeString = [NSString stringWithFormat:@"%ld万 次", value/ 10000];
+    } else {
+        timeString = [NSString stringWithFormat:@"%ld次", (long)value];
+    }
+    self.timesLabel.text = timeString;
 }
 
 #pragma mark -getter
@@ -113,6 +121,8 @@
     if (!_statuLabel) {
         _statuLabel = [[UILabel alloc] init];
         _statuLabel.text = @"连载中...";
+        _statuLabel.font =[UIFont systemFontOfSize:13];
+        _statuLabel.textColor = kColorValue(0x666666);
     }
     return _statuLabel;
 }
@@ -120,6 +130,8 @@
 - (UILabel *)chaperCountLabel {
     if (!_chaperCountLabel) {
         _chaperCountLabel = [[UILabel alloc] init];
+        _chaperCountLabel.font =[UIFont systemFontOfSize:13];
+        _chaperCountLabel.textColor = kColorValue(0x666666);
     }
     return _chaperCountLabel;
 }
@@ -136,6 +148,8 @@
     if (!_desLabel) {
         _desLabel = [[UILabel alloc] init];
         _desLabel.numberOfLines = 2;
+        _desLabel.font =[UIFont systemFontOfSize:13];
+        _desLabel.textColor = kColorValue(0x666666);
     }
     return _desLabel;
 }
@@ -143,6 +157,8 @@
 - (UILabel *)timesLabel {
     if (!_timesLabel) {
         _timesLabel = [[UILabel alloc] init];
+        _timesLabel.font =[UIFont systemFontOfSize:13];
+        _timesLabel.textColor = kColorValue(0x666666);
     }
     return _timesLabel;
 }
