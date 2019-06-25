@@ -1219,6 +1219,57 @@
     }
 }
 
+- (void)goForward {
+    if (self.audioStream) {
+        FSStreamPosition current = self.audioStream.currentTimePlayed;
+        int totalTime = self.audioStream.duration.minute * 60 + self.audioStream.duration.second;
+        
+        if (totalTime - (current.minute * 60 + current.second) < 10) {
+            //可快进时间不足10s
+            current.minute = self.audioStream.duration.minute;
+            current.second = self.audioStream.duration.second;
+            current.playbackTimeInSeconds = totalTime;
+        } else {
+            
+            if (current.second > 49) {
+                current.minute += 1;
+                current.second = current.second + 10 - 60;
+            } else {
+                current.second += 10;
+            }
+            current.playbackTimeInSeconds += 10.0;
+        }
+        current.position = current.playbackTimeInSeconds / totalTime;
+        [self.audioStream seekToPosition:current];
+    }else if (self.audioPlayer) {
+        self.audioPlayer.currentTime += 10;
+    }
+}
+
+- (void)backward {
+    if (self.audioStream) {
+        FSStreamPosition current = self.audioStream.currentTimePlayed;
+        if (current.minute == 0 && current.second < 10) {
+            //可后退时间不足10s
+            current.second = 0;
+            current.playbackTimeInSeconds = 0.0;
+        } else {
+            if (current.second < 9) {
+                current.minute -= 1;
+                current.second = current.second + 60 - 10;
+            } else {
+                current.second -= 10;
+            }
+            current.playbackTimeInSeconds -= 10.0;
+        }
+        int totalTime = self.audioStream.duration.minute * 60 + self.audioStream.duration.second;
+        current.position = current.playbackTimeInSeconds / totalTime;
+        [self.audioStream seekToPosition:current];
+    }else if (self.audioPlayer) {
+        self.audioPlayer.currentTime -= 10;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -1387,7 +1438,7 @@
 - (UIButton *)addBtn {
     if (!_addBtn) {
         _addBtn = [UIButton buttonWithType:UIButtonTypeCustom] ;
-        [_addBtn addTarget:self action:@selector(playBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_addBtn addTarget:self action:@selector(goForward) forControlEvents:UIControlEventTouchUpInside];
         [_addBtn setImage:[UIImage imageNamed:@"快进10s"] forState:UIControlStateNormal];
     }
     return _addBtn;
@@ -1396,7 +1447,7 @@
 - (UIButton *)subBtn {
     if (!_subBtn) {
         _subBtn = [UIButton buttonWithType:UIButtonTypeCustom] ;
-        [_subBtn addTarget:self action:@selector(playBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_subBtn addTarget:self action:@selector(backward) forControlEvents:UIControlEventTouchUpInside];
         [_subBtn setImage:[UIImage imageNamed:@"快退10s"] forState:UIControlStateNormal];
     }
     return _subBtn;
