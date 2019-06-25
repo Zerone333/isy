@@ -574,6 +574,20 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     return [list copy];
 }
 
+
+- (BOOL)deleteSearchKeywords {
+    NSString *sqlString = [NSString stringWithFormat:@"delete from %@",
+                           ISYTable_ReadSearchKeywordTable.tableName];
+    __block BOOL res;
+    [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
+        [db beginTransaction];
+        res = [db executeUpdate:sqlString];
+        [db commit];
+    }];
+    
+    return res;
+}
+
 /**
  查询书本详情
 

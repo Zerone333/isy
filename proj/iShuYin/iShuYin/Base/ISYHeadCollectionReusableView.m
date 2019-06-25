@@ -21,7 +21,8 @@
     if (self = [super initWithFrame:frame]) {
         [self addSubview:self.titleLabel];
         [self addSubview:self.imageView];
-        
+        [self addSubview:self.clearHistoryBtn];
+        self.clearHistoryBtn.hidden = YES;
         [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).mas_offset(12);
             make.centerY.equalTo(self);
@@ -29,6 +30,10 @@
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.imageView.mas_right).mas_offset(0);
             make.centerY.equalTo(self);
+        }];
+        [self.clearHistoryBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self);
+            make.trailing.equalTo(self).offset(-50);
         }];
     }
     return self;
@@ -48,4 +53,20 @@
     }
     return _imageView;
 }
+- (UIButton *)clearHistoryBtn {
+    if (!_clearHistoryBtn) {
+        _clearHistoryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_clearHistoryBtn setTitle:@"  清空" forState:UIControlStateNormal];
+        [_clearHistoryBtn setImage:[UIImage imageNamed:@"search_delete"] forState:UIControlStateNormal];
+        _clearHistoryBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_clearHistoryBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_clearHistoryBtn addTarget:self action:@selector(clearHistoryAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _clearHistoryBtn;
+}
+
+- (void)clearHistoryAction {
+    self.completion ? self.completion() : nil;
+}
+
 @end

@@ -90,6 +90,14 @@
 }
 
 - (void)searchData:(NSString *)keyWord page:(NSInteger)page {
+    if (![self.historyKeyWords containsObject:keyWord]) {
+        
+        [[ISYDBManager shareInstance] insertSearchKeyword:keyWord];
+        [self.leftButton setTitle:@"取消" forState:UIControlStateNormal];
+        NSArray *array =  [[ISYDBManager shareInstance] querySearchKewords];
+        self.historyKeyWords = array;
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
+    }
     ZXNetworkManager *manager = [ZXNetworkManager shareManager];
     NSString *url = [manager URLStringWithQuery2:Query2BookList];
     __weak __typeof(self)weakSelf = self;
@@ -203,6 +211,17 @@
         headerView.titleLabel.text = model.titleString;
         headerView.imageView.image = [UIImage imageNamed:model.imageName];
         headerView.backgroundColor =  [UIColor whiteColor];
+        headerView.clearHistoryBtn.hidden = indexPath.section != 1;
+        if (indexPath.section == 1) {
+            __weak typeof(collectionView) weakCol = collectionView;
+            headerView.completion = ^{
+                __strong typeof(weakCol) col = collectionView;
+                [[ISYDBManager shareInstance] deleteSearchKeywords];
+                NSArray *array =  [[ISYDBManager shareInstance] querySearchKewords];
+                self.historyKeyWords = array;
+                [col reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+            };
+        }
         return headerView;
     }
     return nil;
@@ -242,11 +261,7 @@
             text = self.historyKeyWords[indexPath.item];
         }
         [self searchData:text page:1];
-        if (![self.historyKeyWords containsObject:text]) {
-            
-            [[ISYDBManager shareInstance] insertSearchKeyword:text];
-            [self.leftButton setTitle:@"取消" forState:UIControlStateNormal];
-        }
+        
     } else {
         HomeBookModel *bookModel = self.hotBooks[indexPath.item];
         [self pushBookVC:bookModel.show_id];
@@ -274,9 +289,6 @@
         return;
     }
     [searchBar resignFirstResponder];
-    //t本地添加搜索关键字
-    [[ISYDBManager shareInstance] insertSearchKeyword:searchBar.text];
-    [self.leftButton setTitle:@"取消" forState:UIControlStateNormal];
     [self searchData:searchBar.text page:1];
 //    MoreListViewController *vc = [[MoreListViewController alloc]init];
 //    vc.keyword = searchBar.text;

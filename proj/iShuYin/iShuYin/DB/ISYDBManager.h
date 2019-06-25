@@ -33,6 +33,13 @@
 //历史搜索记录
 - (BOOL)insertSearchKeyword:(NSString *)keyworkd;
 
+/**
+ 清空搜索记录
+ 
+ @return operation result
+ */
+- (BOOL)deleteSearchKeywords;
+
 - (NSArray *)querySearchKewords;
 
 //查询历史收听记录
