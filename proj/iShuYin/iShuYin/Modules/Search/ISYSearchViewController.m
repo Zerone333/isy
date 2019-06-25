@@ -76,7 +76,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if ([responseObject[@"statusCode"]integerValue] == 200) {
             HomeModel *model = [HomeModel yy_modelWithJSON:responseObject[@"data"]];
-            strongSelf.hotKeyWords = model.search_keywords;
+            strongSelf.hotKeyWords = [model.search_keywords componentsSeparatedByString:@" "];
             strongSelf.hotBooks = model.hot;
             [self.collectionView reloadData];
         }else {
@@ -235,6 +235,18 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section <=1) {
+        NSString *text;
+        if (indexPath.section == 0) {
+            text = self.hotKeyWords[indexPath.item];
+        } else if (indexPath.section == 1) {
+            text = self.historyKeyWords[indexPath.item];
+        }
+        [self searchData:text page:1];
+        if (![self.historyKeyWords containsObject:text]) {
+            
+            [[ISYDBManager shareInstance] insertSearchKeyword:text];
+            [self.leftButton setTitle:@"取消" forState:UIControlStateNormal];
+        }
     } else {
         HomeBookModel *bookModel = self.hotBooks[indexPath.item];
         [self pushBookVC:bookModel.show_id];

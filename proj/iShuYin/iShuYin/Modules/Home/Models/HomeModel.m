@@ -29,7 +29,6 @@
              @"today":[HomeBookModel class],
              @"week":[HomeBookModel class],
              @"month":[HomeBookModel class],
-             @"search_keywords":[NSString class],
              @"playlet":[HomeBookModel class],
              @"music":[HomeBookModel class],
              @"funny":[HomeBookModel class],

@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSArray *today;//
 @property (nonatomic, strong) NSArray *week;//
 @property (nonatomic, strong) NSArray *month;//
-@property (nonatomic, strong) NSArray *search_keywords;//
+@property (nonatomic, copy) NSString *search_keywords;//
 @property (nonatomic, strong) NSArray *playlet;//
 @property (nonatomic, strong) NSArray *music;//
 @property (nonatomic, strong) NSArray *funny;//
