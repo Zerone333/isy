@@ -64,7 +64,7 @@
 }
 
 - (void)playChange {
-    
+    BOOL shouldShow = YES;
     //如果出于当前正在播放的详情页，则显示当前内容，否则，显示历史内容
     if ([APPDELEGATE.playVC.detailModel.show_id isEqualToString:self.detailModel.show_id]) {
         
@@ -86,8 +86,12 @@
             BookChapterModel *chapter = book.chapters[selfHistory.chaperNumber];
             self.currentChaperlabel.text = [NSString stringWithFormat:@"上次播放：%@-%@", book.title, chapter.l_title];
         } else {
-            self.currentChaperlabel.text = @"正在播放：无播放";
+            self.currentChaperlabel.text = @"";
+            shouldShow = NO;
         }
+    }
+    if (self.playStatuButton.hidden == shouldShow) {
+        self.playStatuButton.hidden = !shouldShow;
     }
 }
 
