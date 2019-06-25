@@ -111,7 +111,9 @@
         return;
     }
     if ([string isEqualToString:@"FindPswdViewController"]) {
-        [self.navigationController pushViewController:SBVC(@"FindPswdVC") animated:YES];
+        UIViewController *vc = SBVC(@"FindPswdVC");
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
         return;
     }
     Class cls = NSClassFromString(string);
