@@ -52,8 +52,9 @@
     [self.view addSubview:self.bottomView];
     
     [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
+        make.left.right.equalTo(self.view);
         make.height.mas_equalTo(44);
+        make.bottom.equalTo(self.bottomView.mas_top);
     }];
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -67,10 +68,10 @@
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.topView.mas_bottom);
+        make.top.equalTo(self.view);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.bottomView.mas_top);
+        make.bottom.equalTo(self.topView.mas_top);
     }];
 }
 
