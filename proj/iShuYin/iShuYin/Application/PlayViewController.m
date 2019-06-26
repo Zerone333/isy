@@ -715,13 +715,21 @@
 - (void)speedButtonClick:(UIButton *)button {
     if (self.PlayRate == 1.0) {
         self.PlayRate = 1.2;
+        UIImage *image = [UIImage imageNamed:@"speed12"];
+        [self.speedButton setImage:image forState:UIControlStateNormal];
     } else if (self.PlayRate == 1.2) {
         self.PlayRate = 1.5;
+        UIImage *image = [UIImage imageNamed:@"speed15"];
+        [self.speedButton setImage:image forState:UIControlStateNormal];
     } else if (self.PlayRate == 1.5) {
         self.PlayRate = 2.0;
+        UIImage *image = [UIImage imageNamed:@"speed1"];
+        [self.speedButton setImage:image forState:UIControlStateNormal];
         button.selected = YES;
     } else if (self.PlayRate == 2.0) {
         self.PlayRate = 1.0;
+        UIImage *image = [UIImage imageNamed:@"speed2"];
+        [self.speedButton setImage:image forState:UIControlStateNormal];
         button.selected = NO;
     }
     [SVProgressHUD showImage:nil status:[NSString stringWithFormat:@"切换为%.1f倍速播放", self.PlayRate]];
@@ -1379,7 +1387,7 @@
         _speedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_speedButton addTarget:self action:@selector(speedButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [_speedButton setImage:image forState:UIControlStateNormal];
-        [_speedButton setImage:[UIImage imageNamed:@"speed2"] forState:UIControlStateSelected];
+//        [_speedButton setImage:[UIImage imageNamed:@"speed2"] forState:UIControlStateSelected];
         [_speedButton setTitle:@"倍数播放" forState:UIControlStateNormal];
         [_speedButton setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
         _speedButton.titleLabel.font = [UIFont systemFontOfSize:11];
