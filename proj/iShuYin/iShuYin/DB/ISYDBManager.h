@@ -92,4 +92,19 @@
  @return NSArray
  */
 - (NSArray *)queryDownloadingChapersBookId:(NSString *)bookId;
+
+/**
+ 保存分享记录
+
+ @param bookId bookId
+ */
+- (void)updateShareBookId:(NSString *)bookId;
+
+/**
+ 分享记录 24小时内
+
+ @param bookId bookId
+ @return BOOL
+ */
+- (BOOL)hasShareBook:(NSString *)bookId;
 @end

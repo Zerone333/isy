@@ -164,6 +164,16 @@
 
 
 - (void)downLoadButtonClick:(UIButton *)button {
+    if (![[ISYDBManager shareInstance] hasShareBook:self.detailModel.show_id]) {
+        [SVProgressHUD showImage:nil status:@"要分享后才可批量下载哦"];
+        __weak __typeof(self)weakSelf = self;
+        ZXPopView *view = [[ZXPopView alloc]initWithShareBlock:^(NSInteger idx) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf shareToPlatform:idx];
+        }];
+        [view showInView:self.navigationController.view animated:ZXPopViewAnimatedSlip];
+        return;
+    }
     if (_selectArray.count == 0) {
         [SVProgressHUD showImage:nil status:@"请选择要下载的章节"];
         return;
@@ -215,6 +225,42 @@
         [_selectArray addObjectsFromArray:_dataArray];
     }
     [_tableView reloadData];
+}
+
+- (void)shareToPlatform:(NSInteger)idx {
+    NSString *title = self.detailModel.title;
+    NSString *content = self.detailModel.desc;
+    NSString *url = (idx < 2) ? [NSString stringWithFormat:@"http://weixin.mp3book.cn/show-%@.html",self.detailModel.show_id] :  [NSString stringWithFormat:@"http://m.ishuyin.com/show-%@.html",self.detailModel.show_id];
+    NSData *imgData = nil;
+    if ([self.detailModel.thumb containsString:kPrefixImageDefault]) {
+        imgData = [NSData dataWithContentsOfURL:[self.detailModel.thumb url]];
+    }else {
+        imgData = [NSData dataWithContentsOfURL:[[kPrefixImageDefault stringByAppendingString:self.detailModel.thumb] url]];
+    }
+    UMSocialPlatformType platformType = UMSocialPlatformType_UnKnown;//平台
+    UMSocialMessageObject *shareMessage = [UMSocialMessageObject messageObject];//创建分享消息对象
+    switch (idx) {
+        case 0:platformType = UMSocialPlatformType_WechatSession;break;//微信好友
+        case 1:platformType = UMSocialPlatformType_WechatTimeLine;break;//朋友圈
+        case 2:platformType = UMSocialPlatformType_Qzone;break;//空间
+        case 3:platformType = UMSocialPlatformType_QQ;break;//QQ
+        default:break;
+    }
+    if (platformType == UMSocialPlatformType_UnKnown) {
+        return;
+    }
+    //创建网页内容对象
+    UMShareWebpageObject *shareWebObject = [UMShareWebpageObject shareObjectWithTitle:title descr:content thumImage:imgData];
+    shareWebObject.webpageUrl = url;
+    shareMessage.shareObject = shareWebObject;
+    [[UMSocialManager defaultManager]shareToPlatform:platformType messageObject:shareMessage currentViewController:self completion:^(id result, NSError *error) {
+        if (error.localizedDescription) {
+            DLog(@"%@", error.localizedDescription);
+        }else {
+            DLog(@"%@", result);
+            [[ISYDBManager shareInstance] updateShareBookId:self.detailModel.show_id];
+        }
+    }];
 }
 
 #pragma mark - Getter

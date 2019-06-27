@@ -693,6 +693,7 @@
             DLog(@"%@", error.localizedDescription);
         }else {
             DLog(@"%@", result);
+            [[ISYDBManager shareInstance] updateShareBookId:self.detailModel.show_id];
         }
     }];
 }

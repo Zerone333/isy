@@ -48,6 +48,12 @@ struct ISYTable_Download {
     __unsafe_unretained NSString *size;
 };
 
+struct ISY_ShareBook {
+    __unsafe_unretained NSString *tableName;
+    __unsafe_unretained NSString *bookId;
+    __unsafe_unretained NSString *date;
+};
+
 const struct ISYTable_Download ISYTable_DownloadTable = {
     .tableName = @"ISYTable_DownloadTable",
     .bookId = @"bookId",
@@ -83,6 +89,12 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     .keyWord = @"keyWord",
 };
 
+const struct ISY_ShareBook ISY_ShareBookTable = {
+    .tableName = @"ISY_ShareBookTable",
+    .bookId = @"bookId",
+    .date = @"date",
+};
+
 @interface ISYDBManager ()
 @property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 @end
@@ -113,6 +125,7 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     [self createHistorySearchTable];
     [self createHistoryListenTable];
     [self createDownloadTable];
+    [self createShareTable];
 }
 
 
@@ -243,6 +256,30 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
     }
     
 }
+
+//分享记录
+- (void)createShareTable {
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        // Book_Table
+        NSString *sql = [NSString stringWithFormat:@"create table if not exists %@\
+                         ('ID' INTEGER PRIMARY KEY AUTOINCREMENT,\
+                         '%@' TEXT NOT NULL,\
+                         '%@' INTERGE)",
+                         ISY_ShareBookTable.tableName,
+                         ISY_ShareBookTable.bookId,
+                         ISY_ShareBookTable.date];
+        result = [db executeUpdate:sql];
+        [db commit];
+    }];
+    
+    if (result) {
+        NSLog(@"create table success");
+    }
+    
+}
+
 
 #pragma mark - public
 
@@ -637,5 +674,59 @@ const struct ISYTable_Search_Keyword ISYTable_ReadSearchKeywordTable = {
         [db commit];
     }];
     return result;
+}
+
+/**
+ 保存分享记录
+ 
+ @param bookId bookId
+ */
+- (void)updateShareBookId:(NSString *)bookId {
+    NSString *deleteSqlString = [NSString stringWithFormat:@"delete from %@ where %@ = ?",
+                                 ISY_ShareBookTable.tableName,
+                                 ISY_ShareBookTable.bookId];
+    
+    NSString *insertSqlString = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ( ?, ?)",
+                                 ISY_ShareBookTable.tableName,
+                                 ISY_ShareBookTable.bookId,
+                                 ISY_ShareBookTable.date];
+    
+    __block BOOL result = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        result = [db executeUpdate:deleteSqlString,
+                  bookId];
+        result = [db executeUpdate:insertSqlString,
+                  bookId,
+                  @([[NSDate date] timeIntervalSince1970])];
+        [db commit];
+    }];
+}
+
+/**
+ 分享记录 24小时内
+ 
+ @param bookId bookId
+ @return BOOL
+ */
+- (BOOL)hasShareBook:(NSString *)bookId {
+    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM  %@ WHERE %@ != %@",
+                           ISY_ShareBookTable.tableName,
+                           ISY_ShareBookTable.bookId,
+                           bookId];
+    __block long timeInterval;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        FMResultSet *rs = [db executeQuery:sqlString];
+        while ([rs next]) {
+            timeInterval = [rs longForColumn:ISY_ShareBookTable.date];
+        }
+        [rs close];
+        rs = nil;
+    }];
+    if (timeInterval == 0) {
+        return NO;
+    }
+    return [[NSDate date] timeIntervalSince1970] - timeInterval >= 24 * 60 * 60;// 
 }
 @end
