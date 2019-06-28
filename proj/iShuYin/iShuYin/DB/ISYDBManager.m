@@ -727,6 +727,6 @@ const struct ISY_ShareBook ISY_ShareBookTable = {
     if (timeInterval == 0) {
         return NO;
     }
-    return [[NSDate date] timeIntervalSince1970] - timeInterval >= 24 * 60 * 60;// 
+    return [[NSDate date] timeIntervalSince1970] - timeInterval <= 24 * 60 * 60;//
 }
 @end
