@@ -15,6 +15,7 @@
 #import "BookChapterIntervalView.h"
 #import "ISYDownloadChaperCell.h"
 #import "ISYDownloadHelper.h"
+#import "LoginViewController.h"
 
 @interface BookChapterViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) BookChapterIntervalView *topView;
@@ -164,6 +165,12 @@
 
 
 - (void)downLoadButtonClick:(UIButton *)button {
+    if (!APPDELEGATE.loginModel) {
+        LoginViewController *vc = SBVC(@"LoginVC");
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
+        return;
+    }
     if (![[ISYDBManager shareInstance] hasShareBook:self.detailModel.show_id]) {
         [SVProgressHUD showImage:nil status:@"要分享后才可批量下载哦"];
         __weak __typeof(self)weakSelf = self;

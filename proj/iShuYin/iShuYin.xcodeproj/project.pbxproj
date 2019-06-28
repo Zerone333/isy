@@ -2066,7 +2066,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ishuyin.iShuYin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5cedc5ad-6f43-435a-a03b-92dfdf63349b";
-				PROVISIONING_PROFILE_SPECIFIER = lee_isy_dev;
+				PROVISIONING_PROFILE_SPECIFIER = lee_isy;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2076,7 +2076,7 @@
 			baseConfigurationReference = 5DD0F7E5297EE226F110F7B7 /* Pods-iShuYin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 774S7CUTG6;
@@ -2094,7 +2094,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ishuyin.iShuYin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0bc1e87e-5270-4466-ae48-ac7f110d2374";
-				PROVISIONING_PROFILE_SPECIFIER = "isy_ Distribution_pro";
+				PROVISIONING_PROFILE_SPECIFIER = lee_isy;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
