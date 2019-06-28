@@ -710,11 +710,11 @@ const struct ISY_ShareBook ISY_ShareBookTable = {
  @return BOOL
  */
 - (BOOL)hasShareBook:(NSString *)bookId {
-    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM  %@ WHERE %@ != %@",
+    NSString *sqlString = [NSString stringWithFormat:@"SELECT * FROM  %@ WHERE %@ == %@",
                            ISY_ShareBookTable.tableName,
                            ISY_ShareBookTable.bookId,
                            bookId];
-    __block long timeInterval;
+    __block long timeInterval = 0;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db beginTransaction];
         FMResultSet *rs = [db executeQuery:sqlString];

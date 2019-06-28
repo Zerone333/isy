@@ -68,6 +68,31 @@
     
 }
 
+- (void)zanComment:(CommentListModel *)model {
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery2:AddCommentAgree];
+    __weak __typeof(self)weakSelf = self;
+    [ZXProgressHUD showLoading:@""];
+    NSDictionary *params = @{@"cmtid":model.comment_id
+                             };
+    [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            model.agree = [NSString stringWithFormat:@"%ld", model.agree.integerValue + 1];
+            [self.tableView reloadData];
+        } else {
+            [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+        }
+        [strongSelf.tableView.mj_header endRefreshing];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.tableView.mj_header endRefreshing];
+    }];
+}
+
 #pragma mark - getter
 - (NSMutableArray *)commentDataSource {
     if (!_commentDataSource) {
@@ -108,8 +133,13 @@
     if (cell == nil) {
         cell = [[ISYCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"ISYCommentTableViewCellID"];
     }
+    
+    __weak typeof(self) weakSelf = self;
     cell.zanCb = ^(CommentListModel *model) {
         //TODO: 赞
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf zanComment:model];
+        
     };
     cell.model = model;
     return cell;

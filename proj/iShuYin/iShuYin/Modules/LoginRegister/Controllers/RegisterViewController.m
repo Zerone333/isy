@@ -146,10 +146,33 @@
             // 第三方平台SDK源数据
             NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
             
-            ISYRegister3ViewController *vc = [[ISYRegister3ViewController alloc] init];
-            vc.platformType = UMSocialPlatformType_WechatSession;
-            vc.unique_id = resp.unionId;
-            [self.navigationController pushViewController:vc animated:YES];
+            ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+            NSString *url = [manager URLStringWithQuery2:BindInfo];
+            NSDictionary *params = @{@"nickname":resp.name,
+                                     @"type": @(1),
+                                     @"unique_id":resp.uid,
+                                     @"headimgurl":resp.iconurl
+                                     };
+            __weak __typeof(self)weakSelf = self;
+            [ZXProgressHUD showLoading:@""];
+            [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+                DLog(@"%@", responseObject);
+                if ([responseObject[@"statusCode"]integerValue] == 200) {
+                    __strong __typeof(weakSelf)strongSelf = weakSelf;
+                    [strongSelf.navigationController popViewControllerAnimated:YES];
+                    [SVProgressHUD showImage:nil status:@"注册成功，请登录。"];
+                }else {
+                    [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+                }
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                DLog(@"%@", error.localizedDescription);
+                [SVProgressHUD showImage:nil status:error.localizedDescription];
+            }];
+            
+//            ISYRegister3ViewController *vc = [[ISYRegister3ViewController alloc] init];
+//            vc.platformType = UMSocialPlatformType_WechatSession;
+//            vc.unique_id = resp.unionId;
+//            [self.navigationController pushViewController:vc animated:YES];
         }
         
     }];

@@ -48,8 +48,14 @@
     [self.iconImage sd_setImageWithURL:[listModel.passport.img_url url] placeholderImage:[UIImage imageNamed:@"ph_man"]];
     self.nameLabel.text = [NSString isEmpty:listModel.passport.nickname]?@"":listModel.passport.nickname;
     
-    NSString *create_time = [NSString stringWithFormat:@"%f",listModel.create_time.floatValue/1000];
-    self.timeLabel.text = [NSString dateStringWithTimeIntervalSince1970:create_time];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:listModel.add_time.integerValue];
+    NSString *updateTime = [formatter stringFromDate:date];
+    
+    self.timeLabel.text = updateTime;
     self.desLabel.text = listModel.content;
     self.nameLabel.text = listModel.user_name;
     [self.zanBtn setTitle:listModel.agree forState:UIControlStateNormal];

@@ -206,9 +206,12 @@
         case Query2BookList:query = @"getBookList";break;//列表
         case Query2AddBindInfo:query = @"addBindInfo";break;//列表
         case Query2Car: query = @"index_car";break;//车载
+        case BindInfo: query = @"getBindInfo";break;//车载
+        case AddCommentAgree: query = @"addCommentAgree";break;//评论点赞
         default:break;
     }
     return [APPDELEGATE.base_url_2 stringByAppendingString:query];
 }
 
 @end
+
