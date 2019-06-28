@@ -36,6 +36,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setupUI];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -94,12 +95,13 @@
     }];
     
     [self.zanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.zanLabel.mas_left).mas_offset(0);
         make.centerY.equalTo(self.timeLabel);
-        make.right.equalTo(self.contentView).mas_offset(-15);
+        make.size.mas_equalTo(CGSizeMake(30, 30));
     }];
     
     [self.zanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.zanBtn.mas_left).mas_offset(-2);
+        make.right.equalTo(self.contentView).mas_offset(-15);
         make.centerY.equalTo(self.zanBtn);
     }];
     
@@ -135,6 +137,8 @@
 - (UILabel *)nameLabel {
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
+        _nameLabel.font =[UIFont systemFontOfSize:15];
+        _nameLabel.textColor = kColorValue(0x282828);
     }
     return _nameLabel;
 }
@@ -143,6 +147,8 @@
     if (!_desLabel) {
         _desLabel = [[UILabel alloc] init];
         _desLabel.numberOfLines = 0;
+        _desLabel.font =[UIFont systemFontOfSize:15];
+        _desLabel.textColor = kColorValue(0x282828);
     }
     return _desLabel;
 }
@@ -150,6 +156,8 @@
 - (UILabel *)timeLabel {
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] init];
+        _timeLabel.font =[UIFont systemFontOfSize:15];
+        _timeLabel.textColor = kColorValue(0x282828);
     }
     return _timeLabel;
 }
@@ -158,7 +166,6 @@
     if (!_zanBtn) {
         _zanBtn = [[UIButton alloc] init];
         [_zanBtn setImage:[UIImage imageNamed:@"comment_like_nor"] forState:UIControlStateNormal];
-        [_zanBtn setImage:[UIImage imageNamed:@"comment_like_sel"] forState:UIControlStateNormal];
         [_zanBtn addTarget:self action:@selector(zan) forControlEvents:UIControlEventTouchUpInside];
     }
     return _zanBtn;
@@ -166,6 +173,8 @@
 - (UILabel *)zanLabel {
     if (!_zanLabel) {
         _zanLabel = [[UILabel alloc] init];
+        _zanLabel.font =[UIFont systemFontOfSize:13];
+        _zanLabel.textColor = kColorValue(0x666666);
     }
     return _zanLabel;
 }

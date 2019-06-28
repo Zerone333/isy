@@ -14,6 +14,7 @@
 #import "ISYCategoryFilterView.h"
 #import "ISYCategoryMoreHeadView.h"
 #import "ISYBookListHotTableViewCell.h"
+#import "ISYSearchViewController.h"
 
 @interface ISYCategoryMoreViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -316,6 +317,16 @@
     //    vc.keyword = searchBar.text;
     //    vc.hidesBottomBarWhenPushed = YES;
     //    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+    
+    ISYSearchViewController *vc = [[ISYSearchViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    return NO;
 }
 
 #pragma mark - get/set method

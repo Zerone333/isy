@@ -11,6 +11,7 @@
 #import "HomeModel.h"
 #import "ISYCategoryDetailTableViewCell.h"
 #import "BookDetailViewController.h"
+#import "ISYSearchViewController.h"
 
 @interface ISYCategoryDetailViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -291,5 +292,15 @@
         [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     }
     return _searchBar;
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+    
+    ISYSearchViewController *vc = [[ISYSearchViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    return NO;
 }
 @end

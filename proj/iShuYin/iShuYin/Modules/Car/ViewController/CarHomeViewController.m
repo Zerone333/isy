@@ -22,8 +22,9 @@
 #import "ISYCategoryDetailViewController.h"
 #import "CategoryModel.h"
 #import "BookDetailViewController.h"
+#import "ISYSearchViewController.h"
 
-@interface CarHomeViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface CarHomeViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) HomeModel *model;
@@ -287,5 +288,15 @@
         [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     }
     return _searchBar;
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+    
+    ISYSearchViewController *vc = [[ISYSearchViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    return NO;
 }
 @end
