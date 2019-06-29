@@ -57,7 +57,8 @@ typedef NS_ENUM(NSInteger,Query2) {
     Query2AddBindInfo,//第三方登录授权绑定
     Query2Car,//车载
     BindInfo,//获取绑定信息
-    AddCommentAgree//点赞
+    AddCommentAgree,//点赞
+    AddBindInfo
     
 };
 

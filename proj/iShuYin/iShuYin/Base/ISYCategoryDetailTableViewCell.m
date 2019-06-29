@@ -86,6 +86,16 @@
     return self;
 }
 
+- (void)updateModel:(HomeBookModel *)model type:(NSInteger)type {
+    if (type == 1) {
+        self.model = model;
+        self.chaperCountLabel.text = [NSString stringWithFormat:@"%@章", model.jishu];
+        self.chaperImage.image = [UIImage imageNamed:@"home_chaper"];
+    } else {
+        self.model = model;
+        self.chaperImage.image = [UIImage imageNamed:@"播报icon"];
+    }
+}
 - (void)setModel:(HomeBookModel *)model {
     [super setModel:model];
     self.chaperCountLabel.text = model.director;
@@ -139,7 +149,7 @@
 - (UIImageView *)chaperImage {
     if (!_chaperImage) {
         _chaperImage = [[UIImageView alloc] init];
-        _chaperImage.image = [UIImage imageNamed:@"home_chaper"];
+        _chaperImage.image = [UIImage imageNamed:@"播报icon"];
     }
     return _chaperImage;
 }
@@ -147,7 +157,7 @@
 - (UILabel *)desLabel {
     if (!_desLabel) {
         _desLabel = [[UILabel alloc] init];
-        _desLabel.numberOfLines = 2;
+        _desLabel.numberOfLines = 4;
         _desLabel.font =[UIFont systemFontOfSize:13];
         _desLabel.textColor = kColorValue(0x666666);
     }

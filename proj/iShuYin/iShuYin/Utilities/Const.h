@@ -69,7 +69,10 @@
 #define kRememberPswd @"RememberPswd"
 #define kAutoLogin @"AutoLogin"
 #define kVersion @"Version"
-
+#define kLoginType @"kLoginType"
+#define kUserName @"kUserName"
+#define kHeadUrl @"kHeadUrl"
+#define kUniqueId @"kUniqueId"
 
 //链接
 #if DEBUG

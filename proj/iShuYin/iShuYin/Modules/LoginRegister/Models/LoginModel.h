@@ -36,5 +36,6 @@
 @property (nonatomic, strong) NSString *user_rank;//用户等级 1计时会员 2计点会员
 @property (nonatomic, strong) NSString *usertype;
 @property (nonatomic, strong) NSString *visit_count;
+@property (nonatomic, strong) NSString *headUrl; //头像地址
 @property (nonatomic, strong) NSString *skyuc_sessionhash;//cookie
 @end

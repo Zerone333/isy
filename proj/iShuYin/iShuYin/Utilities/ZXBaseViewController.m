@@ -81,6 +81,7 @@
                                        action:action];
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:btn];
     if (isLeft) {
+        btn.frame = CGRectMake(0, 0, 32, 44);
         self.navigationItem.leftBarButtonItem = item;
     }else {
         self.navigationItem.rightBarButtonItem = item;

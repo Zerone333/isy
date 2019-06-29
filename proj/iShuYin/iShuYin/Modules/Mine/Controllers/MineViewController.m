@@ -127,6 +127,13 @@
 #pragma mark - Action
 - (void)logoutBtnClick {
     //退出接口
+    [USERDEFAULTS removeObjectForKey:kAutoLogin];
+    [USERDEFAULTS removeObjectForKey:kRememberPswd];
+    [USERDEFAULTS removeObjectForKey:kLoginType];
+    [USERDEFAULTS removeObjectForKey:kUserName];
+    [USERDEFAULTS removeObjectForKey:kUniqueId];
+    [USERDEFAULTS removeObjectForKey:kHeadUrl];
+
     ZXNetworkManager *manager = [ZXNetworkManager shareManager];
     [manager clearCache];
     APPDELEGATE.loginModel = nil;

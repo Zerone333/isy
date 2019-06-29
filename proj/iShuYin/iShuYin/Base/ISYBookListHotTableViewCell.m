@@ -42,8 +42,7 @@
         [self.contentView addSubview:self.timesIcon];
         
         [self.categryBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.equalTo(self.thumImageView);
-            make.width.mas_equalTo(50);
+            make.bottom.left.right.equalTo(self.thumImageView);
             make.height.mas_equalTo(18);
         }];
         [self.categryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,8 +147,11 @@
         [formatter setDateFormat:@"YYYY-MM-dd"];
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.add_time.integerValue];
         NSString *updateTime = [formatter stringFromDate:date];
-        
-        self.desLabel.text = [NSString stringWithFormat:@"更新 %@", updateTime ];
+        if (model.descriptionString.length != 0) {
+            self.desLabel.text = [NSString stringWithFormat:@"%@\n更新 %@", model.descriptionString, updateTime ];
+        } else {
+             self.desLabel.text = [NSString stringWithFormat:@"更新 %@",  updateTime ];
+        }
         self.chaperCountLabel.text = timeString;
         self.chaperImage.image = [UIImage imageNamed:@"播放次数"];
         self.statuImage.hidden = YES;
@@ -171,8 +173,14 @@
         self.statuImage.hidden = YES;
         self.statuLabel.hidden = NO;
     }
-    
-    self.timesLabel.text = [NSString stringWithFormat:@"%@次", model.click_count?:@"0"];
+    NSString *timeString;
+    NSInteger value = model.click_count.integerValue;
+    if (value >= 10000) {
+        timeString = [NSString stringWithFormat:@"%ld万 次", value/ 10000];
+    } else {
+        timeString = [NSString stringWithFormat:@"%ld次", (long)value];
+    }
+    self.timesLabel.text = timeString;
     if (model.cat_name) {
         self.categryLabel.text = model.cat_name;
         self.categryBgView.hidden = NO;
@@ -221,7 +229,7 @@
 - (UILabel *)desLabel {
     if (!_desLabel) {
         _desLabel = [[UILabel alloc] init];
-        _desLabel.numberOfLines = 2;
+        _desLabel.numberOfLines = 4;
         _desLabel.font =[UIFont systemFontOfSize:13];
         _desLabel.textColor = kColorValue(0x666666);
     }
@@ -258,7 +266,7 @@
 - (UIView *)categryBgView {
     if (!_categryBgView) {
         _categryBgView = [[UIView alloc] init];
-        _categryBgView.backgroundColor = [UIColor redColor];
+        _categryBgView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.8];
     }
     return _categryBgView;
 }

@@ -131,7 +131,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HomeBookModel *model = self.dataSource[indexPath.row];
     ISYCategoryDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYCategoryDetailTableViewCell cellID]];
-    cell.model = model;
+    [cell updateModel:model type:0];
     return cell;
 }
 

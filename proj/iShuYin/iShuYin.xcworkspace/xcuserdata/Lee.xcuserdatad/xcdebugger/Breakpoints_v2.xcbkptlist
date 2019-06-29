@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Modules/Play/ISYChaperListView.m"
-            timestampString = "569868898.8019201"
+            timestampString = "583492303.418979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -110,11 +110,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Base/ISYBookListHotTableViewCell.m"
-            timestampString = "583385698.397032"
+            timestampString = "583492303.419468"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "-setModel:isAuthorMore:"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,12 +126,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "583386046.087239"
+            timestampString = "583492303.4195811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "742"
-            endingLineNumber = "742"
-            landmarkName = "-speedButtonClick:"
+            startingLineNumber = "717"
+            endingLineNumber = "717"
+            landmarkName = "-shareToPlatform:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -142,7 +142,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "583386046.0872951"
+            timestampString = "583492303.4199719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "412"
@@ -157,13 +157,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "583386046.08734"
+            filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
+            timestampString = "583492303.420583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "730"
-            endingLineNumber = "730"
-            landmarkName = "-hasShareBook:"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "-shareToPlatform:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
+            timestampString = "583492303.422947"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "-shareToPlatform:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -174,11 +190,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "583386046.0873801"
+            timestampString = "583492303.4235229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "685"
-            endingLineNumber = "685"
+            startingLineNumber = "702"
+            endingLineNumber = "702"
             landmarkName = "-updateShareBookId:"
             landmarkType = "7">
          </BreakpointContent>
@@ -189,76 +205,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "583386046.087418"
+            filePath = "iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
+            timestampString = "583492303.423648"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "718"
-            endingLineNumber = "718"
-            landmarkName = "-hasShareBook:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ISYDBManager hasShareBook:]"
-                  moduleName = "iShuYin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/DB/ISYDBManager.m"
-                  timestampString = "583384871.1864311"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "718"
-                  endingLineNumber = "718"
-                  offsetFromSymbolStart = "161">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__29-[ISYDBManager hasShareBook:]_block_invoke"
-                  moduleName = "iShuYin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/DB/ISYDBManager.m"
-                  timestampString = "583384871.18844"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "718"
-                  endingLineNumber = "718"
-                  offsetFromSymbolStart = "16">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.267"
-                  moduleName = "iShuYin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/DB/ISYDBManager.m"
-                  timestampString = "583384871.191847"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "718"
-                  endingLineNumber = "718"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/DB/ISYDBManager.m"
-            timestampString = "583386046.087454"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "722"
-            endingLineNumber = "722"
-            landmarkName = "-hasShareBook:"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "-wechatRegister:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -269,11 +222,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-            timestampString = "583379379.613258"
+            timestampString = "583492303.423739"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "-wechatLogin:"
             landmarkType = "7">
          </BreakpointContent>
@@ -284,74 +237,58 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-            timestampString = "583386046.0875241"
+            filePath = "iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
+            timestampString = "583492303.423844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-wechatRegister:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-            timestampString = "583386046.087567"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-wechatRegister:"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "-wechatLogin:"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__41-[RegisterViewController wechatRegister:]_block_invoke"
+                  symbolName = "__35-[LoginViewController wechatLogin:]_block_invoke"
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-                  timestampString = "583384871.212993"
+                  urlString = "file:///Users/Lee/Desktop/isy/isygit/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
+                  timestampString = "583491156.666569"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "158"
-                  endingLineNumber = "158"
-                  offsetFromSymbolStart = "1395">
+                  startingLineNumber = "247"
+                  endingLineNumber = "247"
+                  offsetFromSymbolStart = "641">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__41-[RegisterViewController wechatRegister:]_block_invoke_2"
+                  symbolName = "__35-[LoginViewController wechatLogin:]_block_invoke_2"
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-                  timestampString = "583384871.215199"
+                  urlString = "file:///Users/Lee/Desktop/isy/isygit/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
+                  timestampString = "583491156.668438"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "159"
-                  endingLineNumber = "159"
+                  startingLineNumber = "248"
+                  endingLineNumber = "248"
                   offsetFromSymbolStart = "84">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.183"
+                  symbolName = "__destroy_helper_block_.282"
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-                  timestampString = "583384871.217521"
+                  urlString = "file:///Users/Lee/Desktop/isy/isygit/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
+                  timestampString = "583491156.6703629"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "158"
-                  endingLineNumber = "158"
+                  startingLineNumber = "247"
+                  endingLineNumber = "247"
                   offsetFromSymbolStart = "12">
                </Location>
             </Locations>
@@ -363,13 +300,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-            timestampString = "583386046.087605"
+            filePath = "iShuYin/Application/AppDelegate.m"
+            timestampString = "583492303.423969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "-wechatRegister:"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "-autoLogin"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -380,12 +317,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Modules/LoginRegister/Controllers/RegisterViewController.m"
-            timestampString = "583386046.087644"
+            timestampString = "583492303.424053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "-wechatRegister:"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "-qqRegister:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -395,13 +332,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "583386046.087683"
+            filePath = "iShuYin/Modules/Play/ISYChaperListView.m"
+            timestampString = "583492303.424122"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "613"
-            endingLineNumber = "613"
-            landmarkName = "-zanComment:"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "-listSortButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -115,6 +115,9 @@
             [[ISYDBManager shareInstance] insertBook:detailModel];
             [strongSelf playChange];
             
+            // 刷新页面
+            self.navigationItem.titleView = [UILabel navigationItemTitleViewWithText:detailModel.title];
+            
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
             [strongSelf.navigationController popViewControllerAnimated:YES];

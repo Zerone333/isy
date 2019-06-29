@@ -109,6 +109,7 @@
         default:
             break;
     }
+    [self.tableView reloadData];
 }
 
 #pragma mark - Action
@@ -159,6 +160,7 @@
         self.listSortLabel.text = @"逆序";
     }
     self.sortCallBack(self.playSort);
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
@@ -171,16 +173,26 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fdfsfsd"];
     }
-    BookChapterModel *chaper = self.book.chapters[indexPath.row];
-    cell.textLabel.text = chaper.l_title;
-    
-    if (APPDELEGATE.playVC.currentIndex == indexPath.row) {
-        cell.imageView.image = [UIImage imageNamed:@"播放状态"];
+    if (self.playSort != ISYPalySortReverse) {//正序
+        BookChapterModel *chaper = self.book.chapters[indexPath.row];
+        cell.textLabel.text = chaper.l_title;
+        
+        if (APPDELEGATE.playVC.currentIndex == indexPath.row) {
+            cell.imageView.image = [UIImage imageNamed:@"播放状态"];
+        } else {
+            cell.imageView.image = nil;
+        }
     } else {
-        cell.imageView.image = nil;
+        NSInteger index = self.book.chapters.count - indexPath.row - 1;
+        BookChapterModel *chaper = self.book.chapters[index];
+        cell.textLabel.text = chaper.l_title;
+        
+        if (APPDELEGATE.playVC.currentIndex == index) {
+            cell.imageView.image = [UIImage imageNamed:@"播放状态"];
+        } else {
+            cell.imageView.image = nil;
+        }
     }
-    
-    
 
     return cell;
 }
@@ -190,8 +202,11 @@
    
     if (self.selectChaperCB != nil) {
         NSInteger chaperIndxe = 0;
-        chaperIndxe = indexPath.row;
-        
+        if (self.playSort != ISYPalySortReverse) {//正序
+            chaperIndxe = indexPath.row;
+        } else {
+           chaperIndxe = self.book.chapters.count - indexPath.row - 1;
+        }
         self.selectChaperCB(chaperIndxe);
     }
     [self closeButtonClick];

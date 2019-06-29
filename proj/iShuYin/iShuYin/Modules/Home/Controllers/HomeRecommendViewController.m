@@ -155,7 +155,9 @@
         return cell;
     } else {
         ISYBookListHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[ISYBookListHotTableViewCell cellID]];
-        cell.model = model.randarDataSource[indexPath.row];
+//        cell.model = model.randarDataSource[indexPath.row];
+//        
+        [cell setModel:model.randarDataSource[indexPath.row] type:@"小说"];
         return cell;
     }
 }

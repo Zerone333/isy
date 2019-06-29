@@ -39,6 +39,18 @@
     [self requestData];
 }
 
+- (void)popBack:(UIButton *)btn {
+    if (self.vc) {
+        [self.leftButton setTitle:@"搜索" forState:UIControlStateNormal];
+        [self.vc.view removeFromSuperview];
+        [self.vc removeFromParentViewController];
+        self.vc = nil;
+        self.searchBar.text = nil;
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)setupUI {
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];

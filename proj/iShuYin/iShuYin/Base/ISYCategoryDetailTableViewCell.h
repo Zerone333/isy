@@ -10,5 +10,13 @@
 
 @interface ISYCategoryDetailTableViewCell : ISYBookListTableViewCell
 + (NSString *)cellID;
+
+/**
+ <#Description#>
+
+ @param model <#model description#>
+ @param type type = 1 分类页面cell
+ */
+- (void)updateModel:(NSObject *)model type:(NSInteger)type;
 @end
 

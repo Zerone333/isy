@@ -170,9 +170,9 @@
             APPDELEGATE.loginModel = model;
             [APPDELEGATE.keyWrapper setObject:strongSelf.accountTextField.text forKey:(__bridge id)kSecAttrAccount];
             [APPDELEGATE.keyWrapper setObject:strongSelf.pswdTextField.text forKey:(__bridge id)kSecValueData];
-            
+            [USERDEFAULTS setObject:@(0) forKey:kLoginType];
             //记住密码 自动登录
-            if (strongSelf.autoLoginBtn.isSelected) {
+            if (YES) {
                 [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];
                 [USERDEFAULTS setObject:kAutoLogin forKey:kAutoLogin];
             }else {
@@ -235,26 +235,12 @@
             NSLog(@"%@",error);
         } else {
             UMSocialUserInfoResponse *resp = result;
-//
-//            // 授权信息
-//            NSLog(@"Wechat uid: %@", resp.uid);
-//            NSLog(@"Wechat openid: %@", resp.openid);
-//            NSLog(@"Wechat unionid: %@", resp.unionId);
-//            NSLog(@"Wechat accessToken: %@", resp.accessToken);
-//            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
-//            NSLog(@"Wechat expiration: %@", resp.expiration);
-//
-//            // 用户信息
-//            NSLog(@"Wechat name: %@", resp.name);
-//            NSLog(@"Wechat iconurl: %@", resp.iconurl);
-//            NSLog(@"Wechat gender: %@", resp.unionGender);
-//
-//            // 第三方平台SDK源数据
-//            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
             ZXNetworkManager *manager = [ZXNetworkManager shareManager];
-            NSString *url = [manager URLStringWithQuery2:Query2AddBindInfo];
-            NSDictionary *params = @{@"type":@(1),
-                                     @"unique_id":resp.unionId
+            NSString *url = [manager URLStringWithQuery2:AddBindInfo];
+            NSDictionary *params = @{@"nickname":resp.name,
+                                     @"type": @(1),
+                                     @"unique_id":resp.uid,
+                                     @"headimgurl":resp.iconurl
                                      };
             __weak __typeof(self)weakSelf = self;
             [ZXProgressHUD showLoading:@""];
@@ -264,15 +250,22 @@
                     __strong __typeof(weakSelf)strongSelf = weakSelf;
                     //登录信息
                     LoginModel *model = [LoginModel yy_modelWithJSON:responseObject[@"data"]];
+                    model.user_name = resp.name;
+                    model.headUrl = resp.iconurl;
                     APPDELEGATE.loginModel = model;
                     [APPDELEGATE.keyWrapper setObject:strongSelf.accountTextField.text forKey:(__bridge id)kSecAttrAccount];
                     [APPDELEGATE.keyWrapper setObject:strongSelf.pswdTextField.text forKey:(__bridge id)kSecValueData];
+                    
+                    [USERDEFAULTS setObject:@(1) forKey:kLoginType];
+                    [USERDEFAULTS setObject:model.user_name forKey:kUserName];
+                    [USERDEFAULTS setObject:model.headUrl forKey:kHeadUrl];
+                    [USERDEFAULTS setObject:resp.iconurl forKey:kUniqueId];
                     
                     //记住密码 自动登录
                     if (YES) {
                         [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];
                         [USERDEFAULTS setObject:kAutoLogin forKey:kAutoLogin];
-                    }else {
+                    } else {
                         [USERDEFAULTS removeObjectForKey:kAutoLogin];
                         if (strongSelf.rememberPswdBtn.isSelected) {
                             [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];

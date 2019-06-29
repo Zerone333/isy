@@ -66,6 +66,7 @@
     
     self.statusLabel.text = [NSString stringWithFormat:@"更新 %@", updateTime ];
     self.timeLabel.text = timeString;
+    self.orderButton.selected = !model.is_collected.boolValue;
 }
 
 #pragma mark - private
@@ -231,6 +232,7 @@
     if (!_orderButton) {
         _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_orderButton setImage:[UIImage imageNamed:@"订阅btn"] forState:UIControlStateNormal];
+        [_orderButton setImage:[UIImage imageNamed:@"未订阅btn"] forState:UIControlStateSelected];
         [_orderButton addTarget:self action:@selector(orderBook) forControlEvents:UIControlEventTouchUpInside];
     }
     return _orderButton;

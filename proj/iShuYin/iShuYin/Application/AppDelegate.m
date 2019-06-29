@@ -85,7 +85,12 @@
     [self handleWindow];
     
     //自动登录
-    [self autoLogin];
+    NSNumber *type = [USERDEFAULTS valueForKey:kLoginType];
+    if (type.integerValue == 0) {
+        [self autoLogin];
+    } else {
+        [self thirdPartAutoLogin];
+    }
     
     //SVProgressHUD
     [self setProgressHUD];
@@ -127,9 +132,9 @@
 }
 
 - (void)autoLogin {
-//    if (![USERDEFAULTS objectForKey:kAutoLogin]) {
-//        return;
-//    }
+    if (![USERDEFAULTS objectForKey:kAutoLogin]) {
+        return;
+    }
     [USERDEFAULTS setObject:[[NSBundle mainBundle]infoDictionary][@"CFBundleShortVersionString"] forKey:kVersion];
     [USERDEFAULTS synchronize];
     
@@ -172,6 +177,56 @@
         DLog(@"%@", error.localizedDescription);
         [SVProgressHUD showImage:nil status:error.localizedDescription];
     }];
+}
+
+- (void)thirdPartAutoLogin {
+    
+    NSNumber *type = [USERDEFAULTS valueForKey:kLoginType];
+    NSString *nickName = [USERDEFAULTS valueForKey:kUserName];
+    NSString *unique_id = [USERDEFAULTS valueForKey:kUniqueId];
+    NSString *headimgurl = [USERDEFAULTS valueForKey:kHeadUrl];
+    
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery2:AddBindInfo];
+    NSDictionary *params = @{@"nickname":nickName,
+                             @"type": type,
+                             @"unique_id":unique_id,
+                             @"headimgurl":headimgurl
+                             };
+    [ZXProgressHUD showLoading:@""];
+    [manager POSTWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            //登录信息
+            LoginModel *model = [LoginModel yy_modelWithJSON:responseObject[@"data"]];
+            model.user_name = nickName;
+            model.headUrl = headimgurl;
+            APPDELEGATE.loginModel = model;
+            //记住密码 自动登录
+            if (YES) {
+                [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];
+                [USERDEFAULTS setObject:kAutoLogin forKey:kAutoLogin];
+            }else {
+                [USERDEFAULTS removeObjectForKey:kAutoLogin];
+                if (YES) {
+                    [USERDEFAULTS setObject:kRememberPswd forKey:kRememberPswd];
+                }else {
+                    [USERDEFAULTS removeObjectForKey:kRememberPswd];
+                }
+            }
+            //登录畅言
+            [ChangyanSDK loginSSO:model.user_id userName:[NSString isEmpty:model.user_name]?@"游客":model.user_name profileUrl:nil imgUrl:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
+                DLog(@"%@", responseStr);
+            }];
+            [SVProgressHUD showImage:nil status:@"登录成功"];
+        }else {
+            [SVProgressHUD showImage:nil status:responseObject[@"message"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"%@", error.localizedDescription);
+        [SVProgressHUD showImage:nil status:error.localizedDescription];
+    }];
+    
 }
 
 - (void)setProgressHUD {

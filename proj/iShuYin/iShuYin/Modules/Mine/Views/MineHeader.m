@@ -48,6 +48,9 @@
     }else {
         _imgView.image = [UIImage imageNamed:@"mine_boy"];
     }
+    if (loginModel.headUrl.length != 0  ) {
+        [_imgView sd_setImageWithURL:[NSURL URLWithString:loginModel.headUrl] placeholderImage:[UIImage imageNamed:@"mine_girl"]];
+    }
     NSDictionary *dict1 = @{NSForegroundColorAttributeName:kColorValue(0x666666),NSFontAttributeName:kFontSystem(12)};
     NSDictionary *dict2 = @{NSForegroundColorAttributeName:kColorValue(0x9b9b9b),NSFontAttributeName:kFontBold(15)};
     NSString *str1 = [NSString stringWithFormat:@"%@\n听币",loginModel.user_point];
