@@ -63,6 +63,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *collectionImgView;
 
+@property (nonatomic, weak) UIView *luxianView;
+
 @property (nonatomic, strong) BookDetailModel *detailModel;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) NSTimer *timer;
@@ -75,6 +77,8 @@
 @property (nonatomic, assign) NSInteger duration;
 @property (nonatomic, assign) CGFloat PlayRate;// 播放速度1。0 - 2.0
 @property (nonatomic, assign) ISYPalySort playSortType;
+@property (nonatomic, assign) NSInteger luxianIndex; // default 0
+@property (nonatomic, strong) BookChapterModel *currentChaper;
 @end
 
 @implementation PlayViewController
@@ -852,11 +856,17 @@
 
 //播放网络音频
 - (void)playChapterNetwork:(BookChapterModel *)chapterModel {
+    self.currentChaper = chapterModel;
     FSStreamConfiguration *config = [[FSStreamConfiguration alloc] init];
     config.httpConnectionBufferSize *= 2;
     config.enableTimeAndPitchConversion = YES;
     
     NSURL *url = [[chapterModel.l_url decodePlayURL] url];
+    if (self.luxianIndex != 0) {
+        NSString *luxian = [[self luxianData] objectAtIndex:self.luxianIndex];
+        [NSString stringWithFormat:@"%@", luxian, _detailModel.show_id,chapterModel.l_id];
+        url = [NSURL URLWithString:luxian];
+    }
 //    _audioStream = [[FSAudioStream alloc]initWithUrl:url];
      _audioStream = [[FSAudioStream alloc]initWithConfiguration:config];
     [_audioStream playFromURL:url];
@@ -981,6 +991,79 @@
     [USERDEFAULTS synchronize];
 }
 
+- (void)showLuxian {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.7];
+    [window addSubview:bgView];
+    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(window);
+    }];
+    NSArray *data = [self luxianData];
+    UIView *contentView = [[UIView alloc] init];
+    contentView.backgroundColor = [UIColor whiteColor];
+    [bgView addSubview:contentView];
+    
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(300);
+        make.height.mas_equalTo((data.count + 2) * 44);
+        make.center.equalTo(bgView);
+    }];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"当前路线无法播放，请选择其他路线";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:titleLabel];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(contentView);
+        make.height.mas_equalTo(44);
+    }];
+    UIView *upview = titleLabel;
+    for (NSInteger index = 0; index < data.count; ++index) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = index;
+        [btn addTarget:self action:@selector(luxianChange:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setTitle:[NSString stringWithFormat:@"路线%ld", index + 1] forState:UIControlStateNormal];
+        [contentView addSubview:btn];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(contentView);
+            make.height.mas_equalTo(44);
+            make.top.equalTo(upview.mas_bottom);
+        }];
+        upview = btn;
+    }
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn addTarget:self action:@selector(closeLuxian) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"关闭" forState:UIControlStateNormal];
+    [contentView addSubview:btn];
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(contentView);
+        make.height.mas_equalTo(44);
+        make.top.equalTo(upview.mas_bottom);
+    }];
+    self.luxianView = bgView;
+}
+
+- (NSArray *)luxianData {
+    return @[@"",
+             @"http://mp3.aikeu.com/%@/%@.mp3",
+             @"http://mp3.aikeu.com/%@/%@.m4a",
+             @"http://mp31.aikeu.com/%@/%@.mp3",
+             @"http://mp31.aikeu.com/%@/%@.m4a"];
+}
+
+- (void)luxianChange:(UIButton *)btn {
+    NSInteger index = btn.tag;
+    self.luxianIndex = index;
+    [self playChapterLocal:self.currentChaper];
+}
+
+- (void)closeLuxian {
+    [self.luxianView removeFromSuperview];
+    self.luxianView = nil;
+}
+
 #pragma mark - AVAudioPlayerDelegate
 - (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
     self.audioPlayer.currentTime =  self.duration;
@@ -1098,6 +1181,10 @@
 }
 
 - (void)playWithBook:(BookDetailModel *)detailModel index:(NSInteger)idx {
+    if (![_detailModel.show_id isEqualToString:detailModel.show_id]) {
+        self.luxianIndex = 0;
+    }
+    
     if ([_detailModel.show_id isEqualToString:detailModel.show_id] &&
         _currentIndex == idx && (self.audioPlayer.isPlaying || self.audioStream.isPlaying)) {
         return;
