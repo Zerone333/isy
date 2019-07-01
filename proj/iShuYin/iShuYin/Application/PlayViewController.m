@@ -864,8 +864,9 @@
     NSURL *url = [[chapterModel.l_url decodePlayURL] url];
     if (self.luxianIndex != 0) {
         NSString *luxian = [[self luxianData] objectAtIndex:self.luxianIndex];
-        [NSString stringWithFormat:@"%@", luxian, _detailModel.show_id,chapterModel.l_id];
-        url = [NSURL URLWithString:luxian];
+         NSArray *items = [luxian componentsSeparatedByString:@"#"];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@%@", items[0], _detailModel.show_id,items[1], chapterModel.l_id, items[2]];
+        url = [NSURL URLWithString:urlString];
     }
 //    _audioStream = [[FSAudioStream alloc]initWithUrl:url];
      _audioStream = [[FSAudioStream alloc]initWithConfiguration:config];
@@ -873,6 +874,7 @@
     __weak __typeof(self)weakSelf = self;
     _audioStream.onFailure = ^(FSAudioStreamError error,NSString *description){
         DLog(@"网络播放过程中发生错误，错误信息：%@",description);
+        [weakSelf showLuxian];
         [SVProgressHUD showImage:nil status:description];
     };
     _audioStream.onCompletion = ^{
@@ -992,9 +994,12 @@
 }
 
 - (void)showLuxian {
+    if (self.luxianView) {
+        return;
+    }
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIView *bgView = [[UIView alloc] init];
-    bgView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.7];
+    bgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     [window addSubview:bgView];
     [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(window);
@@ -1002,10 +1007,12 @@
     NSArray *data = [self luxianData];
     UIView *contentView = [[UIView alloc] init];
     contentView.backgroundColor = [UIColor whiteColor];
+    contentView.layer.masksToBounds = YES;
+    contentView.layer.cornerRadius = 8;
     [bgView addSubview:contentView];
     
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(300);
+        make.width.mas_equalTo(MAX(300, kScreenWidth * 0.8));
         make.height.mas_equalTo((data.count + 2) * 44);
         make.center.equalTo(bgView);
     }];
@@ -1024,18 +1031,40 @@
         btn.tag = index;
         [btn addTarget:self action:@selector(luxianChange:) forControlEvents:UIControlEventTouchUpInside];
         [btn setTitle:[NSString stringWithFormat:@"路线%ld", index + 1] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        if (self.luxianIndex == index) {
+            [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        }
         [contentView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(contentView);
             make.height.mas_equalTo(44);
             make.top.equalTo(upview.mas_bottom);
         }];
+        
+        UIView *lineview = [UIView new];
+        lineview.backgroundColor = [UIColor grayColor];
+        [contentView addSubview:lineview];
+        [lineview mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(upview);
+            make.height.mas_equalTo(0.5);
+        }];
+        
         upview = btn;
     }
+    
+    UIView *lineview = [UIView new];
+    lineview.backgroundColor = [UIColor grayColor];
+    [contentView addSubview:lineview];
+    [lineview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(upview);
+        make.height.mas_equalTo(0.5);
+    }];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn addTarget:self action:@selector(closeLuxian) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"关闭" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [contentView addSubview:btn];
     [btn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(contentView);
@@ -1047,16 +1076,17 @@
 
 - (NSArray *)luxianData {
     return @[@"",
-             @"http://mp3.aikeu.com/%@/%@.mp3",
-             @"http://mp3.aikeu.com/%@/%@.m4a",
-             @"http://mp31.aikeu.com/%@/%@.mp3",
-             @"http://mp31.aikeu.com/%@/%@.m4a"];
+             @"http://mp3.aikeu.com/#/#.mp3",
+             @"http://mp3.aikeu.com/#/#.m4a",
+             @"http://mp31.aikeu.com/#/#.mp3",
+             @"http://mp31.aikeu.com/#/#.m4a"];
 }
 
 - (void)luxianChange:(UIButton *)btn {
+    [self closeLuxian];
     NSInteger index = btn.tag;
     self.luxianIndex = index;
-    [self playChapterLocal:self.currentChaper];
+    [self playChapterNetwork:self.currentChaper];
 }
 
 - (void)closeLuxian {
