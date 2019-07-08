@@ -71,6 +71,10 @@
     if ([NSString isEmpty:self] || self.length < 2) {
         return nil;
     }
+    //已经解密过了
+    if ([self hasPrefix:@"http"]) {
+        return self;
+    }
     NSString *string = @"";
     NSRange pre_range = NSMakeRange(0, 1);
     NSString *pre_char = [self substringWithRange:pre_range];
