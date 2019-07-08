@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *selectArray;
 @property (nonatomic, strong) UIButton *selectAllButton;
+@property (nonatomic, strong) UIView *luxianView;
+@property (nonatomic, assign) NSInteger luxianIndex; // default 0
 @end
 
 @implementation BookChapterViewController
@@ -185,9 +187,26 @@
         [SVProgressHUD showImage:nil status:@"请选择要下载的章节"];
         return;
     }
+    [self checkAvailabilityWithModel:_selectArray.firstObject completed:^(BOOL available) {
+        if (available) {
+            [self download];
+        }else{
+            //切换线路
+            [self showLuxian];
+        }
+    }];
+}
+
+- (void)download{
     for (BookChapterModel *m in _selectArray) {
         NSString *urlString = [m.l_url decodePlayURL];
-        
+        if (self.luxianIndex != 0) {
+            NSString *luxian = [[self luxianData] objectAtIndex:self.luxianIndex];
+            NSArray *items = [luxian componentsSeparatedByString:@"#"];
+            NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@", items[0], _detailModel.show_id,items[1], m.l_id, items[2]];
+            m.l_url = str;
+            urlString = str;
+        }
         MCDownloadReceipt *receipt = [[MCDownloader sharedDownloader] downloadReceiptForURLString:urlString];
         if (receipt.progress.fractionCompleted == 1.0) {
             continue;
@@ -205,11 +224,7 @@
         } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
             
         }];
-//        [[ISYDownloadHelper shareInstance] downloadDataWithURL:[urlString url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-//
-//        } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
-//
-//        }];
+        
         NSInteger row = [_dataArray indexOfObject:m];
         NSIndexPath *ip = [NSIndexPath indexPathForRow:row inSection:0];
         [_tableView beginUpdates];
@@ -218,6 +233,27 @@
         
         [SVProgressHUD showImage:nil status:@"开始下载"];
     }
+}
+
+- (void)checkAvailabilityWithModel:(BookChapterModel *)model completed:(void(^)(BOOL))completed {
+    if (self.luxianIndex != 0) {
+        NSString *luxian = [[self luxianData] objectAtIndex:self.luxianIndex];
+        NSArray *items = [luxian componentsSeparatedByString:@"#"];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@%@", items[0], _detailModel.show_id,items[1], model.l_id, items[2]];
+        model.l_url = urlString;
+    }
+    [ZXProgressHUD showLoading:@""];
+    [[ISYDownloadHelper shareInstance] downloadChaper:model bookId:self.detailModel.show_id progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+        if (expectedSize > 0 && speed > 0) {
+            completed(YES);
+            [ZXProgressHUD hide];
+        }
+    } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+        if (error) {
+            completed(NO);
+            [ZXProgressHUD hide];
+        }
+    }];
 }
 
 - (void)selectAllButtonClick:(UIButton *)button {
@@ -268,6 +304,107 @@
             [[ISYDBManager shareInstance] updateShareBookId:self.detailModel.show_id];
         }
     }];
+}
+
+- (void)showLuxian {
+    if (self.luxianView) {
+        return;
+    }
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    [window addSubview:bgView];
+    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(window);
+    }];
+    NSArray *data = [self luxianData];
+    UIView *contentView = [[UIView alloc] init];
+    contentView.backgroundColor = [UIColor whiteColor];
+    contentView.layer.masksToBounds = YES;
+    contentView.layer.cornerRadius = 8;
+    [bgView addSubview:contentView];
+    
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(MAX(300, kScreenWidth * 0.8));
+        make.height.mas_equalTo((data.count + 2) * 44);
+        make.center.equalTo(bgView);
+    }];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"当前路线无法播放，请选择其他路线";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:titleLabel];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(contentView);
+        make.height.mas_equalTo(44);
+    }];
+    UIView *upview = titleLabel;
+    for (NSInteger index = 0; index < data.count; ++index) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = index;
+        [btn addTarget:self action:@selector(luxianChange:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setTitle:[NSString stringWithFormat:@"路线%ld", index + 1] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        if (self.luxianIndex == index) {
+            [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        }
+        [contentView addSubview:btn];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(contentView);
+            make.height.mas_equalTo(44);
+            make.top.equalTo(upview.mas_bottom);
+        }];
+        
+        UIView *lineview = [UIView new];
+        lineview.backgroundColor = [UIColor grayColor];
+        [contentView addSubview:lineview];
+        [lineview mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(upview);
+            make.height.mas_equalTo(0.5);
+        }];
+        
+        upview = btn;
+    }
+    
+    UIView *lineview = [UIView new];
+    lineview.backgroundColor = [UIColor grayColor];
+    [contentView addSubview:lineview];
+    [lineview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(upview);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn addTarget:self action:@selector(closeLuxian) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"关闭" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [contentView addSubview:btn];
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(contentView);
+        make.height.mas_equalTo(44);
+        make.top.equalTo(upview.mas_bottom);
+    }];
+    self.luxianView = bgView;
+}
+
+- (NSArray *)luxianData {
+    return @[@"",
+             @"http://mp3.aikeu.com/#/#.mp3",
+             @"http://mp3.aikeu.com/#/#.m4a",
+             @"http://mp31.aikeu.com/#/#.mp3",
+             @"http://mp31.aikeu.com/#/#.m4a"];
+}
+
+- (void)luxianChange:(UIButton *)btn {
+    [self closeLuxian];
+    NSInteger index = btn.tag;
+    self.luxianIndex = index;
+    [self downLoadButtonClick:nil];
+}
+
+- (void)closeLuxian {
+    [self.luxianView removeFromSuperview];
+    self.luxianView = nil;
 }
 
 #pragma mark - Getter
