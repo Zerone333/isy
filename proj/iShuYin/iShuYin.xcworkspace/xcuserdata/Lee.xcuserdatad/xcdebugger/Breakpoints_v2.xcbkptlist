@@ -157,38 +157,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
-            timestampString = "583641526.585484"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
-            landmarkName = "-shareToPlatform:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
-            timestampString = "583641526.585797"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "-shareToPlatform:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "iShuYin/DB/ISYDBManager.m"
             timestampString = "583492920.731284"
             startingColumnNumber = "9223372036854775807"
@@ -254,7 +222,7 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-                  timestampString = "583641057.760694"
+                  timestampString = "592888652.238956"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "247"
@@ -269,27 +237,12 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-                  timestampString = "583641057.7626359"
+                  timestampString = "592888652.242134"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "248"
                   endingLineNumber = "248"
-                  offsetFromSymbolStart = "84">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.282"
-                  moduleName = "iShuYin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-                  timestampString = "583641057.764609"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "247"
-                  endingLineNumber = "247"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -340,6 +293,16 @@
             endingLineNumber = "869"
             landmarkName = "-playChapterNetwork:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

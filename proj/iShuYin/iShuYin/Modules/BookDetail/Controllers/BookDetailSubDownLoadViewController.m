@@ -251,17 +251,33 @@
         model.l_url = urlString;
     }
     [ZXProgressHUD showLoading:@""];
-    [[ISYDownloadHelper shareInstance] downloadChaper:model bookId:self.detailModel.show_id progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-        if (expectedSize > 0 && speed > 0) {
-            completed(YES);
+    NSURL *url = [NSURL URLWithString:[model.l_url decodePlayURL]];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.timeoutIntervalForRequest = 60;
+    NSURLSession *sessrion = [NSURLSession sessionWithConfiguration:config];
+    NSURLSessionDataTask *task = [sessrion dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
             [ZXProgressHUD hide];
-        }
-    } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
-        if (error) {
-            completed(NO);
-            [ZXProgressHUD hide];
-        }
+            NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+            if (r.statusCode == 200) {
+                completed(YES);
+            } else {
+                completed(NO);
+            }
+        });
     }];
+    [task resume];
+//    [[ISYDownloadHelper shareInstance] downloadChaper:model bookId:self.detailModel.show_id progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+//        if (expectedSize > 0 && speed > 0) {
+//            completed(YES);
+//            [ZXProgressHUD hide];
+//        }
+//    } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
+//        if (error) {
+//            completed(NO);
+//            [ZXProgressHUD hide];
+//        }
+//    }];
 }
 
 - (void)showLuxian {
