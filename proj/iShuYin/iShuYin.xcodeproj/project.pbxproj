@@ -1628,8 +1628,10 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 184DAE001F2E24F600EAEA58;
 			productRefGroup = 184DAE0A1F2E24F600EAEA58 /* Products */;

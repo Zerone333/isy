@@ -173,16 +173,16 @@
         [self presentViewController:nav animated:YES completion:nil];
         return;
     }
-    if (![[ISYDBManager shareInstance] hasShareBook:self.detailModel.show_id]) {
-        [SVProgressHUD showImage:nil status:@"要分享后才可批量下载哦"];
-        __weak __typeof(self)weakSelf = self;
-        ZXPopView *view = [[ZXPopView alloc]initWithShareBlock:^(NSInteger idx) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf shareToPlatform:idx];
-        }];
-        [view showInView:self.navigationController.view animated:ZXPopViewAnimatedSlip];
-        return;
-    }
+//    if (![[ISYDBManager shareInstance] hasShareBook:self.detailModel.show_id]) {
+//        [SVProgressHUD showImage:nil status:@"要分享后才可批量下载哦"];
+//        __weak __typeof(self)weakSelf = self;
+//        ZXPopView *view = [[ZXPopView alloc]initWithShareBlock:^(NSInteger idx) {
+//            __strong __typeof(weakSelf)strongSelf = weakSelf;
+//            [strongSelf shareToPlatform:idx];
+//        }];
+//        [view showInView:self.navigationController.view animated:ZXPopViewAnimatedSlip];
+//        return;
+//    }
     if (_selectArray.count == 0) {
         [SVProgressHUD showImage:nil status:@"请选择要下载的章节"];
         return;
@@ -243,17 +243,22 @@
         model.l_url = urlString;
     }
     [ZXProgressHUD showLoading:@""];
-    [[ISYDownloadHelper shareInstance] downloadChaper:model bookId:self.detailModel.show_id progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
-        if (expectedSize > 0 && speed > 0) {
-            completed(YES);
+    NSURL *url = [NSURL URLWithString:[model.l_url decodePlayURL]];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.timeoutIntervalForRequest = 60;
+    NSURLSession *sessrion = [NSURLSession sessionWithConfiguration:config];
+    NSURLSessionDataTask *task = [sessrion dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
             [ZXProgressHUD hide];
-        }
-    } completed:^(MCDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL finished) {
-        if (error) {
-            completed(NO);
-            [ZXProgressHUD hide];
-        }
+            NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+            if (r.statusCode == 200) {
+                completed(YES);
+            } else {
+                completed(NO);
+            }
+        });
     }];
+    [task resume];
 }
 
 - (void)selectAllButtonClick:(UIButton *)button {
