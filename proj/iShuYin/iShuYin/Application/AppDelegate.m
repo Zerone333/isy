@@ -77,8 +77,8 @@
 //    self.base_url = @"http://www.chezaios.com/service.php?action=";
 //    self.base_url_2 = @"http://www.chezaios.com/service.php?action=";
 #else
-    self.base_url = @"http://47.52.110.104/service.php?action=";
-    self.base_url_2 = @"http://47.52.110.104/service.php?action=";
+    self.base_url = @"http://www.chezaios.com/service.php?action=";
+    self.base_url_2 = @"http://www.chezaios.com/service.php?action=";
 #endif
     
     //窗口处理
