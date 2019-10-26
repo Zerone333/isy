@@ -72,10 +72,10 @@
     //接口前缀
 #if DEBUG
 //    http://www.chezaios.com/
-    self.base_url = @"http://app.aikeu.com/service.php?action=";
-    self.base_url_2 = @"http://app.aikeu.com/service.php?action=";
-//    self.base_url = @"http://www.chezaios.com/service.php?action=";
-//    self.base_url_2 = @"http://www.chezaios.com/service.php?action=";
+//    self.base_url = @"http://app.aikeu.com/service.php?action=";
+//    self.base_url_2 = @"http://app.aikeu.com/service.php?action=";
+    self.base_url = @"http://www.chezaios.com/service.php?action=";
+    self.base_url_2 = @"http://www.chezaios.com/service.php?action=";
 #else
     self.base_url = @"http://www.chezaios.com/service.php?action=";
     self.base_url_2 = @"http://www.chezaios.com/service.php?action=";
