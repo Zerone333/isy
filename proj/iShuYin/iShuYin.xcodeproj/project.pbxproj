@@ -67,7 +67,6 @@
 		1848419D1F8BFDAE00AF809B /* SharePlatformView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1848419B1F8BFDAE00AF809B /* SharePlatformView.xib */; };
 		184DAE0E1F2E24F600EAEA58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 184DAE0D1F2E24F600EAEA58 /* main.m */; };
 		184DAE171F2E24F600EAEA58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184DAE151F2E24F600EAEA58 /* Main.storyboard */; };
-		184DAE191F2E24F600EAEA58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 184DAE181F2E24F600EAEA58 /* Assets.xcassets */; };
 		184DAE1C1F2E24F600EAEA58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184DAE1A1F2E24F600EAEA58 /* LaunchScreen.storyboard */; };
 		184DAE261F2E258200EAEA58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 184DAE251F2E258200EAEA58 /* AppDelegate.m */; };
 		184DAE371F2E29CD00EAEA58 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184DAE2E1F2E29CD00EAEA58 /* SVIndefiniteAnimatedView.m */; };
@@ -192,6 +191,7 @@
 		6DF039DB2184427900EFDB38 /* ISYBookHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DA2184427900EFDB38 /* ISYBookHeaderFooterView.m */; };
 		6DF039E021844B7300EFDB38 /* ISYMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */; };
 		6DF039E321844DCF00EFDB38 /* ISYMoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */; };
+		8A0F474A2372B7F8009B79DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0F47492372B7F8009B79DC /* Assets.xcassets */; };
 		99061EBE1D4FA48B0B9A12BA /* libPods-iShuYin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6777BA96BC9336E3F606CF0C /* libPods-iShuYin.a */; };
 		9B51BA4E21C4070900E4A183 /* ISYCategoryMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B51BA4D21C4070900E4A183 /* ISYCategoryMoreViewController.m */; };
 		9B51BA5121C4174300E4A183 /* ISYCategoryFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B51BA5021C4174300E4A183 /* ISYCategoryFilterView.m */; };
@@ -322,7 +322,6 @@
 		184DAE091F2E24F600EAEA58 /* iShuYin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iShuYin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		184DAE0D1F2E24F600EAEA58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		184DAE161F2E24F600EAEA58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		184DAE181F2E24F600EAEA58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		184DAE1B1F2E24F600EAEA58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		184DAE1D1F2E24F600EAEA58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		184DAE241F2E258200EAEA58 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -560,6 +559,7 @@
 		6DF039DF21844B7300EFDB38 /* ISYMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYMoreViewController.m; sourceTree = "<group>"; };
 		6DF039E121844DCF00EFDB38 /* ISYMoreListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYMoreListViewController.h; sourceTree = "<group>"; };
 		6DF039E221844DCF00EFDB38 /* ISYMoreListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYMoreListViewController.m; sourceTree = "<group>"; };
+		8A0F47492372B7F8009B79DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B51BA4C21C4070900E4A183 /* ISYCategoryMoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryMoreViewController.h; sourceTree = "<group>"; };
 		9B51BA4D21C4070900E4A183 /* ISYCategoryMoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISYCategoryMoreViewController.m; sourceTree = "<group>"; };
 		9B51BA4F21C4174300E4A183 /* ISYCategoryFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISYCategoryFilterView.h; sourceTree = "<group>"; };
@@ -724,8 +724,8 @@
 			children = (
 				184DAE0D1F2E24F600EAEA58 /* main.m */,
 				184DAE151F2E24F600EAEA58 /* Main.storyboard */,
-				184DAE181F2E24F600EAEA58 /* Assets.xcassets */,
 				184DAE1A1F2E24F600EAEA58 /* LaunchScreen.storyboard */,
+				8A0F47492372B7F8009B79DC /* Assets.xcassets */,
 				184DAE1D1F2E24F600EAEA58 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1664,11 +1664,11 @@
 				1848419D1F8BFDAE00AF809B /* SharePlatformView.xib in Resources */,
 				1880EFEA1F9D13D5006BADCB /* CommentListCell.xib in Resources */,
 				18A4A7E01F40C94900A02BE8 /* BookDetailOthersView.xib in Resources */,
+				8A0F474A2372B7F8009B79DC /* Assets.xcassets in Resources */,
 				183396911F4212DE00491F22 /* BookDetailDescOneView.xib in Resources */,
 				188471F71FEBB8650018CC3B /* SleepCell.xib in Resources */,
 				18103F4A1F717CBC00E56116 /* FeedbackUserCell.xib in Resources */,
 				18103F3A1F71721C00E56116 /* FeedbackCell.xib in Resources */,
-				184DAE191F2E24F600EAEA58 /* Assets.xcassets in Resources */,
 				18A4A7B31F3B725300A02BE8 /* CategoryCell.xib in Resources */,
 				184841981F8BFAB200AF809B /* RecentPlayCell.xib in Resources */,
 				184DAE171F2E24F600EAEA58 /* Main.storyboard in Resources */,

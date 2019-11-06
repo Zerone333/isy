@@ -113,6 +113,10 @@
         _chapterLabel.text = @"";
     }
     
+    //订阅
+    [_orderBtn setImage:[UIImage imageNamed:_detailModel.is_collected.boolValue?@"已订阅":@"订阅"] forState:UIControlStateNormal];
+    [_orderBtn setTitle:_detailModel.is_collected.boolValue?@"已订阅":@" 订阅" forState:UIControlStateNormal];
+    
     [self getcommentListWithBookId:self.detailModel.show_id];
 }
 
@@ -361,8 +365,7 @@
     }
     //进度
     [self.slider setThumbImage:[UIImage imageNamed:@"play_slider"] forState:UIControlStateNormal];
-    //收藏
-    _collectionImgView.image = [UIImage imageNamed:_detailModel.is_collected.boolValue?@"play_collect_sel":@"play_collect_nor"];
+    
 }
 
 - (void)configEvent {
@@ -590,10 +593,19 @@
             if ([operate isEqualToString:@"1"]) {
                 strongSelf.detailModel.is_collected = @"1";
                 strongSelf.collectionImgView.image = [UIImage imageNamed:@"play_collect_sel"];
+                [strongSelf.orderBtn setTitle:@"已订阅" forState:UIControlStateNormal];
+                
             }else {
                 strongSelf.detailModel.is_collected = @"0";
                 strongSelf.collectionImgView.image = [UIImage imageNamed:@"play_collect_nor"];
+                [strongSelf.orderBtn setTitle:@" 订阅" forState:UIControlStateNormal];
             }
+            [strongSelf.orderBtn setImage:[UIImage imageNamed:strongSelf.detailModel.is_collected.boolValue?@"已订阅":@"订阅"] forState:UIControlStateNormal];
+            [strongSelf.orderBtn setTitle:strongSelf.detailModel.is_collected.boolValue?@"已订阅":@" 订阅" forState:UIControlStateNormal];
+            //更新本地数据
+            NSString *bookJson = [strongSelf.detailModel yy_modelToJSONString];
+            [USERDEFAULTS setObject:bookJson forKey:kLastBook];
+            [USERDEFAULTS synchronize];
         }
         [SVProgressHUD showImage:nil status:responseObject[@"message"]];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -1629,6 +1641,7 @@
         _orderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_orderBtn setImage:[UIImage imageNamed:@"订阅"] forState:UIControlStateNormal];
         [_orderBtn setTitle:@" 订阅" forState:UIControlStateNormal];
+        _orderBtn.tintColor = [UIColor redColor];
         [_orderBtn setTitleColor:kColorValue(0x666666) forState:UIControlStateNormal];
         _orderBtn.titleLabel.font = [UIFont systemFontOfSize:11];
         [_orderBtn addTarget:self action:@selector(collectionViewTap) forControlEvents:UIControlEventTouchUpInside];
