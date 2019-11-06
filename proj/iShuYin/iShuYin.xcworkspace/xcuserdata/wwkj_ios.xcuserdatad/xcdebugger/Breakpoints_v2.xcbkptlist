@@ -10,13 +10,125 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
-            timestampString = "594702982.380322"
+            timestampString = "594706079.259374"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "324"
             endingLineNumber = "324"
             landmarkName = "-showLuxian"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Application/PlayViewController.m"
+            timestampString = "594706079.259744"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1262"
+            endingLineNumber = "1262"
+            landmarkName = "-pauseOrPlay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Application/PlayViewController.m"
+            timestampString = "594706079.260568"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1266"
+            endingLineNumber = "1266"
+            landmarkName = "-pauseOrPlay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Application/PlayViewController.m"
+            timestampString = "594706079.260955"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1273"
+            endingLineNumber = "1273"
+            landmarkName = "-pauseOrPlay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Application/PlayViewController.m"
+            timestampString = "594706079.261266"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1276"
+            endingLineNumber = "1276"
+            landmarkName = "-pauseOrPlay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Application/PlayViewController.m"
+            timestampString = "594706079.261566"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1282"
+            endingLineNumber = "1282"
+            landmarkName = "-pause"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[PlayViewController pause]"
+                  moduleName = "iShuYin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wwkj_ios/Desktop/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
+                  timestampString = "594706079.391889"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1282"
+                  endingLineNumber = "1282"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__27-[PlayViewController pause]_block_invoke"
+                  moduleName = "iShuYin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wwkj_ios/Desktop/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
+                  timestampString = "594706079.39386"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1282"
+                  endingLineNumber = "1282"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

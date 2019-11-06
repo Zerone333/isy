@@ -885,6 +885,13 @@
     };
     
     _audioStream.onStateChange = ^(FSAudioStreamState state) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if (state == kFsAudioStreamBuffering) {
+            [ZXProgressHUD hideHUDForView:strongSelf.view animated:NO];
+            [ZXProgressHUD showLoading:@"加载中"];
+        }else{
+            [ZXProgressHUD hide];
+        }
         if (self.duration != 0 && state == kFsAudioStreamPlaying) {
             int duration = weakSelf.audioStream.duration.minute*60+weakSelf.audioStream.duration.second;
             int seconds = weakSelf.duration;
@@ -1252,7 +1259,8 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:kNotiNameAnimationAdd object:nil];
         //播放
         if (self.audioStream) {
-            [self.audioStream play];
+            [self.audioStream pause];
+//            [ZXProgressHUD showLoading:@""];
         }
         if (self.audioPlayer) {
             [self.audioPlayer play];
