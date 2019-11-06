@@ -243,11 +243,14 @@
         model.l_url = urlString;
     }
     [ZXProgressHUD showLoading:@""];
+    __block id context = nil;
+    [self performSelector:@selector(loadingChange:) withObject:context afterDelay:5];
     NSURL *url = [NSURL URLWithString:[model.l_url decodePlayURL]];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     config.timeoutIntervalForRequest = 60;
     NSURLSession *sessrion = [NSURLSession sessionWithConfiguration:config];
     NSURLSessionDataTask *task = [sessrion dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        context = response;
         dispatch_async(dispatch_get_main_queue(), ^{
             [ZXProgressHUD hide];
             NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
@@ -259,6 +262,12 @@
         });
     }];
     [task resume];
+}
+
+- (void)loadingChange:(id)context {
+    if (!context) {
+        [ZXProgressHUD showLoading:@"当前网络堵塞请等待..."];
+    }
 }
 
 - (void)selectAllButtonClick:(UIButton *)button {

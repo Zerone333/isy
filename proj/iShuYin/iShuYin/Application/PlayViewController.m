@@ -875,7 +875,7 @@
     _audioStream.onFailure = ^(FSAudioStreamError error,NSString *description){
         DLog(@"网络播放过程中发生错误，错误信息：%@",description);
         [weakSelf showLuxian];
-        [SVProgressHUD showImage:nil status:description];
+        [SVProgressHUD showImage:nil status:@"播放错误，请重试"];
     };
     _audioStream.onCompletion = ^{
         DLog(@"网络播放完成!");
