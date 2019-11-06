@@ -54,16 +54,20 @@
             }
             [strongSelf.commentDataSource  addObjectsFromArray:commentDataSource];
             [strongSelf.tableView reloadData];
-            self.page = page.integerValue + 1;
+            if (commentDataSource.count > 0) {
+                strongSelf.page = page.integerValue;
+            }
         }else {
             [SVProgressHUD showImage:nil status:responseObject[@"message"]];
         }
         [strongSelf.tableView.mj_header endRefreshing];
+        [strongSelf.tableView.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         DLog(@"%@", error.localizedDescription);
         [SVProgressHUD showImage:nil status:error.localizedDescription];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.tableView.mj_header endRefreshing];
+        [strongSelf.tableView.mj_footer endRefreshing];
     }];
     
 }

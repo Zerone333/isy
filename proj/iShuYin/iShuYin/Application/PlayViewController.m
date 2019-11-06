@@ -1751,7 +1751,7 @@
         }];
         
         UIView *bvView = [[UIView alloc] init];
-        bvView.backgroundColor = [UIColor grayColor];
+        bvView.backgroundColor = kColorValue(0xdddddd);
         bvView.layer.masksToBounds = YES;
         bvView.layer.cornerRadius = 4;
         [_putCommentView addSubview:bvView];
