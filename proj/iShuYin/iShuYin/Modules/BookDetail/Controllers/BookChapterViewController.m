@@ -173,16 +173,16 @@
         [self presentViewController:nav animated:YES completion:nil];
         return;
     }
-//    if (![[ISYDBManager shareInstance] hasShareBook:self.detailModel.show_id]) {
-//        [SVProgressHUD showImage:nil status:@"要分享后才可批量下载哦"];
-//        __weak __typeof(self)weakSelf = self;
-//        ZXPopView *view = [[ZXPopView alloc]initWithShareBlock:^(NSInteger idx) {
-//            __strong __typeof(weakSelf)strongSelf = weakSelf;
-//            [strongSelf shareToPlatform:idx];
-//        }];
-//        [view showInView:self.navigationController.view animated:ZXPopViewAnimatedSlip];
-//        return;
-//    }
+    if (![[ISYDBManager shareInstance] hasShareBook:self.detailModel.show_id]) {
+        [SVProgressHUD showImage:nil status:@"要分享后才可批量下载哦"];
+        __weak __typeof(self)weakSelf = self;
+        ZXPopView *view = [[ZXPopView alloc]initWithShareBlock:^(NSInteger idx) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf shareToPlatform:idx];
+        }];
+        [view showInView:self.navigationController.view animated:ZXPopViewAnimatedSlip];
+        return;
+    }
     if (_selectArray.count == 0) {
         [SVProgressHUD showImage:nil status:@"请选择要下载的章节"];
         return;
