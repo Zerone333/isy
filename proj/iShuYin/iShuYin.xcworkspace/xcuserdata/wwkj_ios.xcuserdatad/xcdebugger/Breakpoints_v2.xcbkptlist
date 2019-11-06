@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
-            timestampString = "594722160.784162"
+            timestampString = "594722889.4528919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "324"
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "594722160.784492"
+            timestampString = "594722889.453222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1274"
-            endingLineNumber = "1274"
+            startingLineNumber = "1276"
+            endingLineNumber = "1276"
             landmarkName = "-pauseOrPlay"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "594722160.784723"
+            timestampString = "594722889.4540451"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1278"
-            endingLineNumber = "1278"
+            startingLineNumber = "1280"
+            endingLineNumber = "1280"
             landmarkName = "-pauseOrPlay"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "594722160.7847871"
+            timestampString = "594722889.454406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1285"
-            endingLineNumber = "1285"
+            startingLineNumber = "1287"
+            endingLineNumber = "1287"
             landmarkName = "-pauseOrPlay"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "594722160.784847"
+            timestampString = "594722889.4547369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1288"
-            endingLineNumber = "1288"
+            startingLineNumber = "1290"
+            endingLineNumber = "1290"
             landmarkName = "-pauseOrPlay"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "594722160.784904"
+            timestampString = "594722889.455066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1294"
-            endingLineNumber = "1294"
+            startingLineNumber = "1296"
+            endingLineNumber = "1296"
             landmarkName = "-pause"
             landmarkType = "7">
             <Locations>
@@ -106,11 +106,11 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wwkj_ios/Desktop/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "594722160.932057"
+                  timestampString = "594722889.580832"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1294"
-                  endingLineNumber = "1294"
+                  startingLineNumber = "1296"
+                  endingLineNumber = "1296"
                   offsetFromSymbolStart = "23">
                </Location>
                <Location
@@ -121,11 +121,11 @@
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wwkj_ios/Desktop/isy/proj/iShuYin/iShuYin/Application/PlayViewController.m"
-                  timestampString = "594722160.933792"
+                  timestampString = "594722889.583158"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1294"
-                  endingLineNumber = "1294"
+                  startingLineNumber = "1296"
+                  endingLineNumber = "1296"
                   offsetFromSymbolStart = "12">
                </Location>
             </Locations>

@@ -887,7 +887,7 @@
     _audioStream.onFailure = ^(FSAudioStreamError error,NSString *description){
         DLog(@"网络播放过程中发生错误，错误信息：%@",description);
         [weakSelf showLuxian];
-        [SVProgressHUD showImage:nil status:@"播放错误，请重试"];
+//        [SVProgressHUD showImage:nil status:@"播放错误，请重试"];
     };
     _audioStream.onCompletion = ^{
         DLog(@"网络播放完成!");
@@ -915,6 +915,8 @@
             p.position = seconds * 1.0 / duration;
             [weakSelf.audioStream seekToPosition:p];
             weakSelf.duration = 0;
+            [weakSelf closeLuxian];
+            [ZXProgressHUD hideHUDForView:weakSelf.view animated:NO];
         }
     };
     [_audioStream setVolume:0.5];//设置声音
