@@ -93,8 +93,58 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 2) {
+        [self requestAppUpdate];
+        return;
+    }
     NSDictionary *dict = self.dataArray[indexPath.row];
     [self pushWithClassString:dict[@"ctrl"]];
+}
+//版本检测
+- (void)requestAppUpdate {
+    [ZXProgressHUD showLoading:@""];
+    ZXNetworkManager *manager = [ZXNetworkManager shareManager];
+    NSString *url = [manager URLStringWithQuery2:Query2AppVersion];
+    NSDictionary *params = @{@"type":@"2"};
+    [manager GETWithURLString:url parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        DLog(@"%@", responseObject);
+        [ZXProgressHUD hide];
+        if ([responseObject[@"statusCode"]integerValue] == 200) {
+            NSDictionary *data = responseObject[@"data"];
+            if ([data isKindOfClass:[NSNull class]]) {
+                [SVProgressHUD showImage:nil status:@"最新版本啦～"];
+                return ;
+            }
+            NSString *version_name = data[@"version_name"];
+            NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+            NSComparisonResult result = [currentVersion compare:version_name options:NSNumericSearch];
+            if (result == NSOrderedAscending) {
+                //强制更新
+                if ([data[@"is_force"]boolValue] == YES) {
+                    BOOL ret = NO;
+                    for (UIView *view in APPDELEGATE.window.subviews) {
+                        if ([view isKindOfClass:[ZXPopView class]] && ((ZXPopView *)view).style == ZXPopViewStyleVersionForce) {
+                            ret = YES;
+                            break;
+                        }
+                    }
+                    if (!ret) {
+                        ZXPopView *view = [[ZXPopView alloc]initWithVersionInfoForce:responseObject[@"data"]];
+                        [view showInView:APPDELEGATE.window animated:ZXPopViewAnimatedScale];
+                    }
+                }
+                //提示更新
+                else {
+                    ZXPopView *view = [[ZXPopView alloc]initWithVersionInfoRemind:data];
+                    [view showInView:APPDELEGATE.window animated:ZXPopViewAnimatedScale];
+                    APPDELEGATE.hasShowVersionRemindAlert = YES;
+                }
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [ZXProgressHUD hide];
+        DLog(@"%@", error.localizedDescription);
+    }];
 }
 
 #pragma mark - Methods

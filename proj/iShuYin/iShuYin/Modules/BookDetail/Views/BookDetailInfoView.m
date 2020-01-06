@@ -231,7 +231,7 @@
 - (UIButton *)orderButton {
     if (!_orderButton) {
         _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_orderButton setImage:[UIImage imageNamed:@"订阅"] forState:UIControlStateNormal];
+        [_orderButton setImage:[UIImage imageNamed:@"订阅btn"] forState:UIControlStateNormal];
         [_orderButton setImage:[UIImage imageNamed:@"未订阅btn"] forState:UIControlStateSelected];
         [_orderButton addTarget:self action:@selector(orderBook) forControlEvents:UIControlEventTouchUpInside];
     }

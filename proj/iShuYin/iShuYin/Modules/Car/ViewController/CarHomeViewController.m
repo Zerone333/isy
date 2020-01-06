@@ -280,12 +280,15 @@
         [_searchBar setImage:[UIImage imageNamed:@"home_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
         [_searchBar setImage:[UIImage imageNamed:@"home_clear"] forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
         [_searchBar setImage:[UIImage imageNamed:@"home_clear"] forSearchBarIcon:UISearchBarIconClear state:UIControlStateHighlighted];
-        
-        UITextField *searchField = [_searchBar valueForKey:@"_searchField"];
-        searchField.layer.masksToBounds = YES;
-        searchField.layer.cornerRadius = 4.0;
-        searchField.textColor= [UIColor whiteColor];
-        [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+        if (@available(iOS 13.0, *)) {
+            
+        } else {
+            UITextField *searchField = [_searchBar valueForKey:@"_searchField"];
+            searchField.layer.masksToBounds = YES;
+            searchField.layer.cornerRadius = 4.0;
+            searchField.textColor= [UIColor whiteColor];
+            [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+        }
     }
     return _searchBar;
 }

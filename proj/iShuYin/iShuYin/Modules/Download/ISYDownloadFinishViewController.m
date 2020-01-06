@@ -34,7 +34,6 @@
     [super viewDidLoad];
     self.title = @"已下载";
     [self setupUI];
-    [self queryData];
     
     if ([self.book.thumb containsString:kPrefixImageDefault]) {
         [self.thumImageView sd_setImageWithURL:[self.book.thumb url] placeholderImage:[UIImage imageNamed:@"ph_image"]];
@@ -42,6 +41,11 @@
         [self.thumImageView sd_setImageWithURL:[[kPrefixImageDefault stringByAppendingString:self.book.thumb] url] placeholderImage:[UIImage imageNamed:@"ph_image"]];
     }
     self.titleLabel.text = self.book.title;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self queryData];
 }
 
 #pragma mark - private
@@ -160,6 +164,17 @@
     cell.isLoading = NO;
     cell.chaper = model;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // lee test
+    BookChapterModel *chapterModel = self.dataSource[indexPath.row];
+    [APPDELEGATE.playVC playWithBook:self.book index:chapterModel.l_id.integerValue-1];
+    if ([self.navigationController.viewControllers containsObject:APPDELEGATE.playVC]) {
+        [self.navigationController popToViewController:APPDELEGATE.playVC animated:YES];
+    }else {
+        [self.navigationController pushViewController:APPDELEGATE.playVC animated:YES];
+    }
 }
 
 #pragma mark - get/set method

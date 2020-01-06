@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "22095F56-3F7E-4C67-BE90-11941197617F"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "9ACF49FF-3A55-4A0F-9EC2-950E284546F1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -32,22 +24,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/Home/Controllers/HomeViewController.m"
-            timestampString = "572069673.8137569"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
-            landmarkName = "-searchBarShouldBeginEditing:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "02D4B2F6-3F49-47A6-8D79-75193CA2D18C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -64,6 +41,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "9CB4C421-7AA8-45F5-B5FB-79731FF51481"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -80,32 +58,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/Download/View/ISYDownloadChaperStatusCell.m"
-            timestampString = "582825502.056127"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "-setChaper:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "1373ADE7-7435-4B42-8412-F69028D8BD05"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -122,6 +75,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "EA1FE373-BB5C-4FF0-94D1-FD680765F78F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -138,6 +92,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F329E1E6-9042-45AC-B5E6-19930314EBAF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -154,38 +109,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
-            timestampString = "593532479.085567"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
-            landmarkName = "-selectAllButtonClick:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iShuYin/Modules/BookDetail/Controllers/BookChapterViewController.m"
-            timestampString = "593532479.0859489"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "-selectAllButtonClick:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "BB36AA30-3594-43C3-BC08-B4530570DFBD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -202,6 +126,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "903B0921-A644-4502-8952-FC3141FF3916"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -218,6 +143,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "D67A095F-1416-4420-8BE1-8142720D6DB5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -234,6 +160,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "0C285177-40A0-47EB-A136-8BCEFDF99F9C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -247,49 +174,34 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "0C285177-40A0-47EB-A136-8BCEFDF99F9C - 37f36c9e39b0b0cd"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__35-[LoginViewController wechatLogin:]_block_invoke"
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Lee/Desktop/isy/isygit/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-                  timestampString = "593532479.355625"
+                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "247"
                   endingLineNumber = "247"
-                  offsetFromSymbolStart = "641">
+                  offsetFromSymbolStart = "634">
                </Location>
                <Location
+                  uuid = "0C285177-40A0-47EB-A136-8BCEFDF99F9C - 7bebdd5582ccb378"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__35-[LoginViewController wechatLogin:]_block_invoke_2"
                   moduleName = "iShuYin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Lee/Desktop/isy/isygit/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-                  timestampString = "593532479.358152"
+                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "248"
                   endingLineNumber = "248"
-                  offsetFromSymbolStart = "84">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.282"
-                  moduleName = "iShuYin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Lee/Desktop/isy/isygit/isy/proj/iShuYin/iShuYin/Modules/LoginRegister/Controllers/LoginViewController.m"
-                  timestampString = "593532479.360592"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "247"
-                  endingLineNumber = "247"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -297,6 +209,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "AAFF9A16-2EBD-4185-8E08-85226E4759FF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -313,6 +226,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "31A16717-02CC-4F88-9449-3D53042D888D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -329,17 +243,145 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "DF85B496-5517-440C-B126-0B646EDCD2EC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Modules/BookDetail/Views/BookDetailDescOneView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "-chapter1BtnClick:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E41AEA5-BC55-4621-9A2D-158D08ADBF30"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iShuYin/Application/PlayViewController.m"
-            timestampString = "584287399.320483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "837"
-            endingLineNumber = "837"
-            landmarkName = "-playChapterAtIndex:"
+            startingLineNumber = "1266"
+            endingLineNumber = "1266"
+            landmarkName = "-playWithBook:index:duration:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5D671D2F-9E20-4934-89AA-A3078EF00F2B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Modules/Home/Controllers/HomeFoundViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6E035DCD-522B-4A14-A7ED-BD545030A4B0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Modules/CategoryMore/ISYCategoryMoreViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "-requestCategoryData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6E035DCD-522B-4A14-A7ED-BD545030A4B0 - c566648297c2e7d2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ISYCategoryMoreViewController requestCategoryData]"
+                  moduleName = "iShuYin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/CategoryMore/ISYCategoryMoreViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "141">
+               </Location>
+               <Location
+                  uuid = "6E035DCD-522B-4A14-A7ED-BD545030A4B0 - 3ba48d26d68ef0e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__52-[ISYCategoryMoreViewController requestCategoryData]_block_invoke"
+                  moduleName = "iShuYin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/CategoryMore/ISYCategoryMoreViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "136"
+                  endingLineNumber = "136"
+                  offsetFromSymbolStart = "116">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "315CEB06-8532-4C45-8368-C851E65985C2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iShuYin/Modules/CategoryMore/ISYCategoryMoreViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "-requestData:page:category:sortType:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "315CEB06-8532-4C45-8368-C851E65985C2 - 72d6097b5509bfd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ISYCategoryMoreViewController requestData:page:category:sortType:]"
+                  moduleName = "iShuYin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/CategoryMore/ISYCategoryMoreViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "622">
+               </Location>
+               <Location
+                  uuid = "315CEB06-8532-4C45-8368-C851E65985C2 - 1d3938d3b322b89d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__68-[ISYCategoryMoreViewController requestData:page:category:sortType:]_block_invoke"
+                  moduleName = "iShuYin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lee/Desktop/Lee&apos;s%20github/isy/proj/iShuYin/iShuYin/Modules/CategoryMore/ISYCategoryMoreViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "183"
+                  endingLineNumber = "183"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
